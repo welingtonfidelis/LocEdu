@@ -1,0 +1,151 @@
+{
+  "project_info": {
+    "project_number": "762236412169",
+    "firebase_url": "https://locedu-476c8.firebaseio.com",
+    "project_id": "locedu-476c8",
+    "storage_bucket": "locedu-476c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762236412169:android:0a2d8953c6087daa",
+        "android_client_info": {
+          "package_name": "com.example.hellem.locedu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762236412169-2dgvm207us7d5pt15it5vpl3t746vu0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hellem.locedu",
+            "certificate_hash": "d60ccb6eb2c005a5d19417c2224fa1792466a3d3"
+          }
+        },
+        {
+          "client_id": "762236412169-qf4mve0ss4o6bsntf8trr2kpprahjo16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hellem.locedu",
+            "certificate_hash": "6bca323d1c4e845b76ed0af449ea531c04ad250b"
+          }
+        },
+        {
+          "client_id": "762236412169-bdkj9h7to53a2ut7f8pueq1odttapm8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq5Fx5CvptMYczp6Ncr6P8PvDqiSkG8zM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762236412169-bdkj9h7to53a2ut7f8pueq1odttapm8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762236412169:android:8672eeb0d1a984b4",
+        "android_client_info": {
+          "package_name": "com.example.welington.locedu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762236412169-vlkipr0pmqe63os5t7lb5ad40r6k4og4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.welington.locedu",
+            "certificate_hash": "c6f2259b91de275058b4d8896b55cc2b22cd461f"
+          }
+        },
+        {
+          "client_id": "762236412169-bdkj9h7to53a2ut7f8pueq1odttapm8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq5Fx5CvptMYczp6Ncr6P8PvDqiSkG8zM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762236412169-bdkj9h7to53a2ut7f8pueq1odttapm8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762236412169:android:b5a73d1e37c427e6",
+        "android_client_info": {
+          "package_name": "com.example.welington.locedu.View"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762236412169-v5bb020ooism81m099hr96b8a0o80uqj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.welington.locedu.View",
+            "certificate_hash": "c6f2259b91de275058b4d8896b55cc2b22cd461f"
+          }
+        },
+        {
+          "client_id": "762236412169-bdkj9h7to53a2ut7f8pueq1odttapm8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq5Fx5CvptMYczp6Ncr6P8PvDqiSkG8zM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762236412169-bdkj9h7to53a2ut7f8pueq1odttapm8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
