@@ -1,6 +1,7 @@
 package com.example.welington.locedu.View;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +11,8 @@ import com.example.welington.locedu.R;
 
 public class Login extends AppCompatActivity {
 
-    Button botaoLogar;
+    private Button botaoLogar;
+    private FloatingActionButton botaoNovo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         botaoLogar = findViewById(R.id.buttonLogar);
+        botaoNovo = findViewById(R.id.floatingButtonCriarSetor);
 
         botaoLogar.setOnClickListener(new View.OnClickListener() {
             @Override

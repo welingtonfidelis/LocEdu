@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LocEdu</string>
+    <string name="adapter_setor_responsavel_header_text">Responsável:</string>
 </resources>
