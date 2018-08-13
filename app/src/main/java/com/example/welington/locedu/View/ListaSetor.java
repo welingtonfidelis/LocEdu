@@ -13,6 +13,7 @@ import com.example.welington.locedu.Adapter.SetorAdapter;
 import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -30,6 +31,8 @@ public class ListaSetor extends AppCompatActivity {
     private ValueEventListener setorEventListener;
     private LinearLayoutManager layoutManager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +42,6 @@ public class ListaSetor extends AppCompatActivity {
         botaoLogar = findViewById(R.id.floatingButtonLogar);
         botaoNovoSetor = findViewById(R.id.floatingButtonCriarSetor);
         botaoNovoSetor.setVisibility(View.INVISIBLE);
-
-        Intent it = getIntent();
-        Bundle bundle = it.getExtras();
-        if(bundle != null){
-            nivelLogin = (boolean) bundle.get("NIVEL");
-            if(nivelLogin){
-                botaoNovoSetor.setVisibility(View.VISIBLE);
-            }
-        }
 
         setores = new ArrayList<>();
 
@@ -97,6 +91,8 @@ public class ListaSetor extends AppCompatActivity {
                 //finish();
             }
         });
+
+
     }
 
     @Override

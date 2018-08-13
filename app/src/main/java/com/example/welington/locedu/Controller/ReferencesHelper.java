@@ -1,5 +1,7 @@
 package com.example.welington.locedu.Controller;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -10,6 +12,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ReferencesHelper {
     private static FirebaseDatabase firebaseDatabase;
     private static DatabaseReference databaseReference;
+    private static FirebaseAuth.AuthStateListener firebaseAuth;
+    private static FirebaseUser firebaseUser;
 
     public static FirebaseDatabase getFirebaseDatabase() {
         if (firebaseDatabase == null) {
