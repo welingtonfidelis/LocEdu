@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">LocEdu</string>
-    <string name="adapter_setor_responsavel_header_text">Responsável:</string>
+    <string name="adapter_setor_bloco_header_text">Bloco:</string>
+    <string name="botaoCancelar">Cancelar</string>
+    <string name="botaoSalvar">Salvar</string>
+    <string name="botaoDeletar">Deletar</string>
+    <string name="nomeSetor">Nome do setor</string>
+    <string name="nomeResponsavel">Nome do responsável</string>
+    <string name="telefone">Telefone</string>
+    <string name="identificador">Identificador</string>
+    <string name="bloco">Bloco</string>
 </resources>

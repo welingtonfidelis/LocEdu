@@ -37,16 +37,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
-                android:text="@string/adapter_setor_responsavel_header_text"
+                android:text="Bloco: "
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/adapter_setor_responsavel"
+                android:id="@+id/adapter_setor_bloco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Wellington"
+                android:text=" "
                 app:layout_constraintBottom_toBottomOf="@+id/adapter_setor_responsavel_header"
                 app:layout_constraintStart_toEndOf="@+id/adapter_setor_responsavel_header"
                 app:layout_constraintTop_toTopOf="@+id/adapter_setor_responsavel_header" />

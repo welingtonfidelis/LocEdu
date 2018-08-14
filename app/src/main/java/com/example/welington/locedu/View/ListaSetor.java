@@ -30,7 +30,7 @@ public class ListaSetor extends AppCompatActivity {
     private List<Setor> setores;
     private ValueEventListener setorEventListener;
     private LinearLayoutManager layoutManager;
-
+    private FloatingActionButton botaoSair;
 
 
     @Override
@@ -41,17 +41,20 @@ public class ListaSetor extends AppCompatActivity {
         listaSetores = findViewById(R.id.listaSetores);
         botaoLogar = findViewById(R.id.floatingButtonLogar);
         botaoNovoSetor = findViewById(R.id.floatingButtonCriarSetor);
-        botaoNovoSetor.setVisibility(View.INVISIBLE);
+        botaoNovoSetor.setVisibility(View.GONE);
+        botaoSair = findViewById(R.id.floatingActionButtonSair);
 
         setores = new ArrayList<>();
 
         setorEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
+                setores.clear();
                 if (dataSnapshot.exists()){
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Setor setor = postSnapshot.getValue(Setor.class);
 
+                        setor.setKey(postSnapshot.getKey());
                         setores.add(setor);
                     }
 
@@ -74,12 +77,13 @@ public class ListaSetor extends AppCompatActivity {
 
         ReferencesHelper.getDatabaseReference().child("Setor").addValueEventListener(setorEventListener);
 
+
         botaoLogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(ListaSetor.this, Login.class);
                 startActivity(it);
-                finish();
+                //finish();
             }
         });
 
@@ -92,7 +96,29 @@ public class ListaSetor extends AppCompatActivity {
             }
         });
 
+        botaoSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
+                ReferencesHelper.getFirebaseAuth().signOut();
+                botaoNovoSetor.setVisibility(View.GONE);
+                botaoSair.setVisibility(View.GONE);
+            }
+        });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+            botaoNovoSetor.setVisibility(View.VISIBLE);
+            botaoSair.setVisibility(View.VISIBLE);
+        }
+        else{
+            botaoNovoSetor.setVisibility(View.GONE);
+            botaoSair.setVisibility(View.GONE);
+        }
     }
 
     @Override

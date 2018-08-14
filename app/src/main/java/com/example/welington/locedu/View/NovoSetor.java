@@ -1,5 +1,6 @@
 package com.example.welington.locedu.View;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,8 +17,7 @@ import com.google.android.gms.tasks.Task;
 
 public class NovoSetor extends AppCompatActivity {
     private EditText nomeSetor;
-    private EditText nomeResponsavel;
-    private EditText telefone;
+    private EditText bloco;
     private Button botaoSalvar;
     private Button botaoCancelar;
 
@@ -26,11 +26,10 @@ public class NovoSetor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_setor);
 
-        nomeSetor = findViewById(R.id.editTextNomeSetor);
-        nomeResponsavel = findViewById(R.id.editTextResponsavel);
-        telefone = findViewById(R.id.editTextTelefone);
-        botaoSalvar = findViewById(R.id.buttonSalvar);
-        botaoCancelar = findViewById(R.id.buttonCancelar);
+        nomeSetor = (EditText) findViewById(R.id.editTextNomeSetor);
+        bloco = (EditText) findViewById(R.id.editTextBloco);
+        botaoSalvar = (Button) findViewById(R.id.buttonSalvar);
+        botaoCancelar = (Button) findViewById(R.id.buttonCancelar);
 
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,8 +38,7 @@ public class NovoSetor extends AppCompatActivity {
 
                 Setor s = new Setor();
                 s.setNomeSetor(nomeSetor.getText().toString());
-                s.setNomeResponsavel(nomeResponsavel.getText().toString());
-                s.setTelefone(telefone.getText().toString());
+                s.setBloco(bloco.getText().toString());
 
                 ReferencesHelper.getDatabaseReference().child("Setor").child(key).setValue(s).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
