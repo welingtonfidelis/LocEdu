@@ -26,7 +26,6 @@ public class ListaSetor extends AppCompatActivity {
     private FloatingActionButton botaoLogar;
     private FloatingActionButton botaoNovoSetor;
     private RecyclerView listaSetores;
-    private Boolean nivelLogin;
     private List<Setor> setores;
     private ValueEventListener setorEventListener;
     private LinearLayoutManager layoutManager;

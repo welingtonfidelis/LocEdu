@@ -60,8 +60,6 @@ public class SetorAdapter extends RecyclerView.Adapter<SetorAdapter.ViewHolder> 
                 return true;
             }
         });
-
-
     }
 
     @Override

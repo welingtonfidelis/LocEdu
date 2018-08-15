@@ -51,7 +51,13 @@ public class NovoSetor extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
 
+        botaoCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

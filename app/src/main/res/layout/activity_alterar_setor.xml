@@ -55,8 +55,8 @@
         android:layout_marginStart="8dp"
         android:text="@string/botaoSalvar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDeletar"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonDeletar" />
 
     <Button
         android:id="@+id/buttonCancelar"
@@ -67,8 +67,8 @@
         android:layout_marginStart="8dp"
         android:text="@string/botaoCancelar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonDeletar" />
+        app:layout_constraintEnd_toStartOf="@+id/buttonDeletar"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonDeletar"
