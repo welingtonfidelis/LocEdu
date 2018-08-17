@@ -18,9 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.Login" />
+        <activity
+            android:name=".View.Login"
+            android:screenOrientation="portrait" />
         <activity android:name=".View.NovoSetor" />
-        <activity android:name=".View.AlterarSetor"></activity>
+        <activity android:name=".View.AlterarSetor" />
+        <activity android:name=".View.ListaLocal" />
+        <activity android:name=".View.NovoLocal" />
+        <activity android:name=".View.AlterarLocal"></activity>
     </application>
 
 </manifest>

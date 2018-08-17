@@ -15,6 +15,7 @@ import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.AlterarSetor;
+import com.example.welington.locedu.View.ListaLocal;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -50,7 +51,6 @@ public class SetorAdapter extends RecyclerView.Adapter<SetorAdapter.ViewHolder> 
             @Override
             public boolean onLongClick(View v) {
                 if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null) { //Verificando se adm está logado para dar opçao de alterar/deletar Setor
-                    System.out.println("usuario logado");
                     Gson gson = new Gson();
                     Intent it = new Intent(context, AlterarSetor.class);
                     it.putExtra("SETOR", gson.toJson(setor));
@@ -58,6 +58,16 @@ public class SetorAdapter extends RecyclerView.Adapter<SetorAdapter.ViewHolder> 
                     //Toast.makeText(context, "Item :" + setor.getNomeSetor(), Toast.LENGTH_LONG).show();
                 }
                 return true;
+            }
+        });
+
+        holder.adapterSetorCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                Intent it = new Intent(context, ListaLocal.class);
+                it.putExtra("SETOR", gson.toJson(setor));
+                context.startActivity(it);
             }
         });
     }

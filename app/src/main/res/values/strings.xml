@@ -9,4 +9,8 @@
     <string name="telefone">Telefone</string>
     <string name="identificador">Identificador</string>
     <string name="bloco">Bloco</string>
+    <string name="nomeLocal">Nome do local</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="responsavel">Responsável:</string>
 </resources>
