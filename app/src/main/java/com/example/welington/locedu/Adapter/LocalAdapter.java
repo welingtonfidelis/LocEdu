@@ -15,6 +15,7 @@ import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.AlterarLocal;
+import com.example.welington.locedu.View.ListaEvento;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -71,6 +72,16 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
                 }
                 //Toast.makeText(context, "Item :" + local.getLatitude() + " " +local.getLongitude(), Toast.LENGTH_LONG).show();
                 return true;
+            }
+        });
+
+        holder.adapterLocalCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson g = new Gson();
+                Intent it = new Intent(context, ListaEvento.class);
+                it.putExtra("LOCAL", g.toJson(local));
+                context.startActivity(it);
             }
         });
     }

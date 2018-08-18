@@ -1,4 +1,8 @@
 <resources>
+    <string-array name="listaEvento">
+        <item>"item 1"</item>
+    </string-array>
+
     <string name="app_name">LocEdu</string>
     <string name="adapter_setor_bloco_header_text">Bloco:</string>
     <string name="botaoCancelar">Cancelar</string>
@@ -13,4 +17,8 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="responsavel">Responsável:</string>
+    <string name="data">Data:</string>
+    <string name="nomeEvento">Nome do evento</string>
+    <string name="descricaoEvento">Descrição do evento</string>
+    <string name="horario">Horario:</string>
 </resources>

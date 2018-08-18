@@ -25,7 +25,9 @@
         <activity android:name=".View.AlterarSetor" />
         <activity android:name=".View.ListaLocal" />
         <activity android:name=".View.NovoLocal" />
-        <activity android:name=".View.AlterarLocal"></activity>
+        <activity android:name=".View.AlterarLocal" />
+        <activity android:name=".View.NovoEvento" />
+        <activity android:name=".View.ListaEvento"></activity>
     </application>
 
 </manifest>
