@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -17,10 +16,6 @@ import com.example.welington.locedu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class NovoEvento extends AppCompatActivity {
 
@@ -50,16 +45,16 @@ public class NovoEvento extends AppCompatActivity {
         tipoEvento = findViewById(R.id.spTipoEvento);
         btnCancelar = findViewById(R.id.btnCancelar);
         btnSalvar = findViewById(R.id.btnSalvar);
-        (nomeLocal = findViewById(R.id.tvNomeLocalEvento)).setText(local.getNomeLocal());
+        (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal());
 
-        List<String> listaEventos = new ArrayList<String>();
+        /*List<String> listaEventos = new ArrayList<String>();
         listaEventos.add("Minicurso");
         listaEventos.add("Oficina");
-        listaEventos.add("Palestra");
+        listaEventos.add("Palestra");*/
 
-        ArrayAdapter<String> dataAdpter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaEventos);
+        /*ArrayAdapter<String> dataAdpter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaEventos);
         dataAdpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        tipoEvento.setAdapter(dataAdpter);
+        tipoEvento.setAdapter(dataAdpter);*/
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +63,7 @@ public class NovoEvento extends AppCompatActivity {
 
                 Evento e = new Evento();
                 e.setLocalKey(local.getKey());
+                e.setTipo(String.valueOf(tipoEvento.getSelectedItem()));
                 e.setNomeEvento(nomeEvento.getText().toString());
                 e.setResponsavel(nomeReponsavel.getText().toString());
                 e.setDescricao(descricaoEvento.getText().toString());

@@ -43,7 +43,7 @@ public class ListaEvento extends AppCompatActivity {
 
         eventos = new ArrayList<>();
         listaEvento = findViewById(R.id.listaEventos);
-        (nomeLocal = findViewById(R.id.tvNomeLocalEvento)).setText(local.getNomeLocal().toString());
+        (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal().toString());
         novoEvento = findViewById(R.id.fbNovoEvento);
 
         eventoEventListener = new ValueEventListener() {

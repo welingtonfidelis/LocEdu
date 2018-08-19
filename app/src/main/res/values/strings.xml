@@ -1,6 +1,8 @@
 <resources>
     <string-array name="listaEvento">
-        <item>"item 1"</item>
+        <item>"Minicurso"</item>
+        <item>"Palestra"</item>
+        <item>"Oficina"</item>
     </string-array>
 
     <string name="app_name">LocEdu</string>
@@ -21,4 +23,5 @@
     <string name="nomeEvento">Nome do evento</string>
     <string name="descricaoEvento">Descrição do evento</string>
     <string name="horario">Horario:</string>
+    <string name="eventoDisponivel">Eventos:</string>
 </resources>

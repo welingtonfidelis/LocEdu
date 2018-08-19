@@ -1,6 +1,10 @@
 package com.example.welington.locedu.View;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Controller.ReferencesHelper;
-import com.example.welington.locedu.Controller.Util;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
 import com.google.gson.Gson;
@@ -39,8 +42,8 @@ public class AlterarLocal extends AppCompatActivity {
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
         (identificador = findViewById(R.id.tvIdentificador)).setText(local.getKey());
-        (edtNomeLocal = findViewById(R.id.edtNomeLocal)).setText(local.getNomeLocal());
-        (edtNomeResponsavelLocal = findViewById(R.id.edtNomeResponsavelLocal)).setText(local.getNomeResponsavel());
+        (edtNomeLocal = findViewById(R.id.edtNomeEvento)).setText(local.getNomeLocal());
+        (edtNomeResponsavelLocal = findViewById(R.id.edtNomeResponsavelEvento)).setText(local.getNomeResponsavel());
         (edtLatitude = findViewById(R.id.edtLatitude)).setText(local.getLatitude().toString());
         (edtLongitude = findViewById(R.id.edtLongitude)).setText(local.getLongitude().toString());
         btnSalvar = findViewById(R.id.btnSalvar);
@@ -78,6 +81,14 @@ public class AlterarLocal extends AppCompatActivity {
     }
 
     private void exibeAlerta(final String  chave, final String tabela) {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            vibrator.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
+        }
+        else{
+            vibrator.vibrate(500);
+        }
         //Cria o gerador do AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //define o titulo

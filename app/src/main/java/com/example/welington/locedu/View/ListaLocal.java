@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.welington.locedu.Adapter.LocalAdapter;
 import com.example.welington.locedu.Controller.ReferencesHelper;
@@ -42,6 +43,7 @@ public class ListaLocal extends AppCompatActivity {
 
         listaLocais = findViewById(R.id.listaLocais);
         botaoNovoLocal = findViewById(R.id.floatingActionButtonNovoLocal);
+
 
         locais = new ArrayList<>();
 

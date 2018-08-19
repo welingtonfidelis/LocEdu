@@ -2,6 +2,7 @@ package com.example.welington.locedu.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,8 +17,12 @@ import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.AlterarLocal;
 import com.example.welington.locedu.View.ListaEvento;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.EventListener;
 import java.util.List;
 
 /**
@@ -38,6 +43,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         protected TextView adapterLocalNome;
         protected TextView adapterLocalResponsavel;
         protected CardView adapterLocalCard;
+        protected TextView adapterQntEvento;
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -45,6 +51,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             adapterLocalNome = itemView.findViewById(R.id.adapter_local_nome);
             adapterLocalResponsavel = itemView.findViewById(R.id.adapter_loca_responsavel);
             adapterLocalCard = itemView.findViewById(R.id.adapter_local_card);
+            adapterQntEvento = itemView.findViewById(R.id.tvQntdEvento);
         }
     }
 
@@ -54,9 +61,24 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         return new ViewHolder(itemView);
     }
 
+
+
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Local local = locais.get(position);
+
+        ValueEventListener m = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                holder.adapterQntEvento.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).addValueEventListener(m);
 
         holder.adapterLocalNome.setText(local.getNomeLocal());
         holder.adapterLocalResponsavel.setText(local.getNomeResponsavel());
@@ -91,4 +113,5 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         Log.e("Quantidade na LOCAIS", String.valueOf(locais.size()) );
         return locais.size();
     }
+
 }

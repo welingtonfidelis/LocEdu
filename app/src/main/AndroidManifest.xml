@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_round"
@@ -27,7 +29,8 @@
         <activity android:name=".View.NovoLocal" />
         <activity android:name=".View.AlterarLocal" />
         <activity android:name=".View.NovoEvento" />
-        <activity android:name=".View.ListaEvento"></activity>
+        <activity android:name=".View.ListaEvento" />
+        <activity android:name=".View.AlterarEvento"></activity>
     </application>
 
 </manifest>

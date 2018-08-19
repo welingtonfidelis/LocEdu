@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Evento;
 import com.example.welington.locedu.R;
+import com.example.welington.locedu.View.AlterarEvento;
 import com.google.gson.Gson;
 
 import java.util.Date;
@@ -65,11 +66,11 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             @Override
             public boolean onLongClick(View v) {
                 if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-                    /*Gson gson = new Gson();
+                    Gson gson = new Gson();
                     Intent it = new Intent(context, AlterarEvento.class);
-                    it.putExtra("LOCAL", gson.toJson(evento));
-                    context.startActivity(it);*/
-                    Toast.makeText(context, "Item :" + evento.getNomeEvento() + " " +evento.getData(), Toast.LENGTH_LONG).show();
+                    it.putExtra("EVENTO", gson.toJson(evento));
+                    context.startActivity(it);
+                    //Toast.makeText(context, "Item :" + evento.getNomeEvento() + " " +evento.getData(), Toast.LENGTH_LONG).show();
                 }
                 return true;
             }

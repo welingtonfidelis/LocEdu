@@ -36,7 +36,7 @@ public class NovoLocal extends AppCompatActivity {
 
         Gson gson = new Gson();
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
-        nomeLocal = findViewById(R.id.edtNomeLocal);
+        nomeLocal = findViewById(R.id.edtNomeEvento);
         nomeResponsavel = findViewById(R.id.edtResponsavelLocal);
         latitude = findViewById(R.id.edtLatitude);
         longitude = findViewById(R.id.edtLongitude);
@@ -70,6 +70,13 @@ public class NovoLocal extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
