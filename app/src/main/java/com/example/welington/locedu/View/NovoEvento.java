@@ -1,10 +1,14 @@
 package com.example.welington.locedu.View;
 
+import android.app.DatePickerDialog;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,17 +21,30 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class NovoEvento extends AppCompatActivity {
 
     private TextView nomeLocal;
-    private TextView nomeEvento;
-    private TextView nomeReponsavel;
-    private TextView descricaoEvento;
-    private TextView data;
-    private TextView horario;
+    private EditText nomeEvento;
+    private EditText nomeReponsavel;
+    private EditText descricaoEvento;
+    private EditText data;
+    private EditText horario;
     private Spinner tipoEvento;
     private Button btnSalvar, btnCancelar;
     private Local local;
+
+    //variaveis para Widget Calendar
+    private Context context = this;
+    private Calendar myCalendar = Calendar.getInstance();
+    private String dateFormat = "dd/MM/yyyy";
+    private DatePickerDialog.OnDateSetListener date;
+    private SimpleDateFormat sdf;
+    private long currentdate;
+    private String dateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +64,29 @@ public class NovoEvento extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btnSalvar);
         (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal());
 
-        /*List<String> listaEventos = new ArrayList<String>();
-        listaEventos.add("Minicurso");
-        listaEventos.add("Oficina");
-        listaEventos.add("Palestra");*/
+        sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
+        currentdate = System.currentTimeMillis();
+        dateString = sdf.format(currentdate);
+        data.setText(dateString);
 
-        /*ArrayAdapter<String> dataAdpter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listaEventos);
-        dataAdpter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        tipoEvento.setAdapter(dataAdpter);*/
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDate();
+            }
+        };
+
+        data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(context, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,5 +125,9 @@ public class NovoEvento extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void updateDate() {
+        data.setText(sdf.format(myCalendar.getTime()));
     }
 }
