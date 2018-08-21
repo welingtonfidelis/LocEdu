@@ -13,6 +13,7 @@ public class Local {
     private String nomeResponsavel;
     private Double latitude;
     private Double longitude;
+    private String informacao;
 
     public Local() {
     }
@@ -25,6 +26,14 @@ public class Local {
     @Exclude
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getInformacao() {
+        return informacao;
+    }
+
+    public void setInformacao(String informacao) {
+        this.informacao = informacao;
     }
 
     public String getKeySetor() {

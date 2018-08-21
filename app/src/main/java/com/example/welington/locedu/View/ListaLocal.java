@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.welington.locedu.Adapter.LocalAdapter;
@@ -30,8 +31,10 @@ public class ListaLocal extends AppCompatActivity {
     private RecyclerView listaLocais;
     private FloatingActionButton botaoNovoLocal;
     private List<Local> locais;
+    private ImageView home;
     private ValueEventListener localEventListener;
     private LinearLayoutManager layoutManager;
+    private TextView nomeSetor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +44,10 @@ public class ListaLocal extends AppCompatActivity {
         Gson gson = new Gson();
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
 
+        home = findViewById(R.id.imgv_home);
         listaLocais = findViewById(R.id.listaLocais);
         botaoNovoLocal = findViewById(R.id.floatingActionButtonNovoLocal);
-
+        (nomeSetor = findViewById(R.id.nomeSetor)).setText(setor.getNomeSetor());
 
         locais = new ArrayList<>();
 
@@ -83,6 +87,15 @@ public class ListaLocal extends AppCompatActivity {
                 Intent it = new Intent(getBaseContext(), NovoLocal.class);
                 it.putExtra("SETOR", gson.toJson(setor));
                 startActivity(it);
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getBaseContext(), ListaSetor.class);
+                startActivity(it);
+                finish();
             }
         });
 

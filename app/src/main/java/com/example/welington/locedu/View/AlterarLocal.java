@@ -25,6 +25,7 @@ public class AlterarLocal extends AppCompatActivity {
     private TextView identificador;
     private EditText edtNomeLocal;
     private EditText edtNomeResponsavelLocal;
+    private EditText informacao;
     private EditText edtLatitude;
     private EditText edtLongitude;
     private Button btnSalvar;
@@ -44,6 +45,7 @@ public class AlterarLocal extends AppCompatActivity {
         (identificador = findViewById(R.id.tvIdentificador)).setText(local.getKey());
         (edtNomeLocal = findViewById(R.id.edtNomeEvento)).setText(local.getNomeLocal());
         (edtNomeResponsavelLocal = findViewById(R.id.edtNomeResponsavelEvento)).setText(local.getNomeResponsavel());
+        (informacao = findViewById(R.id.edtInformacao)).setText(local.getInformacao());
         (edtLatitude = findViewById(R.id.edtLatitude)).setText(local.getLatitude().toString());
         (edtLongitude = findViewById(R.id.edtLongitude)).setText(local.getLongitude().toString());
         btnSalvar = findViewById(R.id.btnSalvar);
@@ -55,6 +57,7 @@ public class AlterarLocal extends AppCompatActivity {
             public void onClick(View v) {
                 local.setNomeLocal(edtNomeLocal.getText().toString());
                 local.setNomeResponsavel(edtNomeResponsavelLocal.getText().toString());
+                local.setInformacao(informacao.getText().toString());
                 local.setLatitude(Double.parseDouble(edtLatitude.getText().toString()));
                 local.setLongitude(Double.parseDouble(edtLongitude.getText().toString()));
 

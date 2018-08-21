@@ -12,10 +12,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Controller.Util;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
 import com.google.gson.Gson;
@@ -24,11 +26,9 @@ public class AlterarSetor extends AppCompatActivity {
 
     private Setor setor;
     private EditText nomeSetor;
-    private EditText bloco;
     private TextView identificador;
-
     private AlertDialog alerta;
-
+    private Spinner spListaBloco;
     private Button botaoSalvar;
     private Button botaoCancelar;
     private Button botaoDeletar;
@@ -42,7 +42,7 @@ public class AlterarSetor extends AppCompatActivity {
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
 
         (nomeSetor = findViewById(R.id.editTextNomeSetor)).setText(setor.getNomeSetor());
-        (bloco = findViewById(R.id.editTextBloco)).setText(setor.getBloco());
+        (spListaBloco = findViewById(R.id.spListaBloco)).setSelection(Util.posicaoBloco(setor.getBloco()));
         (identificador = findViewById(R.id.tvIdentificador)).setText(setor.getKey());
         botaoSalvar = findViewById(R.id.buttonSalvar);
         botaoDeletar = findViewById(R.id.buttonDeletar);
@@ -52,7 +52,7 @@ public class AlterarSetor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setor.setNomeSetor(nomeSetor.getText().toString());
-                setor.setBloco(bloco.getText().toString());
+                setor.setBloco(String.valueOf(spListaBloco.getSelectedItem()));
 
                 ReferencesHelper.getDatabaseReference().child("Setor").child(setor.getKey()).setValue(setor);
                 Toast.makeText(getBaseContext(), "Salvo com sucesso.", Toast.LENGTH_SHORT).show();

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Controller.ReferencesHelper;
@@ -17,9 +18,9 @@ import com.google.android.gms.tasks.Task;
 
 public class NovoSetor extends AppCompatActivity {
     private EditText nomeSetor;
-    private EditText bloco;
     private Button botaoSalvar;
     private Button botaoCancelar;
+    private Spinner spListaBloco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,9 @@ public class NovoSetor extends AppCompatActivity {
         setContentView(R.layout.activity_novo_setor);
 
         nomeSetor = (EditText) findViewById(R.id.editTextNomeSetor);
-        bloco = (EditText) findViewById(R.id.editTextBloco);
         botaoSalvar = (Button) findViewById(R.id.buttonSalvar);
         botaoCancelar = (Button) findViewById(R.id.buttonCancelar);
+        spListaBloco = findViewById(R.id.spListaBloco);
 
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +39,7 @@ public class NovoSetor extends AppCompatActivity {
 
                 Setor s = new Setor();
                 s.setNomeSetor(nomeSetor.getText().toString());
-                s.setBloco(bloco.getText().toString());
+                s.setBloco(String.valueOf(spListaBloco.getSelectedItem()));
 
                 ReferencesHelper.getDatabaseReference().child("Setor").child(key).setValue(s).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

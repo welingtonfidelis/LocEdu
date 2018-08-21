@@ -1,6 +1,7 @@
 package com.example.welington.locedu.View;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.welington.locedu.Adapter.EventoAdapter;
@@ -30,6 +32,7 @@ public class ListaEvento extends AppCompatActivity {
     private RecyclerView listaEvento;
     private TextView nomeLocal;
     private Local local;
+    private ImageView home;
     private LinearLayoutManager layoutManager;
     private ValueEventListener eventoEventListener;
 
@@ -42,6 +45,7 @@ public class ListaEvento extends AppCompatActivity {
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
         eventos = new ArrayList<>();
+        home = findViewById(R.id.imgv_home);
         listaEvento = findViewById(R.id.listaEventos);
         (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal().toString());
         novoEvento = findViewById(R.id.fbNovoEvento);
@@ -82,6 +86,15 @@ public class ListaEvento extends AppCompatActivity {
                 Intent it = new Intent(getBaseContext(), NovoEvento.class);
                 it.putExtra("LOCAL", g.toJson(local));
                 startActivity(it);
+            }
+        });
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getBaseContext(), ListaSetor.class);
+                startActivity(it);
+                finish();
             }
         });
     }

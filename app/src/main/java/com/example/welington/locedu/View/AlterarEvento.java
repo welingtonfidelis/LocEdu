@@ -1,6 +1,7 @@
 package com.example.welington.locedu.View;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Controller.ReferencesHelper;
@@ -40,7 +42,7 @@ public class AlterarEvento extends AppCompatActivity {
     private EditText nomeResponsavel;
     private EditText descricao;
     private EditText data;
-    private EditText hora;
+    private EditText horario;
     private Spinner spinner;
     private Button btnSalvar;
     private Button btnDeletar;
@@ -64,12 +66,12 @@ public class AlterarEvento extends AppCompatActivity {
         evento = gson.fromJson(getIntent().getStringExtra("EVENTO"), Evento.class);
 
         (identificador = findViewById(R.id.tvIdentificadorEvento)).setText(evento.getKey());
-        (spinner = findViewById(R.id.spTipoEvento)).setSelection(Util.posicaoSpinner(evento.getTipo()));
+        (spinner = findViewById(R.id.spTipoEvento)).setSelection(Util.posicaoTipoEvento(evento.getTipo()));
         (nomeEvento = findViewById(R.id.edtNomeEvento)).setText(evento.getNomeEvento());
         (nomeResponsavel = findViewById(R.id.edtResponsavelEvento)).setText(evento.getResponsavel());
         (descricao = findViewById(R.id.edtDescricaoEvento)).setText(evento.getDescricao());
         (data = findViewById(R.id.edtDataEvento)).setText(evento.getData());
-        (hora = findViewById(R.id.edtHorarioEvento)).setText(evento.getHorario());
+        (horario = findViewById(R.id.edtHorarioEvento)).setText(evento.getHorario());
         btnSalvar = findViewById(R.id.btnSalvar);
         btnCancelar = findViewById(R.id.btnCancelar);
         btnDeletar = findViewById(R.id.btnDeletar);
@@ -98,6 +100,24 @@ public class AlterarEvento extends AppCompatActivity {
             }
         });
 
+        horario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hora = myCalendar.get(Calendar.HOUR_OF_DAY);
+                int minuto = myCalendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog;
+                timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        horario.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hora, minuto, true);//Yes 24 hour time
+                timePickerDialog.setTitle("Select Time");
+                timePickerDialog.show();
+            }
+        });
+
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +126,7 @@ public class AlterarEvento extends AppCompatActivity {
                 evento.setResponsavel(nomeResponsavel.getText().toString());
                 evento.setDescricao(descricao.getText().toString());
                 evento.setData(data.getText().toString());
-                evento.setHorario(hora.getText().toString());
+                evento.setHorario(horario.getText().toString());
 
                 ReferencesHelper.getDatabaseReference().child("Evento").child(evento.getKey()).setValue(evento);
                 Toast.makeText(getBaseContext(), "Salvo com sucesso.", Toast.LENGTH_SHORT).show();

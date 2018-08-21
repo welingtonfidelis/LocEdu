@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class Util {
 
-    public static int  posicaoSpinner(String nome){
+    public static int  posicaoTipoEvento(String nome){
         switch (nome){
             case "Minicurso":
                 return 0;
@@ -27,6 +27,26 @@ public class Util {
             case "Oficina":
                 return  2;
 
+        }
+        return 0;
+    }
+
+    public static int posicaoBloco(String nome){
+        switch (nome){
+            case "A":
+                return 0;
+
+            case "B":
+                return 1;
+
+            case "C":
+                return 2;
+
+            case "D":
+                return 3;
+
+             case "E":
+                return 4;
         }
         return 0;
     }

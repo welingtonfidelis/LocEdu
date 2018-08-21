@@ -1,8 +1,16 @@
 <resources>
     <string-array name="listaEvento">
-        <item>"Minicurso"</item>
-        <item>"Palestra"</item>
-        <item>"Oficina"</item>
+        <item>Minicurso</item>
+        <item>Palestra</item>
+        <item>Oficina</item>
+    </string-array>
+
+    <string-array name="listaBloco">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
     </string-array>
 
     <string name="app_name">LocEdu</string>
@@ -24,4 +32,13 @@
     <string name="descricaoEvento">Descrição do evento</string>
     <string name="horario">Horario:</string>
     <string name="eventoDisponivel">Eventos:</string>
+    <string name="id">ID:</string>
+    <string name="novoSetor">Cadastrar Novo Setor</string>
+    <string name="novoEvento">Cadastrar Novo Evento</string>
+    <string name="novoLocal">Cadastrar Novo Local</string>
+    <string name="locaisDentroSetor">Locais dentro do setor:</string>
+    <string name="setoresDentroCampo">Setores dentro do campus</string>
+    <string name="eventosDentroLocal">Eventos dentro do local:</string>
+    <string name="informacoes">Informações</string>
+    <string name="tipoEvento">Tipo de evento</string>
 </resources>

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Evento;
 import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.AlterarEvento;
+import com.example.welington.locedu.View.PopUpInfoEvento;
 import com.google.gson.Gson;
 
 import java.util.Date;
@@ -36,6 +38,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         protected TextView adapterEventoResponsavel;
         protected CardView adapterEventoCard;
         protected TextView adapterEventoData;
+        protected ImageView adapterInformacao;
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -44,6 +47,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             adapterEventoResponsavel = itemView.findViewById(R.id.adapter_evento_responsavel);
             adapterEventoCard = itemView.findViewById(R.id.adapter_evento_card);
             adapterEventoData = itemView.findViewById(R.id.adapter_evento_data);
+            adapterInformacao = itemView.findViewById(R.id.imgv_informacao);
         }
     }
 
@@ -73,6 +77,16 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
                     //Toast.makeText(context, "Item :" + evento.getNomeEvento() + " " +evento.getData(), Toast.LENGTH_LONG).show();
                 }
                 return true;
+            }
+        });
+
+        holder.adapterInformacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                Intent it = new Intent(context, PopUpInfoEvento.class);
+                it.putExtra("EVENTO", gson.toJson(evento));
+                context.startActivity(it);
             }
         });
     }

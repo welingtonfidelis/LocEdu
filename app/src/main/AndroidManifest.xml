@@ -3,7 +3,6 @@
     package="com.example.welington.locedu">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -30,7 +29,13 @@
         <activity android:name=".View.AlterarLocal" />
         <activity android:name=".View.NovoEvento" />
         <activity android:name=".View.ListaEvento" />
-        <activity android:name=".View.AlterarEvento"></activity>
+        <activity android:name=".View.AlterarEvento" />
+        <activity
+            android:name=".View.PopUpInfoLocal"
+            android:theme="@style/Theme.AppCompat.Dialog.MinWidth" />
+        <activity
+            android:name=".View.PopUpInfoEvento"
+            android:theme="@style/Theme.AppCompat.Dialog.MinWidth"/>
     </application>
 
 </manifest>

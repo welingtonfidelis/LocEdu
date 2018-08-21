@@ -1,6 +1,7 @@
 package com.example.welington.locedu.View;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Controller.ReferencesHelper;
@@ -27,7 +29,6 @@ import java.util.Locale;
 
 public class NovoEvento extends AppCompatActivity {
 
-    private TextView nomeLocal;
     private EditText nomeEvento;
     private EditText nomeReponsavel;
     private EditText descricaoEvento;
@@ -62,7 +63,6 @@ public class NovoEvento extends AppCompatActivity {
         tipoEvento = findViewById(R.id.spTipoEvento);
         btnCancelar = findViewById(R.id.btnCancelar);
         btnSalvar = findViewById(R.id.btnSalvar);
-        (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal());
 
         sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
         currentdate = System.currentTimeMillis();
@@ -85,6 +85,24 @@ public class NovoEvento extends AppCompatActivity {
                 new DatePickerDialog(context, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        horario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hora = myCalendar.get(Calendar.HOUR_OF_DAY);
+                int minuto = myCalendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog;
+                timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        horario.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hora, minuto, true);//Yes 24 hour time
+                timePickerDialog.setTitle("Select Time");
+                timePickerDialog.show();
             }
         });
 

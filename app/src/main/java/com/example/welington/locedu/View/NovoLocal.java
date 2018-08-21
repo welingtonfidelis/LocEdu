@@ -23,11 +23,10 @@ public class NovoLocal extends AppCompatActivity {
     private EditText nomeResponsavel;
     private EditText latitude;
     private EditText longitude;
+    private EditText informacao;
     private Setor setor;
-    private TextView nomeSetor;
     private Button salvar;
     private Button cancelar;
-    private String keyLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +35,14 @@ public class NovoLocal extends AppCompatActivity {
 
         Gson gson = new Gson();
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
+
         nomeLocal = findViewById(R.id.edtNomeEvento);
         nomeResponsavel = findViewById(R.id.edtResponsavelLocal);
+        informacao = findViewById(R.id.edtInformacao);
         latitude = findViewById(R.id.edtLatitude);
         longitude = findViewById(R.id.edtLongitude);
-        nomeSetor = findViewById(R.id.nomeSetor);
         salvar = findViewById(R.id.btnSalvar);
         cancelar = findViewById(R.id.btnCancelar);
-
-        nomeSetor.setText(setor.getNomeSetor());
 
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +53,7 @@ public class NovoLocal extends AppCompatActivity {
                 l.setKeySetor(setor.getKey());
                 l.setNomeLocal(nomeLocal.getText().toString());
                 l.setNomeResponsavel(nomeResponsavel.getText().toString());
+                l.setInformacao(informacao.getText().toString());
                 l.setLatitude(Double.parseDouble(latitude.getText().toString()));
                 l.setLongitude(Double.parseDouble(longitude.getText().toString()));
 
