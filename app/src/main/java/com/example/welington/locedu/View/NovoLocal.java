@@ -1,8 +1,14 @@
 package com.example.welington.locedu.View;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +20,18 @@ import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.IOException;
+import java.util.UUID;
 
 public class NovoLocal extends AppCompatActivity {
 
@@ -26,7 +42,11 @@ public class NovoLocal extends AppCompatActivity {
     private EditText informacao;
     private Setor setor;
     private Button salvar;
-    private Button cancelar;
+    private Button cancelar, foto;
+    private Uri resultUri;
+    private Bitmap imagemSalva;
+    private Local local;
+    private String enderecoImagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +63,7 @@ public class NovoLocal extends AppCompatActivity {
         longitude = findViewById(R.id.edtLongitude);
         salvar = findViewById(R.id.btnSalvar);
         cancelar = findViewById(R.id.btnCancelar);
+        foto = findViewById(R.id.foto);
 
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +77,7 @@ public class NovoLocal extends AppCompatActivity {
                 l.setInformacao(informacao.getText().toString());
                 l.setLatitude(Double.parseDouble(latitude.getText().toString()));
                 l.setLongitude(Double.parseDouble(longitude.getText().toString()));
+                l.setImagem(enderecoImagem);
 
                 ReferencesHelper.getDatabaseReference().child("Local").child(key).setValue(l).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -69,6 +91,14 @@ public class NovoLocal extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getBaseContext(), PopUpFotoLocal.class);
+                startActivity(it);
             }
         });
 

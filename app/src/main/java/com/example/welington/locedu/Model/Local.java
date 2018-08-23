@@ -14,6 +14,7 @@ public class Local {
     private Double latitude;
     private Double longitude;
     private String informacao;
+    private String imagem;
 
     public Local() {
     }
@@ -26,6 +27,14 @@ public class Local {
     @Exclude
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     public String getInformacao() {

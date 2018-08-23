@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,8 @@ import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.AlterarLocal;
 import com.example.welington.locedu.View.ListaEvento;
+import com.example.welington.locedu.View.Mapa;
+import com.example.welington.locedu.View.PopUpFotoLocal;
 import com.example.welington.locedu.View.PopUpInfoLocal;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,7 +47,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         protected TextView adapterLocalResponsavel;
         protected CardView adapterLocalCard;
         protected TextView adapterQntEvento;
-        protected ImageView adapterLocalInformacao;
+        protected ImageButton adapterLocalImgView, adapterLocalInformacao, adapterLocalRota;
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -54,6 +57,8 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             adapterLocalCard = itemView.findViewById(R.id.adapter_local_card);
             adapterQntEvento = itemView.findViewById(R.id.tvQntdEvento);
             adapterLocalInformacao = itemView.findViewById(R.id.imgv_informacao);
+            adapterLocalImgView = itemView.findViewById(R.id.img_View);
+            adapterLocalRota = itemView.findViewById(R.id.imgv_rota);
         }
     }
 
@@ -112,6 +117,26 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             public void onClick(View v) {
                 Gson g = new Gson();
                 Intent it = new Intent(context, PopUpInfoLocal.class);
+                it.putExtra("LOCAL", g.toJson(local));
+                context.startActivity(it);
+            }
+        });
+
+        holder.adapterLocalImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson g = new Gson();
+                Intent it = new Intent(context, PopUpFotoLocal.class);
+                it.putExtra("LOCAL", g.toJson(local));
+                context.startActivity(it);
+            }
+        });
+
+        holder.adapterLocalRota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson g = new Gson();
+                Intent it = new Intent(context, Mapa.class);
                 it.putExtra("LOCAL", g.toJson(local));
                 context.startActivity(it);
             }

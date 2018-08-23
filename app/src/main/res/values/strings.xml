@@ -41,4 +41,6 @@
     <string name="eventosDentroLocal">Eventos dentro do local:</string>
     <string name="informacoes">Informações</string>
     <string name="tipoEvento">Tipo de evento</string>
+    <string name="title_activity_mapa">Map</string>
+
 </resources>

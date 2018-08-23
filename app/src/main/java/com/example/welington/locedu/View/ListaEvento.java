@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ListaEvento extends AppCompatActivity {
 
-    private FloatingActionButton novoEvento;
+    private FloatingActionButton novoEvento, btnSair;
     private List<Evento> eventos;
     private RecyclerView listaEvento;
     private TextView nomeLocal;
@@ -49,6 +49,7 @@ public class ListaEvento extends AppCompatActivity {
         listaEvento = findViewById(R.id.listaEventos);
         (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal().toString());
         novoEvento = findViewById(R.id.fbNovoEvento);
+        btnSair = findViewById(R.id.floatingActionButtonSair);
 
         eventoEventListener = new ValueEventListener() {
             @Override
