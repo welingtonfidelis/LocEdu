@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -70,7 +70,10 @@
 
         <activity
             android:name=".View.Mapa"
-            android:label="@string/title_activity_mapa"></activity>
+            android:label="@string/title_activity_mapa" />
+        <activity
+            android:name=".View.Feedback"
+            android:theme="@style/Theme.AppCompat.Dialog.MinWidth" />
     </application>
 
 </manifest>

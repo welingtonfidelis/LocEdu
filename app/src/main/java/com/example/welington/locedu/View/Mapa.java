@@ -1,6 +1,7 @@
 package com.example.welington.locedu.View;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -14,6 +15,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.welington.locedu.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -50,6 +53,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback, Google
     private Location locInicial; //localizacao inical
     private long distance;
     private Local local;
+    private Button botao;
     // ViewFlipper viewFlipper;
 
     @Override
@@ -63,6 +67,8 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback, Google
         GoogleMapOptions options = new GoogleMapOptions();
         options.zOrderOnTop(true);
 
+        botao = findViewById(R.id.button);
+
         mapFrag = SupportMapFragment.newInstance(options);
         mapFrag.getMapAsync(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -70,6 +76,13 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback, Google
         ft.commit();
         callConnection();
 
+        botao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(getBaseContext(), Feedback.class);
+                startActivity(it);
+            }
+        });
 
     }
 

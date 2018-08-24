@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.OnProgressListener;
@@ -48,20 +49,14 @@ public class PopUpFotoLocal extends AppCompatActivity {
         imgv_upload = findViewById(R.id.imv_upload);
         imageView = findViewById(R.id.imgView);
 
-        temp = ReferencesHelper.getDatabaseReference().push().getKey();
+        //temp = ReferencesHelper.getDatabaseReference().push().getKey();
 
         if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
             imgv_foto.setVisibility(View.GONE);
             imgv_upload.setVisibility(View.GONE);
 
-            ReferencesHelper.getStorage().child("Imagens").child(local.getImagem()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(PopUpFotoLocal.this).load(uri).into(imageView);
-                }
-            });
-
-
+            Glide.with(this).load(ReferencesHelper.getStorage()
+                    .child(local.getImagem())).into(imageView);
         }
 
         imgv_foto.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +111,8 @@ public class PopUpFotoLocal extends AppCompatActivity {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = ReferencesHelper.getStorage().child("Imagens").child(temp);
+            local.setImagem("Imagens/"+UUID.randomUUID().toString()+".jpg");
+            StorageReference ref = ReferencesHelper.getStorage().child(local.getImagem());
             ref.putFile(resultUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -140,7 +136,7 @@ public class PopUpFotoLocal extends AppCompatActivity {
                             progressDialog.setMessage("Uploaded "+(int)progress+"%");
                         }
                     });
-            local.setImagem(temp);
+            //local.setImagem(temp);
             ReferencesHelper.getDatabaseReference().child("Local").child(local.getKey()).setValue(local);//atualizando foto no local
             //Log.e("ID da imagem", ref.toString());
         }
