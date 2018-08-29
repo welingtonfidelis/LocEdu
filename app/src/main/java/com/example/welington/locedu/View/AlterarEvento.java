@@ -3,19 +3,11 @@ package com.example.welington.locedu.View;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.opengl.Visibility;
-import android.os.Build;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -53,7 +45,7 @@ public class AlterarEvento extends AppCompatActivity {
     private Calendar myCalendar = Calendar.getInstance();
     private String dateFormat = "dd/MM/yyyy";
     private DatePickerDialog.OnDateSetListener date;
-    private SimpleDateFormat sdf;
+    private SimpleDateFormat sdfData;
     private long currentdate;
     private String dateString;
 
@@ -76,9 +68,9 @@ public class AlterarEvento extends AppCompatActivity {
         btnCancelar = findViewById(R.id.btnCancelar);
         btnDeletar = findViewById(R.id.btnDeletar);
 
-        sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
+        sdfData = new SimpleDateFormat(dateFormat, Locale.GERMAN);
         currentdate = System.currentTimeMillis();
-        dateString = sdf.format(currentdate);
+        dateString = sdfData.format(currentdate);
         data.setText(evento.getData());
 
         date = new DatePickerDialog.OnDateSetListener() {
@@ -88,6 +80,7 @@ public class AlterarEvento extends AppCompatActivity {
                 myCalendar.set(Calendar.MONTH, month);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateDate();
+
             }
         };
 
@@ -113,7 +106,7 @@ public class AlterarEvento extends AppCompatActivity {
                         horario.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hora, minuto, true);//Yes 24 hour time
-                timePickerDialog.setTitle("Select Time");
+                timePickerDialog.setTitle("Escolha o horário");
                 timePickerDialog.show();
             }
         });
@@ -137,7 +130,7 @@ public class AlterarEvento extends AppCompatActivity {
         btnDeletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                exibeAlerta(evento.getKey(), "Evento");
+                Util.exibeAlerta(evento.getKey(), "Evento", AlterarEvento.this);
             }
         });
 
@@ -150,43 +143,9 @@ public class AlterarEvento extends AppCompatActivity {
 
     }
 
-    private void exibeAlerta(final String  chave, final String tabela) {
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            vibrator.vibrate(VibrationEffect.createOneShot(500,VibrationEffect.DEFAULT_AMPLITUDE));
-        }
-        else{
-            vibrator.vibrate(500);
-        }
-        //Cria o gerador do AlertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //define o titulo
-        builder.setTitle("ALERTA");
-        //define a mensagem
-        builder.setMessage("Deletar informação?");
-        //define um botão como positivo
-        builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                ReferencesHelper.getDatabaseReference().child(tabela).child(chave).removeValue();
-                Toast.makeText(getBaseContext(), "Informação excluida.", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-        //define um botão como negativo.
-        builder.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                return;
-            }
-        });
-        //cria o AlertDialog
-        alerta = builder.create();
-        //Exibe
-        alerta.show();
-    }
 
     //atualiza edt data após clique no calendario
     private void updateDate() {
-        data.setText(sdf.format(myCalendar.getTime()));
+        data.setText(sdfData.format(myCalendar.getTime()));
     }
 }

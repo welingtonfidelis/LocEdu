@@ -42,11 +42,8 @@ public class NovoLocal extends AppCompatActivity {
     private EditText informacao;
     private Setor setor;
     private Button salvar;
-    private Button cancelar, foto;
-    private Uri resultUri;
-    private Bitmap imagemSalva;
-    private Local local;
-    private String enderecoImagem;
+    private Button cancelar;
+    private Local localNovo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +53,7 @@ public class NovoLocal extends AppCompatActivity {
         Gson gson = new Gson();
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
 
+        localNovo = new Local();
         nomeLocal = findViewById(R.id.edtNomeEvento);
         nomeResponsavel = findViewById(R.id.edtResponsavelLocal);
         informacao = findViewById(R.id.edtInformacao);
@@ -63,23 +61,21 @@ public class NovoLocal extends AppCompatActivity {
         longitude = findViewById(R.id.edtLongitude);
         salvar = findViewById(R.id.btnSalvar);
         cancelar = findViewById(R.id.btnCancelar);
-        foto = findViewById(R.id.foto);
 
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String key = ReferencesHelper.getDatabaseReference().push().getKey();
 
-                Local l = new Local();
-                l.setKeySetor(setor.getKey());
-                l.setNomeLocal(nomeLocal.getText().toString());
-                l.setNomeResponsavel(nomeResponsavel.getText().toString());
-                l.setInformacao(informacao.getText().toString());
-                l.setLatitude(Double.parseDouble(latitude.getText().toString()));
-                l.setLongitude(Double.parseDouble(longitude.getText().toString()));
-                l.setImagem(enderecoImagem);
+                localNovo.setKeySetor(setor.getKey());
+                localNovo.setNomeLocal(nomeLocal.getText().toString());
+                localNovo.setNomeResponsavel(nomeResponsavel.getText().toString());
+                localNovo.setInformacao(informacao.getText().toString());
+                localNovo.setLatitude(Double.parseDouble(latitude.getText().toString()));
+                localNovo.setLongitude(Double.parseDouble(longitude.getText().toString()));
+               // l.setImagem(enderecoImagem);
 
-                ReferencesHelper.getDatabaseReference().child("Local").child(key).setValue(l).addOnCompleteListener(new OnCompleteListener<Void>() {
+                ReferencesHelper.getDatabaseReference().child("Local").child(key).setValue(localNovo).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
@@ -94,13 +90,6 @@ public class NovoLocal extends AppCompatActivity {
             }
         });
 
-        foto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(getBaseContext(), PopUpFotoLocal.class);
-                startActivity(it);
-            }
-        });
 
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override

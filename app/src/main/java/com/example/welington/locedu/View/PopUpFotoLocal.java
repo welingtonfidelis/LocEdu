@@ -3,6 +3,7 @@ package com.example.welington.locedu.View;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Controller.StorageHelper;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
@@ -26,6 +28,7 @@ import com.google.gson.Gson;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -35,7 +38,9 @@ public class PopUpFotoLocal extends AppCompatActivity {
     private Uri resultUri;
     private Bitmap imagemSalva;
     private Local local;
-    private String temp;
+    private String photoUrl;
+    private Bitmap imagemServidor;
+    private Bitmap imagemLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +50,18 @@ public class PopUpFotoLocal extends AppCompatActivity {
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
+        photoUrl = ReferencesHelper.getDatabaseReference().push().getKey();
         imgv_foto = findViewById(R.id.imv_camera);
         imgv_upload = findViewById(R.id.imv_upload);
         imageView = findViewById(R.id.imgView);
 
-        //temp = ReferencesHelper.getDatabaseReference().push().getKey();
-
         if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
             imgv_foto.setVisibility(View.GONE);
             imgv_upload.setVisibility(View.GONE);
+        }
 
-            Glide.with(this).load(ReferencesHelper.getStorage()
-                    .child(local.getImagem())).into(imageView);
+        if(local.getImagem()!= null){
+            loadImage(local.getImagem());
         }
 
         imgv_foto.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +74,7 @@ public class PopUpFotoLocal extends AppCompatActivity {
         imgv_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadImage();
+                saveImage();
             }
         });
 
@@ -103,42 +108,93 @@ public class PopUpFotoLocal extends AppCompatActivity {
         }
     }
 
-    private void uploadImage() {
+    // CODIGO NOVO
 
-        if(resultUri != null)
-        {
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
+    private void loadImage(String id) {
+        final StorageHelper storageHelper = new StorageHelper(PopUpFotoLocal.this, id);
+        imagemLocal = storageHelper.openImage();
 
-            local.setImagem("Imagens/"+UUID.randomUUID().toString()+".jpg");
-            StorageReference ref = ReferencesHelper.getStorage().child(local.getImagem());
-            ref.putFile(resultUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getBaseContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+        if (imagemLocal != null) {
+            imageView.setImageBitmap(imagemLocal);
+            imageView.setVisibility(View.VISIBLE);                                                
+            Log.e("BuscaLocal", "Imagem Local");
+        } else {
+            ReferencesHelper.getStorageReference().child("Imagens").child( id+".jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    imagemServidor = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                    if (imagemServidor != null) {
+                        imageView.setImageBitmap(imagemServidor);
+                        imageView.setVisibility(View.VISIBLE);
+
+                        storageHelper.save(bytes);
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure( Exception exception) {
+                    try {
+
+                        imgv_foto.setVisibility(View.VISIBLE);
+                        imgv_upload.setVisibility(View.VISIBLE);
+
+                        throw exception;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }
+    }
+
+   private void saveImage() {
+        if (imagemSalva != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imagemSalva.compress(Bitmap.CompressFormat.JPEG, 65, stream);
+            byte[] data = stream.toByteArray();
+
+            if (data != null) {
+                //PopUp de carregamento
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setTitle("Uploading...");final StorageHelper iStorageHelper = new StorageHelper(getApplicationContext(), photoUrl);
+                progressDialog.show();iStorageHelper.save(data);
+
+                //Excluindo imagem anterior para upar a nova
+                ReferencesHelper.getStorageReference().child("Imagens").child(local.getImagem()+".jpg").delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                              Log.d("EXCLUIDO", "onSuccess: deleted file");
+                    }
+                });
+
+                //Upload da imagem nova
+                UploadTask uploadTask = ReferencesHelper.getStorageReference().child("Imagens").child(photoUrl+".jpg").putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception exception) {
+                        progressDialog.dismiss();
+                        Toast.makeText(PopUpFotoLocal.this, exception.toString(), Toast.LENGTH_SHORT).show();
+                        //ProgressBarHelper.stopProgress(ProfileActivity.this);
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        Toast.makeText(PopUpFotoLocal.this, "Imagem enviada com sucesso", Toast.LENGTH_SHORT).show();
+
+                        // Atualizando key da nova imagem no objeto local
+                        if(local.getKey() != null){
+                            ReferencesHelper.getDatabaseReference().child("Local").child(local.getKey()).child("imagem").
+                                    setValue(photoUrl);
+
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getBaseContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                        }
-                    });
-            //local.setImagem(temp);
-            ReferencesHelper.getDatabaseReference().child("Local").child(local.getKey()).setValue(local);//atualizando foto no local
-            //Log.e("ID da imagem", ref.toString());
+                    }
+                });
+            }
+        }else{
+            Toast.makeText(this, "Você deve selecionar uma imagem", Toast.LENGTH_SHORT).show();
         }
     }
 }

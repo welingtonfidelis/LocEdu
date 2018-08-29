@@ -37,10 +37,11 @@ public class ReferencesHelper {
         return firebaseAuth;
     }
 
-    public static StorageReference getStorage(){
-        if(storageReference == null){
+
+    public static StorageReference getStorageReference() {
+        if (storageReference == null)
             storageReference = FirebaseStorage.getInstance().getReference();
-        }
         return storageReference;
     }
+
 }

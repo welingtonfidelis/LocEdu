@@ -3,25 +3,26 @@ package com.example.welington.locedu.View;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.location.Location;
 
+import com.example.welington.locedu.Controller.VetorHelper;
 import com.example.welington.locedu.Model.Local;
-import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.welington.locedu.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,215 +30,140 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 
-
-import java.util.List;
-
-public class Mapa extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class Mapa extends FragmentActivity implements OnMapReadyCallback {
 
     private SupportMapFragment mapFrag; //mapa
     private GoogleMap map;
-    private GoogleApiClient mGoogleApiClient; //requisicao da google
-    private LocationRequest mLocationRequest; //localizacao
-    private Marker minhaPosicao = null; //marcador da posicao atual
-    private LatLng latLng = null; //latitude e longitude do local de destino
-    private Polyline polyline; //poli-linha que realiza o percurso
-    private List<LatLng> list; //lista com pontos convertidos do json buscado no servidor da google
-    private Location locInicial; //localizacao inical
-    private long distance;
+    private LocationRequest mLocationRequest; //Configura o pedido de localização
+    private Marker markerLocation; //marcador da posicao atual
+    private Polyline polyline;
+    private Location location, locationDest;
+    private LatLng latLngUser, latLngDest;
+    private CameraPosition positionCamera;
+    private CameraUpdate updateCamera;
+    private FusedLocationProviderClient mLocationServices;
+    private LocationCallback mLocationCallback;
     private Local local;
-    private Button botao;
-    // ViewFlipper viewFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
+
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
+        final TextView distancia = findViewById(R.id.tv_distancia);
+        locationDest = new Location("");
+        locationDest.setLatitude(local.getLatitude());
+        locationDest.setLongitude(local.getLongitude());
+
         GoogleMapOptions options = new GoogleMapOptions();
         options.zOrderOnTop(true);
-
-        botao = findViewById(R.id.button);
 
         mapFrag = SupportMapFragment.newInstance(options);
         mapFrag.getMapAsync(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.llMap, mapFrag);
         ft.commit();
-        callConnection();
 
-        botao.setOnClickListener(new View.OnClickListener() {
+
+        mLocationServices = LocationServices.getFusedLocationProviderClient(this);
+        mLocationCallback = new LocationCallback() {
             @Override
-            public void onClick(View v) {
-                Intent it = new Intent(getBaseContext(), Feedback.class);
-                startActivity(it);
-            }
-        });
-
-    }
-
-    private void callConnection() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addOnConnectionFailedListener(this)
-                .addConnectionCallbacks(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if (minhaPosicao != null) {
-            minhaPosicao.remove();
-        }
-
-        minhaPosicao = map.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Você"));
-
-// Changing marker icon
-        minhaPosicao.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_maker));
-
-        /*minhaPosicao = map.addMarker(new MarkerOptions()
-                .position(
-                        new LatLng(location.getLatitude(), location.getLongitude()))
-                .draggable(true).visible(true));
-                /*.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));*/
-        //minhaPosicao.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_camera));*/
-    }
-
-    /*@Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-
-    }*/
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        locInicial = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-        CameraPosition positionCamera = new CameraPosition.Builder().target(new LatLng(locInicial.getLatitude(), locInicial.getLongitude())).zoom(18).build();
-        CameraUpdate updateCamera = CameraUpdateFactory.newCameraPosition(positionCamera);
-        map.moveCamera(updateCamera);
-
-        //getRoute(new LatLng(locInicial.getLatitude(), locInicial.getLongitude()), new LatLng(latLng.latitude, latLng.longitude));
-
-        startLocationUpdate();
-    }
-
-    /*private void getRoute(LatLng origin, LatLng destination) {
-        new Thread(){
-            public void run(){
-
-                String url= "http://maps.googleapis.com/maps/api/directions/json?origin="
-                        + origin.latitude+","+origin.longitude+"&destination="
-                        + destination.latitude+","+destination.longitude+"&sensor=false";
-
-
-                HttpResponse response;
-                HttpGet request;
-                AndroidHttpClient client = AndroidHttpClient.newInstance("route");
-
-                request = new HttpGet(url);
-                try {
-                    response = client.execute(request);
-                    final String answer = EntityUtils.toString(response.getEntity());
-
-                    runOnUiThread(new Runnable(){
-                        public void run(){
-                            try {
-                                //Log.i("Script", answer);
-                                list = buildJSONRoute(answer);
-                                drawRoute();
-                            }
-                            catch(JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
                 }
-                catch(IOException e) {
-                    e.printStackTrace();
+                location = locationResult.getLastLocation();
+
+                latLngUser = new LatLng(location.getLatitude(), location.getLongitude());
+
+                positionCamera = new CameraPosition.Builder().target(latLngUser).zoom(18).build();
+                updateCamera = CameraUpdateFactory.newCameraPosition(positionCamera);
+
+                if (map != null) {
+                    if (markerLocation != null){
+                        markerLocation.setPosition(latLngUser);
+                        distancia.setText(String.valueOf(location.distanceTo(locationDest)));
+                        checaDistancia(location);
+
+                    }else{
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.title("Você");
+                        markerOptions.icon(VetorHelper.bitmapDescriptorFromVector(Mapa.this, R.drawable.ic_marker_radius));
+                        markerOptions.position(latLngUser);
+
+                        markerLocation = map.addMarker(markerOptions);
+                    }
+
+                    map.moveCamera(updateCamera);
                 }
             }
-        }.start();
-    }*/
-
-    private void startLocationUpdate() {
-        initLocationRequest();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, Mapa.this);
-
-    }
-
-    private void initLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(500);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        };
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         map = googleMap;
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        latLng = new LatLng(local.getLatitude(), local.getLongitude());
+        //Colocando marcador na localizacao do usuario
+        latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
         MarkerOptions marcador = new MarkerOptions();
         marcador.title("Destino");
         marcador.snippet(local.getNomeLocal());
-        marcador.position(latLng);
+        marcador.position(latLngDest);
         map.addMarker(marcador);
 
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            finish();
+        }
+
+        mLocationServices.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
+
+        //colocando a polilinha
+
+        if(polyline == null){
+
+            PolylineOptions polylineOptions = new PolylineOptions();
+            polylineOptions.add(new LatLng(-20.7146686,-46.6277484), new LatLng(-20.7144947,-46.6286372));
+            polylineOptions.color(Color.BLUE);
+
+            polyline = map.addPolyline(polylineOptions);
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mLocationServices.removeLocationUpdates(mLocationCallback);
+    }
+
+    public void checaDistancia(Location locationUser){
+        if(location.distanceTo(locationDest) <= 5){
+            mLocationServices.removeLocationUpdates(mLocationCallback);//parando de buscar localização do usuario
+            Intent it = new Intent(getBaseContext(), Feedback.class);
+            startActivity(it);
+        }
     }
 }

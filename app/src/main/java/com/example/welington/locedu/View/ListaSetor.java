@@ -1,13 +1,20 @@
 package com.example.welington.locedu.View;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.welington.locedu.Adapter.SetorAdapter;
 import com.example.welington.locedu.Controller.ReferencesHelper;
@@ -23,14 +30,12 @@ import java.util.List;
 
 public class ListaSetor extends AppCompatActivity {
 
-    private FloatingActionButton botaoLogar;
     private FloatingActionButton botaoNovoSetor;
     private RecyclerView listaSetores;
     private List<Setor> setores;
     private ValueEventListener setorEventListener;
     private LinearLayoutManager layoutManager;
-    private FloatingActionButton botaoSair;
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +43,10 @@ public class ListaSetor extends AppCompatActivity {
         setContentView(R.layout.activity_lista_setor);
 
         listaSetores = findViewById(R.id.listaSetores);
-        botaoLogar = findViewById(R.id.floatingButtonLogar);
         botaoNovoSetor = findViewById(R.id.floatingButtonCriarSetor);
         botaoNovoSetor.setVisibility(View.GONE);
-        botaoSair = findViewById(R.id.floatingActionButtonSair);
+        toolbar = findViewById(R.id.tb_menu);
+        setSupportActionBar(toolbar);
 
         setores = new ArrayList<>();
 
@@ -57,7 +62,7 @@ public class ListaSetor extends AppCompatActivity {
                         setores.add(setor);
                     }
 
-                    Log.e("e", setores.toString());
+                    //Log.e("e", setores.toString());
 
                     layoutManager = new LinearLayoutManager(ListaSetor.this);
                     listaSetores.setHasFixedSize(true);
@@ -76,16 +81,6 @@ public class ListaSetor extends AppCompatActivity {
 
         ReferencesHelper.getDatabaseReference().child("Setor").addValueEventListener(setorEventListener);
 
-
-        botaoLogar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(ListaSetor.this, Login.class);
-                startActivity(it);
-                //finish();
-            }
-        });
-
         botaoNovoSetor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,15 +90,6 @@ public class ListaSetor extends AppCompatActivity {
             }
         });
 
-        botaoSair.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
-                ReferencesHelper.getFirebaseAuth().signOut();
-                botaoNovoSetor.setVisibility(View.GONE);
-                botaoSair.setVisibility(View.GONE);
-            }
-        });
     }
 
     @Override
@@ -112,14 +98,41 @@ public class ListaSetor extends AppCompatActivity {
 
         if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
             botaoNovoSetor.setVisibility(View.VISIBLE);
-            botaoSair.setVisibility(View.VISIBLE);
         }
         else{
             botaoNovoSetor.setVisibility(View.GONE);
-            botaoSair.setVisibility(View.GONE);
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login_ajuda, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logar:
+                Intent it = new Intent(ListaSetor.this, Login.class);
+                startActivity(it);
+                return true;
+            case R.id.ajuda:
+                Toast.makeText(ListaSetor.this, "ajuda", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.sair:
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    //ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
+                    ReferencesHelper.getFirebaseAuth().signOut();
+                    botaoNovoSetor.setVisibility(View.GONE);
+                    Toast.makeText(ListaSetor.this, "Deslogado", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
