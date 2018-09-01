@@ -9,14 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Evento;
+import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.AlterarEvento;
+import com.example.welington.locedu.View.Mapa;
 import com.example.welington.locedu.View.PopUpInfoEvento;
 import com.google.gson.Gson;
 
@@ -25,11 +28,13 @@ import java.util.List;
 
 public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder>{
     private Context context;
+    private Local local;
     private List<Evento> eventos;
 
-    public EventoAdapter(Context context, List<Evento> eventos) {
+    public EventoAdapter(Context context, List<Evento> eventos, Local local) {
         this.context = context;
         this.eventos = eventos;
+        this.local = local;
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder{
@@ -38,7 +43,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         protected TextView adapterEventoResponsavel;
         protected CardView adapterEventoCard;
         protected TextView adapterEventoData;
-        protected ImageView adapterInformacao;
+        protected ImageButton adapterInformacao, adapterRota;
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -47,7 +52,8 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             adapterEventoResponsavel = itemView.findViewById(R.id.adapter_evento_responsavel);
             adapterEventoCard = itemView.findViewById(R.id.adapter_evento_card);
             adapterEventoData = itemView.findViewById(R.id.adapter_evento_data);
-            adapterInformacao = itemView.findViewById(R.id.imgv_informacao);
+            adapterInformacao = itemView.findViewById(R.id.img_button_info);
+            adapterRota = itemView.findViewById(R.id.img_button_rota);
         }
     }
 
@@ -86,6 +92,16 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
                 Gson gson = new Gson();
                 Intent it = new Intent(context, PopUpInfoEvento.class);
                 it.putExtra("EVENTO", gson.toJson(evento));
+                context.startActivity(it);
+            }
+        });
+
+        holder.adapterRota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                Intent it = new Intent(context, Mapa.class);
+                it.putExtra("LOCAL", gson.toJson(local));
                 context.startActivity(it);
             }
         });

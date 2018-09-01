@@ -81,15 +81,32 @@
 
     <Spinner
         android:id="@+id/spListaBloco"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:entries="@array/listaBloco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtNomeResponsavel" />
+
+    <EditText
+        android:id="@+id/edtNomeResponsavel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="84dp"
-        android:entries="@array/listaBloco"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="@string/responsavel"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNomeSetor" />
+
 </android.support.constraint.ConstraintLayout>

@@ -9,6 +9,7 @@ import com.google.firebase.database.Exclude;
 public class Setor {
     private String key;
     private String nomeSetor;
+    private String nomeResponsavel;
     private String bloco;
 
     public Setor() {
@@ -27,6 +28,14 @@ public class Setor {
     @Exclude
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getNomeResponsavel() {
+        return nomeResponsavel;
+    }
+
+    public void setNomeResponsavel(String nomeResponsavel) {
+        this.nomeResponsavel = nomeResponsavel;
     }
 
     public String getNomeSetor() {

@@ -34,38 +34,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/adapter_evento_responsavel_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/responsavel"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/adapter_local_nome" />
-
-            <TextView
-                android:id="@+id/adapter_loca_responsavel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text=" "
-                app:layout_constraintBottom_toBottomOf="@+id/adapter_evento_responsavel_header"
-                app:layout_constraintStart_toEndOf="@+id/adapter_evento_responsavel_header"
-                app:layout_constraintTop_toTopOf="@+id/adapter_evento_responsavel_header" />
-
-            <TextView
                 android:id="@+id/tvQntdEvento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:text='" "'
                 app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/adapter_evento_responsavel_header" />
+                app:layout_constraintTop_toTopOf="@+id/textView3" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -73,10 +49,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/eventoDisponivel"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/adapter_evento_responsavel_header" />
+                app:layout_constraintTop_toBottomOf="@+id/adapter_local_nome" />
 
             <ImageButton
                 android:id="@+id/imgv_informacao"
@@ -87,11 +63,11 @@
                 android:layout_marginRight="8dp"
                 android:tint="@android:color/holo_orange_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imgv_rota"
+                app:layout_constraintEnd_toStartOf="@+id/img_button_rota"
                 app:srcCompat="@android:drawable/ic_menu_help" />
 
             <ImageButton
-                android:id="@+id/imgv_rota"
+                android:id="@+id/img_button_rota"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginBottom="8dp"

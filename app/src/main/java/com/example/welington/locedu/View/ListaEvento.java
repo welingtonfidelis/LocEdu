@@ -66,7 +66,7 @@ public class ListaEvento extends AppCompatActivity {
                     listaEvento.setHasFixedSize(true);
                     listaEvento.setLayoutManager(layoutManager);
 
-                    EventoAdapter eventoAdapter = new EventoAdapter(ListaEvento.this, eventos);
+                    EventoAdapter eventoAdapter = new EventoAdapter(ListaEvento.this, eventos, local);
                     listaEvento.setAdapter(eventoAdapter);
                 }
             }

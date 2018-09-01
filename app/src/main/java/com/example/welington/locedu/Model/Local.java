@@ -10,7 +10,7 @@ public class Local {
     private String key;
     private String keySetor;
     private String nomeLocal;
-    private String nomeResponsavel;
+    //private String nomeResponsavel;
     private Double latitude;
     private Double longitude;
     private String informacao;
@@ -61,13 +61,13 @@ public class Local {
         this.nomeLocal = nomeLocal;
     }
 
-    public String getNomeResponsavel() {
+    /*public String getNomeResponsavel() {
         return nomeResponsavel;
     }
 
     public void setNomeResponsavel(String nomeResponsavel) {
         this.nomeResponsavel = nomeResponsavel;
-    }
+    }*/
 
     public Double getLatitude() {
         return latitude;

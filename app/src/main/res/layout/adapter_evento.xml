@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imgv_informacao"
+            <ImageButton
+                android:id="@+id/img_button_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -29,11 +29,11 @@
                 android:layout_marginRight="8dp"
                 android:background="@android:color/holo_green_light"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imgv_rota"
+                app:layout_constraintEnd_toStartOf="@+id/img_button_rota"
                 app:srcCompat="@android:drawable/ic_menu_help" />
 
-            <ImageView
-                android:id="@+id/imgv_rota"
+            <ImageButton
+                android:id="@+id/img_button_rota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"

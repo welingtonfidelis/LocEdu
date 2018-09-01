@@ -36,7 +36,7 @@ import java.util.UUID;
 public class NovoLocal extends AppCompatActivity {
 
     private EditText nomeLocal;
-    private EditText nomeResponsavel;
+    //private EditText nomeResponsavel;
     private EditText latitude;
     private EditText longitude;
     private EditText informacao;
@@ -55,7 +55,7 @@ public class NovoLocal extends AppCompatActivity {
 
         localNovo = new Local();
         nomeLocal = findViewById(R.id.edtNomeEvento);
-        nomeResponsavel = findViewById(R.id.edtResponsavelLocal);
+        //nomeResponsavel = findViewById(R.id.edtResponsavelLocal);
         informacao = findViewById(R.id.edtInformacao);
         latitude = findViewById(R.id.edtLatitude);
         longitude = findViewById(R.id.edtLongitude);
@@ -69,7 +69,7 @@ public class NovoLocal extends AppCompatActivity {
 
                 localNovo.setKeySetor(setor.getKey());
                 localNovo.setNomeLocal(nomeLocal.getText().toString());
-                localNovo.setNomeResponsavel(nomeResponsavel.getText().toString());
+                //localNovo.setNomeResponsavel(nomeResponsavel.getText().toString());
                 localNovo.setInformacao(informacao.getText().toString());
                 localNovo.setLatitude(Double.parseDouble(latitude.getText().toString()));
                 localNovo.setLongitude(Double.parseDouble(longitude.getText().toString()));

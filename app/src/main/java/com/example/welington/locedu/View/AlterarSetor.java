@@ -26,6 +26,7 @@ public class AlterarSetor extends AppCompatActivity {
 
     private Setor setor;
     private EditText nomeSetor;
+    private EditText nomeResponsavel;
     private TextView identificador;
     private AlertDialog alerta;
     private Spinner spListaBloco;
@@ -42,6 +43,7 @@ public class AlterarSetor extends AppCompatActivity {
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
 
         (nomeSetor = findViewById(R.id.editTextNomeSetor)).setText(setor.getNomeSetor());
+        (nomeResponsavel = findViewById(R.id.edtNomeResponsavel)).setText(setor.getNomeResponsavel());
         (spListaBloco = findViewById(R.id.spListaBloco)).setSelection(Util.posicaoBloco(setor.getBloco()));
         (identificador = findViewById(R.id.tvIdentificador)).setText(setor.getKey());
         botaoSalvar = findViewById(R.id.buttonSalvar);

@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 
 public class NovoSetor extends AppCompatActivity {
     private EditText nomeSetor;
+    private EditText nomeResponsavel;
     private Button botaoSalvar;
     private Button botaoCancelar;
     private Spinner spListaBloco;
@@ -29,6 +30,7 @@ public class NovoSetor extends AppCompatActivity {
         setContentView(R.layout.activity_novo_setor);
 
         nomeSetor = (EditText) findViewById(R.id.editTextNomeSetor);
+        nomeResponsavel = findViewById(R.id.editTextNomeResponsavelSetor);
         botaoSalvar = (Button) findViewById(R.id.buttonSalvar);
         botaoCancelar = (Button) findViewById(R.id.buttonCancelar);
         spListaBloco = findViewById(R.id.spListaBloco);
@@ -40,6 +42,7 @@ public class NovoSetor extends AppCompatActivity {
 
                 Setor s = new Setor();
                 s.setNomeSetor(nomeSetor.getText().toString());
+                s.setNomeResponsavel(nomeResponsavel.getText().toString());
                 s.setBloco(String.valueOf(spListaBloco.getSelectedItem()));
 
                 ReferencesHelper.getDatabaseReference().child("Setor").child(key).setValue(s).addOnCompleteListener(new OnCompleteListener<Void>() {

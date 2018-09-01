@@ -1,26 +1,23 @@
 package com.example.welington.locedu.View;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.example.welington.locedu.Adapter.SetorAdapter;
+import com.example.welington.locedu.Adapter.SetorAdapterGrid;
+import com.example.welington.locedu.Adapter.SetorAdapterList;
 import com.example.welington.locedu.Controller.ReferencesHelper;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -36,6 +33,7 @@ public class ListaSetor extends AppCompatActivity {
     private ValueEventListener setorEventListener;
     private LinearLayoutManager layoutManager;
     private Toolbar toolbar;
+    private SetorAdapterGrid adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +60,20 @@ public class ListaSetor extends AppCompatActivity {
                         setores.add(setor);
                     }
 
+                    int numColunas = 2;
+                    listaSetores.setLayoutManager(new GridLayoutManager(ListaSetor.this, numColunas));
+                    adapter = new SetorAdapterGrid(ListaSetor.this, setores);
+                    //adapter.setClickListener(ListaSetor.this);
+                    listaSetores.setAdapter(adapter);
+
                     //Log.e("e", setores.toString());
 
-                    layoutManager = new LinearLayoutManager(ListaSetor.this);
+                    /*layoutManager = new LinearLayoutManager(ListaSetor.this);
                     listaSetores.setHasFixedSize(true);
                     listaSetores.setLayoutManager(layoutManager);
 
-                    SetorAdapter setorAdapter = new SetorAdapter(ListaSetor.this, setores);
-                    listaSetores.setAdapter(setorAdapter);
+                    SetorAdapterList setorAdapter = new SetorAdapterList(ListaSetor.this, setores);
+                    listaSetores.setAdapter(setorAdapter);*/
                 }
             }
 

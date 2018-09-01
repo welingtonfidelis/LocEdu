@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.welington.locedu.Controller.ReferencesHelper;
@@ -44,7 +43,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
 
     protected class ViewHolder extends RecyclerView.ViewHolder{
         protected TextView adapterLocalNome;
-        protected TextView adapterLocalResponsavel;
+        //protected TextView adapterLocalResponsavel;
         protected CardView adapterLocalCard;
         protected TextView adapterQntEvento;
         protected ImageButton adapterLocalImgView, adapterLocalInformacao, adapterLocalRota;
@@ -53,12 +52,12 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             super(itemView);
 
             adapterLocalNome = itemView.findViewById(R.id.adapter_local_nome);
-            adapterLocalResponsavel = itemView.findViewById(R.id.adapter_loca_responsavel);
+            //adapterLocalResponsavel = itemView.findViewById(R.id.adapter_loca_responsavel);
             adapterLocalCard = itemView.findViewById(R.id.adapter_local_card);
             adapterQntEvento = itemView.findViewById(R.id.tvQntdEvento);
             adapterLocalInformacao = itemView.findViewById(R.id.imgv_informacao);
             adapterLocalImgView = itemView.findViewById(R.id.img_View);
-            adapterLocalRota = itemView.findViewById(R.id.imgv_rota);
+            adapterLocalRota = itemView.findViewById(R.id.img_button_rota);
         }
     }
 
@@ -86,7 +85,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).addValueEventListener(m);
 
         holder.adapterLocalNome.setText(local.getNomeLocal());
-        holder.adapterLocalResponsavel.setText(local.getNomeResponsavel());
+        //holder.adapterLocalResponsavel.setText(local.getNomeResponsavel());
 
         holder.adapterLocalCard.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
