@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Adapter.SetorAdapterGrid;
@@ -62,6 +63,11 @@ public class ListaSetor extends AppCompatActivity {
 
                     int numColunas = 2;
                     listaSetores.setLayoutManager(new GridLayoutManager(ListaSetor.this, numColunas));
+                    /*int oneRowHeight = listaSetores.getHeight();
+                    int rows = (int) (setores.size() / 2);
+                    ViewGroup.LayoutParams params = listaSetores.getLayoutParams();
+                    params.height = oneRowHeight * rows;
+                    listaSetores.setLayoutParams(params);*/
                     adapter = new SetorAdapterGrid(ListaSetor.this, setores);
                     //adapter.setClickListener(ListaSetor.this);
                     listaSetores.setAdapter(adapter);

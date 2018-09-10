@@ -144,7 +144,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         if(polyline == null){
 
             PolylineOptions polylineOptions = new PolylineOptions();
-            polylineOptions.add(new LatLng(-20.7146686,-46.6277484), new LatLng(-20.7144947,-46.6286372));
+            polylineOptions.add();
             polylineOptions.color(Color.BLUE);
 
             polyline = map.addPolyline(polylineOptions);
