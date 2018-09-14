@@ -1,4 +1,4 @@
-package com.example.welington.locedu.Controller;
+package com.example.welington.locedu.Helper;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;

@@ -7,13 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.welington.locedu.Adapter.LocalAdapter;
-import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;

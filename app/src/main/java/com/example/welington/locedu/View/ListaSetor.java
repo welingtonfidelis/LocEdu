@@ -11,12 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Adapter.SetorAdapterGrid;
-import com.example.welington.locedu.Adapter.SetorAdapterList;
-import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
 import com.google.firebase.database.DataSnapshot;

@@ -2,7 +2,6 @@ package com.example.welington.locedu.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,20 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Evento;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
-import com.example.welington.locedu.View.AlterarEvento;
 import com.example.welington.locedu.View.Mapa;
+import com.example.welington.locedu.View.NovoEvento;
 import com.example.welington.locedu.View.PopUpInfoEvento;
 import com.google.gson.Gson;
 
-import java.util.Date;
 import java.util.List;
 
 public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder>{
@@ -77,7 +73,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             public boolean onLongClick(View v) {
                 if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
                     Gson gson = new Gson();
-                    Intent it = new Intent(context, AlterarEvento.class);
+                    Intent it = new Intent(context, NovoEvento.class);
                     it.putExtra("EVENTO", gson.toJson(evento));
                     context.startActivity(it);
                     //Toast.makeText(context, "Item :" + evento.getNomeEvento() + " " +evento.getData(), Toast.LENGTH_LONG).show();

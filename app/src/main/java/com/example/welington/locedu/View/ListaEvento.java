@@ -1,7 +1,6 @@
 package com.example.welington.locedu.View;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.welington.locedu.Adapter.EventoAdapter;
-import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Evento;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
@@ -52,7 +51,7 @@ public class ListaEvento extends AppCompatActivity {
 
         eventoEventListener = new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(com.google.firebase.database.DataSnapshot dataSnapshot) {
                 eventos.clear();
 
                 if(dataSnapshot.exists()){

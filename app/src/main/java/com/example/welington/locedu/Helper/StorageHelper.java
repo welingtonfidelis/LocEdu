@@ -1,4 +1,4 @@
-package com.example.welington.locedu.Controller;
+package com.example.welington.locedu.Helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;

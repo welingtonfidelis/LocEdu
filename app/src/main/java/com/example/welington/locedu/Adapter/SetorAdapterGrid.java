@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
-import com.example.welington.locedu.View.AlterarSetor;
 import com.example.welington.locedu.View.ListaLocal;
+import com.example.welington.locedu.View.NovoSetor;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -63,7 +63,7 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
             public boolean onLongClick(View v) {
                 if(ReferencesHelper.getFirebaseAuth().getCurrentUser()!=null){
                     Gson gson = new Gson();
-                    Intent it = new Intent(context, AlterarSetor.class);
+                    Intent it = new Intent(context, NovoSetor.class);
                     it.putExtra("SETOR", gson.toJson(setores.get(position)));
                     context.startActivity(it);
                 }

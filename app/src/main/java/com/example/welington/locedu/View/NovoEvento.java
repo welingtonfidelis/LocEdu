@@ -11,11 +11,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Helper.FormularioEventoHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
+import com.example.welington.locedu.Helper.Util;
 import com.example.welington.locedu.Model.Evento;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
@@ -28,14 +29,12 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class NovoEvento extends AppCompatActivity {
-
-    private EditText nomeEvento;
-    private EditText nomeReponsavel;
-    private EditText descricaoEvento;
     private EditText data;
     private EditText horario;
     private Spinner tipoEvento;
-    private Button btnSalvar, btnCancelar;
+    private Button btnSalvar, btnCancelar, btnDeletar;
+    private Evento evento;
+    private FormularioEventoHelper formularioEventoHelper;
     private Local local;
 
     //variaveis para Widget Calendar
@@ -52,22 +51,21 @@ public class NovoEvento extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_evento);
 
+        formularioEventoHelper = new FormularioEventoHelper(NovoEvento.this);
+
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
+        evento = gson.fromJson(getIntent().getStringExtra("EVENTO"), Evento.class);
 
-        nomeEvento = findViewById(R.id.edtNomeEvento);
-        nomeReponsavel = findViewById(R.id.edtResponsavelEvento);
-        descricaoEvento = findViewById(R.id.edtDescricaoEvento);
         data = findViewById(R.id.edtDataEvento);
         horario = findViewById(R.id.edtHorarioEvento);
-        tipoEvento = findViewById(R.id.spTipoEvento);
         btnCancelar = findViewById(R.id.btnCancelar);
         btnSalvar = findViewById(R.id.btnSalvar);
+        btnDeletar = findViewById(R.id.btn_deletar);
 
         sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);
         currentdate = System.currentTimeMillis();
         dateString = sdf.format(currentdate);
-        data.setText(dateString);
 
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -101,41 +99,62 @@ public class NovoEvento extends AppCompatActivity {
                         horario.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hora, minuto, true);//Yes 24 hour time
-                timePickerDialog.setTitle("Select Time");
+                timePickerDialog.setTitle("Escolha o horário");
                 timePickerDialog.show();
             }
         });
 
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String key = ReferencesHelper.getDatabaseReference().push().getKey();
+        if(evento == null){
+            btnDeletar.setVisibility(View.GONE);
+            btnSalvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    evento = new Evento();
+                    evento = formularioEventoHelper.retornaEventoDoFormulario();
+                    evento.setHorario(horario.getText().toString());
+                    evento.setData(data.getText().toString());
+                    evento.setLocalKey(local.getKey());
 
-                Evento e = new Evento();
-                e.setLocalKey(local.getKey());
-                e.setTipo(String.valueOf(tipoEvento.getSelectedItem()));
-                e.setNomeEvento(nomeEvento.getText().toString());
-                e.setResponsavel(nomeReponsavel.getText().toString());
-                e.setDescricao(descricaoEvento.getText().toString());
-                e.setData(data.getText().toString());
-                e.setHorario(horario.getText().toString());
+                    String key = ReferencesHelper.getDatabaseReference().push().getKey();
 
-                ReferencesHelper.getDatabaseReference().child("Evento").child(key).setValue(e).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(NovoEvento.this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
-                            finish();
+                    ReferencesHelper.getDatabaseReference().child("Evento").child(key).setValue(evento).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(NovoEvento.this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else{
+                                Toast.makeText(NovoEvento.this, "Erro ao conectar no banco", Toast.LENGTH_LONG).show();
+                            }
                         }
-                        else{
-                            Toast.makeText(NovoEvento.this, "Erro ao conectar no banco", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                    });
+                }
+            });
+        }else{
+            formularioEventoHelper.insereEventoNoFormulario(evento);
 
-                //Toast.makeText(getBaseContext(), String.valueOf(tipoEvento.getSelectedItem()), Toast.LENGTH_LONG ).show();
-            }
-        });
+            btnSalvar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    evento = formularioEventoHelper.retornaEventoDoFormulario();
+                    evento.setHorario(horario.getText().toString());
+                    evento.setData(data.getText().toString());
+
+                    ReferencesHelper.getDatabaseReference().child("Evento").child(evento.getKey()).setValue(evento);
+                    Toast.makeText(getBaseContext(), "Salvo com sucesso.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+
+            btnDeletar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Util.exibeAlerta(evento.getKey(), "Evento", NovoEvento.this);
+                }
+            });
+        }
+
 
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override

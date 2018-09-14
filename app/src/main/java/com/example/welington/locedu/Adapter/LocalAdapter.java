@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.welington.locedu.Controller.ReferencesHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
-import com.example.welington.locedu.View.AlterarLocal;
 import com.example.welington.locedu.View.ListaEvento;
 import com.example.welington.locedu.View.Mapa;
+import com.example.welington.locedu.View.NovoLocal;
 import com.example.welington.locedu.View.PopUpFotoLocal;
 import com.example.welington.locedu.View.PopUpInfoLocal;
 import com.google.firebase.database.DataSnapshot;
@@ -92,7 +92,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             public boolean onLongClick(View v) {
                 if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
                     Gson gson = new Gson();
-                    Intent it = new Intent(context, AlterarLocal.class);
+                    Intent it = new Intent(context, NovoLocal.class);
                     it.putExtra("LOCAL", gson.toJson(local));
                     context.startActivity(it);
                 }

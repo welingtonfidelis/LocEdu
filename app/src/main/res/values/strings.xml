@@ -47,5 +47,7 @@
     <string name="perguntaChegou">Você chegou ao seu destino?</string>
     <string name="perguntaQualidadeApp">Como você avalia o aplicativo?</string>
     <string name="perguntaExperiencia">Conte-nos sua experiência com o aplicativo</string>
+    <string name="aguarde">Aguarde.</string>
+    <string name="infoSetor">Informações do Setor</string>
 
 </resources>

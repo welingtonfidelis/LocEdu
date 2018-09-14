@@ -1,20 +1,13 @@
-package com.example.welington.locedu.Controller;
+package com.example.welington.locedu.Helper;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.view.Menu;
 import android.widget.Toast;
-
-import com.example.welington.locedu.R;
 
 /**
  * Created by welington on 15/08/18.

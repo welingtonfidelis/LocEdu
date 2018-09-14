@@ -13,16 +13,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.welington.locedu.Controller.ReferencesHelper;
-import com.example.welington.locedu.Controller.StorageHelper;
+import com.example.welington.locedu.Helper.ReferencesHelper;
+import com.example.welington.locedu.Helper.StorageHelper;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -30,7 +26,6 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.UUID;
 
 public class PopUpFotoLocal extends AppCompatActivity {
 
@@ -158,7 +153,8 @@ public class PopUpFotoLocal extends AppCompatActivity {
             if (data != null) {
                 //PopUp de carregamento
                 final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setTitle("Uploading...");final StorageHelper iStorageHelper = new StorageHelper(getApplicationContext(), photoUrl);
+                progressDialog.setTitle("Uploading...");
+                final StorageHelper iStorageHelper = new StorageHelper(getApplicationContext(), photoUrl);
                 progressDialog.show();iStorageHelper.save(data);
 
                 //Excluindo imagem anterior para upar a nova
