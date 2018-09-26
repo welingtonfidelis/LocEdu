@@ -43,8 +43,6 @@ public class SetorAdapterList extends RecyclerView.Adapter<SetorAdapterList.View
         final Setor setor = setores.get(position);
 
         holder.adapterSetorNome.setText(setor.getNomeSetor());
-        holder.adapterSetorBloco.setText(setor.getBloco());
-        holder.adapterResposavel.setText(setor.getNomeResponsavel());
 
         holder.adapterSetorCard.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

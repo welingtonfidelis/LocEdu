@@ -44,8 +44,6 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
     @Override
     public void onBindViewHolder(@NonNull SetorAdapterGrid.ViewHolder holder, final int position) {
         holder.nomeSetor.setText(setores.get(position).getNomeSetor());
-        holder.blocoTextView.setText(setores.get(position).getBloco());
-        holder.nomeResponsavel.setText(setores.get(position).getNomeResponsavel());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,12 +1,10 @@
 package com.example.welington.locedu.View;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Helper.FormularioSetorHelper;
@@ -19,8 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
 public class NovoSetor extends AppCompatActivity {
-    private Button botaoSalvar, botaoDeletar;
-    private Button botaoCancelar;
+    private FloatingActionButton botaoSalvar, botaoDeletar,botaoCancelar;
     private FormularioSetorHelper formularioSetorHelper;
 
     private Setor setor;
@@ -32,8 +29,8 @@ public class NovoSetor extends AppCompatActivity {
 
         formularioSetorHelper = new FormularioSetorHelper(NovoSetor.this);
 
-        botaoSalvar = findViewById(R.id.buttonSalvar);
-        botaoCancelar = findViewById(R.id.buttonCancelar);
+        botaoSalvar = findViewById(R.id.btn_salvar);
+        botaoCancelar = findViewById(R.id.btn_cancelar);
         botaoDeletar = findViewById(R.id.btn_deletar);
 
         Gson gson = new Gson();

@@ -24,6 +24,6 @@ public class PopUpInfoLocal extends AppCompatActivity {
         (nome = findViewById(R.id.tv_NomeLocal)).setText(local.getNomeLocal());
         //(responsavel = findViewById(R.id.tv_ResponsavelLocal)).setText(local.getNomeResponsavel());
         telefone = findViewById(R.id.tv_TelefoneLocal);
-        (info = findViewById(R.id.tv_InformacaoLocal)).setText(local.getInformacao());
+        (info = findViewById(R.id.tv_InformacaoLocal)).setText(local.getHorarioFuncionamento());
     }
 }

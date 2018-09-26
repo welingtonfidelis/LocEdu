@@ -32,8 +32,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -57,7 +61,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
     private LocationCallback mLocationCallback;
     private Local local;
     private TextView distancia, posicaoAtual;
-    private FloatingActionButton salvar, upar, focalizaCamera;
+    private FloatingActionButton focalizaCamera;
     private String rotas = "", rotaPoli = "";
 
     private boolean init = true;
@@ -73,8 +77,6 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
 
         distancia = findViewById(R.id.tv_distancia);
         posicaoAtual = findViewById(R.id.tv_posicaoAtual);
-        salvar = findViewById(R.id.fb_salvar);
-        upar = findViewById(R.id.fb_upar);
         focalizaCamera = findViewById(R.id.fb_focaliza_camera);
 
         locationDest = new Location("");
@@ -100,6 +102,8 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 }
                 location = locationResult.getLastLocation();
 
+                distancia.setText(String.valueOf(location.distanceTo(locationDest)));
+
                 latLngUser = new LatLng(location.getLatitude(), location.getLongitude());
 
                 posicaoAtual.setText(latLngUser.toString());
@@ -110,7 +114,6 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 if (map != null) {
                     if (markerLocation != null){
                         markerLocation.setPosition(latLngUser);
-                        distancia.setText(String.valueOf(location.distanceTo(locationDest)));
                         checaDistancia(location);
 
                     }else{
@@ -138,33 +141,6 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
             }
         });
 
-        //salvando posições para criar rotas usando polilinhas
-        salvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rotas += "new LatLng(" + latLngUser.latitude + "," + latLngUser.longitude +"),";
-            }
-        });
-
-        //upando a string com os pontos salvos
-        upar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ReferencesHelper.getDatabaseReference().child("Rotas").child("1").setValue(rotas).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(Mapa.this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                        else{
-                            Toast.makeText(Mapa.this, "Erro ao conectar no banco", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }
-        });
-
     }
 
     @Override
@@ -175,15 +151,15 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         //map.moveCamera(updateCamera);
 
         //sobrepor imagem no mapa
-       /* LatLngBounds newarkBounds = new LatLngBounds(
-                new LatLng(-20.714915, -46.628945),
-                new LatLng(-20.713871, -46.627397));
+        LatLngBounds newarkBounds = new LatLngBounds(
+                new LatLng(-20.715010, -46.628925),
+                new LatLng(-20.713806, -46.627306));
 
         GroundOverlayOptions newarkMap = new GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.planta_campus))
                 .positionFromBounds(newarkBounds);
 
-        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);*/
+        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
 
         //Colocando marcador na localizacao do usuario
         latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
@@ -223,13 +199,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
             };*/
 
             PolylineOptions polylineOptions = new PolylineOptions();
-            polylineOptions.add(
-                    new LatLng(-20.714523, -46.627464), new LatLng(-20.714459, -46.627805),
-                    new LatLng(-20.714532, -46.627824), new LatLng(-20.714541, -46.628467),
-                    new LatLng(-20.714405, -46.628498), new LatLng(-20.714324, -46.628763),
-                    new LatLng(-20.714354, -46.627837), new LatLng(-20.714345, -46.628334),
-                    new LatLng(-20.714453, -46.628335), new LatLng(-20.714458, -46.627833),
-                    new LatLng(-20.714354, -46.627837));
+            polylineOptions.add();
             polylineOptions.color(Color.BLUE);
 
             polyline = map.addPolyline(polylineOptions);

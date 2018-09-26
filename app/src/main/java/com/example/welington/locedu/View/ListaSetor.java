@@ -2,6 +2,8 @@ package com.example.welington.locedu.View;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Adapter.SetorAdapterGrid;
@@ -39,11 +43,13 @@ public class ListaSetor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_setor);
 
+        
         listaSetores = findViewById(R.id.listaSetores);
         botaoNovoSetor = findViewById(R.id.floatingButtonCriarSetor);
         botaoNovoSetor.setVisibility(View.GONE);
-        toolbar = findViewById(R.id.tb_menu);
-        setSupportActionBar(toolbar);
+
+       // toolbar = findViewById(R.id.tb_menu);
+      //  setSupportActionBar(toolbar);
 
         setores = new ArrayList<>();
 

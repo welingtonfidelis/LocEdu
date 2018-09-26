@@ -1,6 +1,7 @@
 package com.example.welington.locedu.View;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,7 @@ import com.google.gson.Gson;
 public class NovoLocal extends AppCompatActivity {
 
     private Setor setor;
-    private Button salvar, cancelar, deletar;
+    private FloatingActionButton salvar, cancelar, deletar;
     private Local local;
 
     private FormularioLocalHelper formularioLocalHelper;
@@ -37,9 +38,9 @@ public class NovoLocal extends AppCompatActivity {
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
-        salvar = findViewById(R.id.btnSalvar);
-        cancelar = findViewById(R.id.btnCancelar);
-        deletar = findViewById(R.id.btnDeletar);
+        salvar = findViewById(R.id.btn_salvar);
+        cancelar = findViewById(R.id.btn_cancelar);
+        deletar = findViewById(R.id.btn_deletar);
 
         if(local == null){//Checa se a activity foi chamada para CRIAR um novo local ou ALTERAR um existente
             deletar.setVisibility(View.GONE);

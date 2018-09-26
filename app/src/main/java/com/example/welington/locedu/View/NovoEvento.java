@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +33,7 @@ public class NovoEvento extends AppCompatActivity {
     private EditText data;
     private EditText horario;
     private Spinner tipoEvento;
-    private Button btnSalvar, btnCancelar, btnDeletar;
+    private FloatingActionButton btnSalvar, btnCancelar, btnDeletar;
     private Evento evento;
     private FormularioEventoHelper formularioEventoHelper;
     private Local local;
@@ -59,8 +60,8 @@ public class NovoEvento extends AppCompatActivity {
 
         data = findViewById(R.id.edtDataEvento);
         horario = findViewById(R.id.edtHorarioEvento);
-        btnCancelar = findViewById(R.id.btnCancelar);
-        btnSalvar = findViewById(R.id.btnSalvar);
+        btnCancelar = findViewById(R.id.btn_cancelar);
+        btnSalvar = findViewById(R.id.btn_salvar);
         btnDeletar = findViewById(R.id.btn_deletar);
 
         sdf = new SimpleDateFormat(dateFormat, Locale.GERMAN);

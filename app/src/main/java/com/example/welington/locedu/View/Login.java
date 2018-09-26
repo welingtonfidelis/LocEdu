@@ -36,24 +36,22 @@ public class Login extends AppCompatActivity {
         logar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String us = usuario.getText().toString();
-                String se = senha.getText().toString();
+                String user = usuario.getText().toString();
+                String password = senha.getText().toString();
 
-                ReferencesHelper.getFirebaseAuth().signInWithEmailAndPassword(us, se).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            startListaSetor();
-                        }else{
-                            Toast.makeText(Login.this,"Credencial inválida", Toast.LENGTH_LONG ).show();
-                        }
-                    }
+                ReferencesHelper.getFirebaseAuth().signInWithEmailAndPassword(user, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    startListaSetor();
+                                }else{
+                                    Toast.makeText(Login.this,"Credencial inválida", Toast.LENGTH_LONG ).show();
+                                }
+                            }
                 });
             }
         });
-
-
-
     }
 
     @Override

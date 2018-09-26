@@ -10,10 +10,12 @@ public class Local {
     private String key;
     private String keySetor;
     private String nomeLocal;
-    //private String nomeResponsavel;
+    private String nomeResponsavel;
+    private String email;
+    private String telefone;
     private Double latitude;
     private Double longitude;
-    private String informacao;
+    private String horarioFuncionamento;
     private String imagem;
 
     public Local() {
@@ -29,28 +31,20 @@ public class Local {
         this.key = key;
     }
 
-    public String getImagem() {
-        return imagem;
-    }
-
-    public void setImagem(String imagem) {
-        this.imagem = imagem;
-    }
-
-    public String getInformacao() {
-        return informacao;
-    }
-
-    public void setInformacao(String informacao) {
-        this.informacao = informacao;
-    }
-
     public String getKeySetor() {
         return keySetor;
     }
 
     public void setKeySetor(String keySetor) {
         this.keySetor = keySetor;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
     public String getNomeLocal() {
@@ -61,13 +55,29 @@ public class Local {
         this.nomeLocal = nomeLocal;
     }
 
-    /*public String getNomeResponsavel() {
+    public String getNomeResponsavel() {
         return nomeResponsavel;
     }
 
     public void setNomeResponsavel(String nomeResponsavel) {
         this.nomeResponsavel = nomeResponsavel;
-    }*/
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
     public Double getLatitude() {
         return latitude;
@@ -83,6 +93,14 @@ public class Local {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getHorarioFuncionamento() {
+        return horarioFuncionamento;
+    }
+
+    public void setHorarioFuncionamento(String horarioFuncionamento) {
+        this.horarioFuncionamento = horarioFuncionamento;
     }
 
     @Override

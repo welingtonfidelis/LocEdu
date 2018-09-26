@@ -9,23 +9,32 @@ import com.example.welington.locedu.View.NovoLocal;
 
 public class FormularioLocalHelper {
     private EditText nomeLocal;
+    private EditText nomeResponsavel;
+    private EditText email;
+    private EditText telefone;
     private EditText latitude;
     private EditText longitude;
-    private EditText informacao;
+    private EditText horarioFuncionamento;
     private Local local;
 
     public FormularioLocalHelper(NovoLocal activity) {
         this.local = new Local();
         
-        this.nomeLocal = activity.findViewById(R.id.edtNomeEvento);
-        this.latitude = activity.findViewById(R.id.edtLatitude);
-        this.longitude = activity.findViewById(R.id.edtLongitude);
-        this.informacao = activity.findViewById(R.id.edtInformacao);
+        this.nomeLocal = activity.findViewById(R.id.edt_nome_local);
+        this.nomeResponsavel = activity.findViewById(R.id.edt_nome_responsavel);
+        this.email = activity.findViewById(R.id.edt_email);
+        this.telefone = activity.findViewById(R.id.edt_email);
+        this.latitude = activity.findViewById(R.id.edt_latitude);
+        this.longitude = activity.findViewById(R.id.edt_longitude);
+        this.horarioFuncionamento = activity.findViewById(R.id.edt_horario_funcionamento);
     }
     
     public Local retornaLocalDoFormulario(){
         this.local.setNomeLocal(nomeLocal.getText().toString());
-        this.local.setInformacao(informacao.getText().toString());
+        this.local.setNomeResponsavel(nomeResponsavel.getText().toString());
+        this.local.setTelefone(telefone.getText().toString());
+        this.local.setEmail(email.getText().toString());
+        this.local.setHorarioFuncionamento(horarioFuncionamento.getText().toString());
         this.local.setLatitude(Double.parseDouble(latitude.getText().toString()));
         this.local.setLongitude(Double.parseDouble(longitude.getText().toString()));
 
@@ -34,7 +43,10 @@ public class FormularioLocalHelper {
 
     public void insereLocalNoFormulario(Local l){
         this.nomeLocal.setText(l.getNomeLocal());
-        this.informacao.setText(l.getInformacao());
+        this.nomeResponsavel.setText(l.getNomeResponsavel());
+        this.telefone.setText(l.getTelefone());
+        this.email.setText(l.getEmail());
+        this.horarioFuncionamento.setText(l.getHorarioFuncionamento());
         this.latitude.setText(l.getLatitude().toString());
         this.longitude.setText(l.getLongitude().toString());
 

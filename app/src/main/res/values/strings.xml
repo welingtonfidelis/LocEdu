@@ -49,5 +49,8 @@
     <string name="perguntaExperiencia">Conte-nos sua experiência com o aplicativo</string>
     <string name="aguarde">Aguarde.</string>
     <string name="infoSetor">Informações do Setor</string>
+    <string name="infoLocal">Informações do local</string>
+    <string name="horarioFuncionamento">Horário de funcionamento</string>
+    <string name="email">E-mail</string>
 
 </resources>
