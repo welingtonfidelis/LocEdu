@@ -1,15 +1,21 @@
 package com.example.welington.locedu.Adapter;
 
+import android.animation.FloatArrayEvaluator;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.welington.locedu.Helper.ReferencesHelper;
@@ -20,6 +26,7 @@ import com.example.welington.locedu.View.Mapa;
 import com.example.welington.locedu.View.NovoLocal;
 import com.example.welington.locedu.View.PopUpFotoLocal;
 import com.example.welington.locedu.View.PopUpInfoLocal;
+import com.example.welington.locedu.View.PopUpListaMenu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -36,17 +43,29 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
     private Context context;
     private List<Local> locais;
 
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     public LocalAdapter(Context context, List<Local> locais) {
         this.context = context;
         this.locais = locais;
     }
 
-    protected class ViewHolder extends RecyclerView.ViewHolder{
+    protected class ViewHolder extends RecyclerView.ViewHolder {
         protected TextView adapterLocalNome;
         //protected TextView adapterLocalResponsavel;
         protected CardView adapterLocalCard;
         protected TextView adapterQntEvento;
+        protected FloatingActionButton abrirMenu;
         protected ImageButton adapterLocalImgView, adapterLocalInformacao, adapterLocalRota;
+
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -55,10 +74,14 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             //adapterLocalResponsavel = itemView.findViewById(R.id.adapter_loca_responsavel);
             adapterLocalCard = itemView.findViewById(R.id.adapter_local_card);
             adapterQntEvento = itemView.findViewById(R.id.tvQntdEvento);
-            adapterLocalInformacao = itemView.findViewById(R.id.imgv_informacao);
+            abrirMenu = itemView.findViewById(R.id.fb_menu);
+            /*adapterLocalInformacao = itemView.findViewById(R.id.imgv_informacao);
             adapterLocalImgView = itemView.findViewById(R.id.img_View);
-            adapterLocalRota = itemView.findViewById(R.id.img_button_rota);
+            adapterLocalRota = itemView.findViewById(R.id.img_button_rota);*/
+
         }
+
+
     }
 
     @Override
@@ -83,6 +106,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             }
         };
         ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).addValueEventListener(m);
+
 
         holder.adapterLocalNome.setText(local.getNomeLocal());
         //holder.adapterLocalResponsavel.setText(local.getNomeResponsavel());
@@ -111,7 +135,17 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             }
         });
 
-        holder.adapterLocalInformacao.setOnClickListener(new View.OnClickListener() {
+        holder.abrirMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Gson gson = new Gson();
+                Intent it = new Intent(context, PopUpListaMenu.class);
+                it.putExtra("LOCAL", gson.toJson(local));
+                context.startActivity(it);
+            }
+        });
+
+       /* holder.adapterLocalInformacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Gson g = new Gson();
@@ -139,7 +173,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
                 it.putExtra("LOCAL", g.toJson(local));
                 context.startActivity(it);
             }
-        });
+        });*/
     }
 
     @Override
@@ -147,5 +181,6 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         Log.e("Quantidade na LOCAIS", String.valueOf(locais.size()) );
         return locais.size();
     }
+
 
 }

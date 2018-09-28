@@ -24,11 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-
         <activity
             android:name=".View.Login"
             android:screenOrientation="portrait" />
-        <activity android:name=".View.ListaSetor"/>
+        <activity android:name=".View.ListaSetor" />
         <activity android:name=".View.NovoSetor" />
         <activity android:name=".View.ListaLocal" />
         <activity android:name=".View.NovoLocal" />
@@ -65,6 +64,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".View.PopUpListaMenu"
+            android:theme="@style/Theme.AppCompat.Dialog.MinWidth"></activity>
     </application>
 
 </manifest>
