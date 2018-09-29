@@ -128,11 +128,18 @@ public class ListaSetor extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logar:
-                Intent it = new Intent(ListaSetor.this, Login.class);
-                startActivity(it);
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent it = new Intent(this, Login.class);
+                    startActivity(it);
+                }
                 return true;
-            case R.id.ajuda:
-                Toast.makeText(ListaSetor.this, "ajuda", Toast.LENGTH_LONG).show();
+            case R.id.ondeEstou:
+                Intent it2 = new Intent(ListaSetor.this, Mapa.class);
+                it2.putExtra("TIPOCHAMADA", false);
+                startActivity(it2);
                 return true;
             case R.id.sair:
                 if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
@@ -141,12 +148,16 @@ public class ListaSetor extends AppCompatActivity {
                     botaoNovoSetor.setVisibility(View.GONE);
                     Toast.makeText(ListaSetor.this, "Deslogado", Toast.LENGTH_LONG).show();
                 }
+                else{
+                    Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

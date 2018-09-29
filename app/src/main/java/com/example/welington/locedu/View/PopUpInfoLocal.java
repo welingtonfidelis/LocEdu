@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 
 public class PopUpInfoLocal extends AppCompatActivity {
 
-    private TextView nome, responsavel, telefone, info;
+    private TextView nome, responsavel, telefone, email, horario;
     private Local local;
 
     @Override
@@ -21,9 +21,17 @@ public class PopUpInfoLocal extends AppCompatActivity {
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
-        (nome = findViewById(R.id.tv_NomeLocal)).setText(local.getNomeLocal());
-        //(responsavel = findViewById(R.id.tv_ResponsavelLocal)).setText(local.getNomeResponsavel());
-        telefone = findViewById(R.id.tv_TelefoneLocal);
-        (info = findViewById(R.id.tv_InformacaoLocal)).setText(local.getHorarioFuncionamento());
+        nome = findViewById(R.id.tv_nome_local);
+        responsavel = findViewById(R.id.tv_responsavel_local);
+        telefone = findViewById(R.id.tv_telefone_local);
+        email = findViewById(R.id.tv_email_local);
+        horario = findViewById(R.id.tv_horario_funcionamento_local);
+
+        //setando informações
+        nome.setText(local.getNomeLocal());
+        responsavel.setText(local.getNomeResponsavel());
+        telefone.setText(local.getTelefone());
+        email.setText(local.getEmail());
+        horario.setText(local.getHorarioFuncionamento());
     }
 }

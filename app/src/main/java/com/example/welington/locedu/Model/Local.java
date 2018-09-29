@@ -17,6 +17,7 @@ public class Local {
     private Double longitude;
     private String horarioFuncionamento;
     private String imagem;
+    private Long qntEvento;
 
     public Local() {
     }
@@ -29,6 +30,16 @@ public class Local {
     @Exclude
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Exclude
+    public Long getQntEvento() {
+        return qntEvento;
+    }
+
+    @Exclude
+    public void setQntEvento(Long qntEvento) {
+        this.qntEvento = qntEvento;
     }
 
     public String getKeySetor() {

@@ -19,6 +19,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +62,10 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mLocationServices;
     private LocationCallback mLocationCallback;
     private Local local;
-    private TextView distancia, posicaoAtual;
+    private TextView distancia, texto;
     private FloatingActionButton focalizaCamera;
+    private FloatingActionButton home;
+    private boolean tipoChamada;
     private String rotas = "", rotaPoli = "";
 
     private boolean init = true;
@@ -74,14 +78,20 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
 
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
+        Intent it = getIntent();
+        tipoChamada = it.getBooleanExtra("TIPOCHAMADA", false);//verifica se a chamada veio da tela inicial ou do mapa com destino
 
         distancia = findViewById(R.id.tv_distancia);
-        posicaoAtual = findViewById(R.id.tv_posicaoAtual);
+        texto = findViewById(R.id.tv_texto);
         focalizaCamera = findViewById(R.id.fb_focaliza_camera);
+        home = findViewById(R.id.fb_home);
 
-        locationDest = new Location("");
-        locationDest.setLatitude(local.getLatitude());
-        locationDest.setLongitude(local.getLongitude());
+        if(tipoChamada){
+            locationDest = new Location("");
+            locationDest.setLatitude(local.getLatitude());
+            locationDest.setLongitude(local.getLongitude());
+            texto.setText("Distância até o destino");
+        }
 
         GoogleMapOptions options = new GoogleMapOptions();
         options.zOrderOnTop(true);
@@ -102,11 +112,9 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 }
                 location = locationResult.getLastLocation();
 
-                distancia.setText(String.valueOf(location.distanceTo(locationDest)));
+                if (tipoChamada) distancia.setText(String.valueOf(location.distanceTo(locationDest)));
 
                 latLngUser = new LatLng(location.getLatitude(), location.getLongitude());
-
-                posicaoAtual.setText(latLngUser.toString());
 
                 positionCamera = new CameraPosition.Builder().target(latLngUser).zoom(19).build();
                 updateCamera = CameraUpdateFactory.newCameraPosition(positionCamera);
@@ -114,7 +122,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 if (map != null) {
                     if (markerLocation != null){
                         markerLocation.setPosition(latLngUser);
-                        checaDistancia(location);
+                        if(tipoChamada) checaDistancia(location);
 
                     }else{
                         MarkerOptions markerOptions = new MarkerOptions();
@@ -133,11 +141,25 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
             }
         };
 
-        //focar camera la localização do usuário
-        focalizaCamera.setOnClickListener(new View.OnClickListener() {
+        //focar camera na localização do usuário
+            focalizaCamera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(location!= null){
+                        map.moveCamera(updateCamera);
+                    }
+                    else{
+                        Toast.makeText(Mapa.this, "Recebendo sinal de GPS, aguarde por favor.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                map.moveCamera(updateCamera);
+            public void onClick(View view) {
+                Intent it = new Intent(Mapa.this, ListaSetor.class);
+                startActivity(it);
+                finish();
             }
         });
 
@@ -162,12 +184,14 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
 
         //Colocando marcador na localizacao do usuario
-        latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
-        MarkerOptions marcador = new MarkerOptions();
-        marcador.title("Destino");
-        marcador.snippet(local.getNomeLocal());
-        marcador.position(latLngDest);
-        map.addMarker(marcador);
+        if(tipoChamada){
+            latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
+            MarkerOptions marcador = new MarkerOptions();
+            marcador.title("Destino");
+            marcador.snippet(local.getNomeLocal());
+            marcador.position(latLngDest);
+            map.addMarker(marcador);
+        }
 
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(3000);

@@ -3,28 +3,122 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".View.PopUpListaMenu">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/imgv_info"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:tint="@android:color/holo_blue_bright"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_informacao"
+        tools:tint="@android:color/holo_blue_bright" />
 
-        <TextView
-            android:id="@+id/tv_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Informações" />
+    <ImageView
+        android:id="@+id/imgv_foto_local"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:tint="@android:color/holo_orange_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_info"
+        app:srcCompat="@drawable/ic_imagem" />
 
-        <TextView
-            android:id="@+id/tv_foto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="Foto" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Informações"
+        app:layout_constraintStart_toEndOf="@+id/imgv_info"
+        app:layout_constraintTop_toTopOf="@+id/imgv_info" />
+
+    <TextView
+        android:id="@+id/tv_foto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Foto do local"
+        app:layout_constraintStart_toEndOf="@+id/imgv_foto_local"
+        app:layout_constraintTop_toTopOf="@+id/imgv_foto_local" />
+
+    <ImageView
+        android:id="@+id/imgv_mapa_local"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:tint="@android:color/holo_red_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_foto_local"
+        app:srcCompat="@drawable/ic_mapa" />
+
+    <ImageView
+        android:id="@+id/imgv_ligar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:tint="@android:color/darker_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_mapa_local"
+        app:srcCompat="@drawable/ic_ligar" />
+
+    <ImageView
+        android:id="@+id/imgv_email"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:tint="@android:color/holo_green_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgv_ligar"
+        app:srcCompat="@drawable/ic_email" />
+
+    <TextView
+        android:id="@+id/tv_mapa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Ir até o local"
+        app:layout_constraintStart_toEndOf="@+id/imgv_mapa_local"
+        app:layout_constraintTop_toTopOf="@+id/imgv_mapa_local" />
+
+    <TextView
+        android:id="@+id/tv_ligar_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Ligar"
+        app:layout_constraintStart_toEndOf="@+id/imgv_ligar"
+        app:layout_constraintTop_toTopOf="@+id/imgv_ligar" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Enviar e-mail"
+        app:layout_constraintStart_toEndOf="@+id/imgv_email"
+        app:layout_constraintTop_toTopOf="@+id/imgv_email" />
 </android.support.constraint.ConstraintLayout>

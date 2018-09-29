@@ -14,10 +14,7 @@ import com.example.welington.locedu.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-/**
- * Demonstrate Firebase Authentication using a custom minted token. For more information, see:
- * https://firebase.google.com/docs/auth/android/custom-auth
- */
+
 public class Login extends AppCompatActivity {
 
     private EditText usuario;
@@ -44,7 +41,8 @@ public class Login extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    startListaSetor();
+                                    Toast.makeText(Login.this, "Bem vindo administrador.", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }else{
                                     Toast.makeText(Login.this,"Credencial inválida", Toast.LENGTH_LONG ).show();
                                 }
@@ -52,20 +50,6 @@ public class Login extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-            startListaSetor();
-        }
-    }
-
-    protected void startListaSetor(){
-        Intent it = new Intent(Login.this, ListaSetor.class);
-        startActivity(it);
-        finish();
     }
 }
 

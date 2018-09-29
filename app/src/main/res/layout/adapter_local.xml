@@ -26,15 +26,15 @@
                 android:id="@+id/fb_menu"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:clickable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_info_details" />
+                app:srcCompat="@drawable/ic_menu_lista" />
 
             <TextView
                 android:id="@+id/adapter_local_nome"

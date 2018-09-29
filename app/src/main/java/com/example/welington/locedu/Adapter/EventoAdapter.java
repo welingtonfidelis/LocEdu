@@ -3,6 +3,7 @@ package com.example.welington.locedu.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.Mapa;
 import com.example.welington.locedu.View.NovoEvento;
 import com.example.welington.locedu.View.PopUpInfoEvento;
+import com.example.welington.locedu.View.PopUpListaMenu;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -39,7 +41,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         protected TextView adapterEventoResponsavel;
         protected CardView adapterEventoCard;
         protected TextView adapterEventoData;
-        protected ImageButton adapterInformacao, adapterRota;
+        protected FloatingActionButton abrirMenu;
 
         public ViewHolder(final View itemView){
             super(itemView);
@@ -48,8 +50,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             adapterEventoResponsavel = itemView.findViewById(R.id.adapter_evento_responsavel);
             adapterEventoCard = itemView.findViewById(R.id.adapter_evento_card);
             adapterEventoData = itemView.findViewById(R.id.adapter_evento_data);
-            adapterInformacao = itemView.findViewById(R.id.img_button_info);
-            adapterRota = itemView.findViewById(R.id.img_button_rota);
+            abrirMenu = itemView.findViewById(R.id.fb_info_evento);
         }
     }
 
@@ -82,22 +83,16 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             }
         });
 
-        holder.adapterInformacao.setOnClickListener(new View.OnClickListener() {
+        holder.abrirMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Gson gson = new Gson();
-                Intent it = new Intent(context, PopUpInfoEvento.class);
-                it.putExtra("EVENTO", gson.toJson(evento));
-                context.startActivity(it);
-            }
-        });
+                Intent it = new Intent(context, PopUpListaMenu.class);
 
-        holder.adapterRota.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Gson gson = new Gson();
-                Intent it = new Intent(context, Mapa.class);
                 it.putExtra("LOCAL", gson.toJson(local));
+                it.putExtra("EVENTO", gson.toJson(evento));
+                it.putExtra("TIPOCHAMADA", true);
+
                 context.startActivity(it);
             }
         });

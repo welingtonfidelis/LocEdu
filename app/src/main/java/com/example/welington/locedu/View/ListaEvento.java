@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.welington.locedu.Adapter.EventoAdapter;
 import com.example.welington.locedu.Helper.ReferencesHelper;
@@ -31,7 +35,7 @@ public class ListaEvento extends AppCompatActivity {
     private RecyclerView listaEvento;
     private TextView nomeLocal;
     private Local local;
-    private ImageView home;
+    private ImageButton home;
     private LinearLayoutManager layoutManager;
     private ValueEventListener eventoEventListener;
 
@@ -44,7 +48,7 @@ public class ListaEvento extends AppCompatActivity {
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
         eventos = new ArrayList<>();
-        home = findViewById(R.id.imgv_home);
+        home = findViewById(R.id.imgb_home);
         listaEvento = findViewById(R.id.listaEventos);
         (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal().toString());
         novoEvento = findViewById(R.id.fbNovoEvento);
@@ -110,6 +114,46 @@ public class ListaEvento extends AppCompatActivity {
             novoEvento.setVisibility(View.GONE);
             //botaoSair.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login_ajuda, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logar:
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent it = new Intent(this, Login.class);
+                    startActivity(it);
+                }
+                return true;
+            case R.id.ondeEstou:
+                Intent it2 = new Intent(this, Mapa.class);
+                it2.putExtra("TIPOCHAMADA", false);
+                startActivity(it2);
+                return true;
+            case R.id.sair:
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    //ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
+                    ReferencesHelper.getFirebaseAuth().signOut();
+                    novoEvento.setVisibility(View.GONE);
+                    Toast.makeText(this, "Deslogado", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     @Override

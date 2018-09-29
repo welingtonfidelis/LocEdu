@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +34,7 @@ public class ListaLocal extends AppCompatActivity {
     private RecyclerView listaLocais;
     private FloatingActionButton botaoNovoLocal;
     private List<Local> locais;
-    private ImageView home;
+    private ImageButton home;
     private ValueEventListener localEventListener;
     private LinearLayoutManager layoutManager;
     private TextView nomeSetor;
@@ -45,7 +47,7 @@ public class ListaLocal extends AppCompatActivity {
         Gson gson = new Gson();
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
 
-        home = findViewById(R.id.imgv_home);
+        home = findViewById(R.id.imgb_home);
         listaLocais = findViewById(R.id.listaLocais);
         botaoNovoLocal = findViewById(R.id.floatingActionButtonNovoLocal);
         (nomeSetor = findViewById(R.id.nomeSetor)).setText(setor.getNomeSetor());
@@ -103,6 +105,7 @@ public class ListaLocal extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -118,23 +121,43 @@ public class ListaLocal extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        int position = -1;
-        try {
-            position = ((LocalAdapter) listaLocais.getAdapter()).getPosition();
-        } catch (Exception e) {
-            //Log.d(TAG, e.getLocalizedMessage(), e);
-            return super.onContextItemSelected(item);
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login_ajuda, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 1:
-                Toast.makeText(this, "aqui", Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
-                // do your stuff
-                break;
+            case R.id.logar:
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent it = new Intent(ListaLocal.this, Login.class);
+                    startActivity(it);
+                }
+                return true;
+            case R.id.ondeEstou:
+                Intent it2 = new Intent(ListaLocal.this, Mapa.class);
+                it2.putExtra("TIPOCHAMADA", false);
+                startActivity(it2);
+                return true;
+            case R.id.sair:
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    //ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
+                    ReferencesHelper.getFirebaseAuth().signOut();
+                    botaoNovoLocal.setVisibility(View.GONE);
+                    Toast.makeText(this, "Deslogado", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onContextItemSelected(item);
+
     }
 
     @Override

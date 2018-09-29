@@ -4,8 +4,8 @@
         android:title="Logar" />
 
     <item
-        android:id="@+id/ajuda"
-        android:title="Ajuda" />
+        android:id="@+id/ondeEstou"
+        android:title="Onde estou" />
 
     <item
         android:id="@+id/sair"
