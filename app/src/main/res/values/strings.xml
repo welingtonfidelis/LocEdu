@@ -5,12 +5,10 @@
         <item>Oficina</item>
     </string-array>
 
-    <string-array name="listaBloco">
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
-        <item>D</item>
-        <item>E</item>
+    <string-array name="andar">
+        <item>1</item>
+        <item>2</item>
+        <item>-1</item>
     </string-array>
 
     <string name="app_name">LocEdu</string>
@@ -52,5 +50,6 @@
     <string name="infoLocal">Informações do local</string>
     <string name="horarioFuncionamento">Horário de funcionamento</string>
     <string name="email">E-mail</string>
+    <string name="andarLocal">Andar/Piso do local</string>
 
 </resources>

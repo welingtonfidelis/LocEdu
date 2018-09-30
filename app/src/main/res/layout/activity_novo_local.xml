@@ -122,6 +122,20 @@
                 android:inputType="textPersonName" />
 
             <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/andarLocal" />
+
+            <Spinner
+                android:id="@+id/spn_andar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:entries="@array/andar" />
+
+            <TextView
                 android:id="@+id/textView32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -203,6 +217,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
             </android.support.constraint.ConstraintLayout>
+
         </LinearLayout>
     </ScrollView>
 

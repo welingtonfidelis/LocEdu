@@ -62,7 +62,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mLocationServices;
     private LocationCallback mLocationCallback;
     private Local local;
-    private TextView distancia, texto;
+    private TextView distancia, texto, textoAndar, andar;
     private FloatingActionButton focalizaCamera;
     private FloatingActionButton home;
     private boolean tipoChamada;
@@ -85,12 +85,17 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         texto = findViewById(R.id.tv_texto);
         focalizaCamera = findViewById(R.id.fb_focaliza_camera);
         home = findViewById(R.id.fb_home);
+        textoAndar = findViewById(R.id.tv_texto_andar_mapa);
+        andar = findViewById(R.id.tv_andar_mapa);
 
         if(tipoChamada){
             locationDest = new Location("");
             locationDest.setLatitude(local.getLatitude());
             locationDest.setLongitude(local.getLongitude());
             texto.setText("Distância até o destino");
+            textoAndar.setVisibility(View.VISIBLE);
+            andar.setVisibility(View.VISIBLE);
+            andar.setText(local.getAndar());
         }
 
         GoogleMapOptions options = new GoogleMapOptions();

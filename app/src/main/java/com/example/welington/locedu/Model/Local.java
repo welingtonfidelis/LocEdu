@@ -18,6 +18,7 @@ public class Local {
     private String horarioFuncionamento;
     private String imagem;
     private Long qntEvento;
+    private String andar;
 
     public Local() {
     }
@@ -40,6 +41,14 @@ public class Local {
     @Exclude
     public void setQntEvento(Long qntEvento) {
         this.qntEvento = qntEvento;
+    }
+
+    public String getAndar() {
+        return andar;
+    }
+
+    public void setAndar(String andar) {
+        this.andar = andar;
     }
 
     public String getKeySetor() {

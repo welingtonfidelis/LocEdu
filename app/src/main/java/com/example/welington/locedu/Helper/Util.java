@@ -30,22 +30,16 @@ public class Util {
         return 0;
     }
 
-    public static int posicaoBloco(String nome){
+    public static int andar(String nome){
         switch (nome){
-            case "A":
+            case "1":
                 return 0;
 
-            case "B":
+            case "2":
                 return 1;
 
-            case "C":
+            case "-1":
                 return 2;
-
-            case "D":
-                return 3;
-
-             case "E":
-                return 4;
         }
         return 0;
     }
