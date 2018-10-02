@@ -24,8 +24,8 @@ public class FormularioLocalHelper {
         
         this.nomeLocal = activity.findViewById(R.id.edt_nome_local);
         this.nomeResponsavel = activity.findViewById(R.id.edt_nome_responsavel);
-        this.email = activity.findViewById(R.id.edt_email);
-        this.telefone = activity.findViewById(R.id.edt_telefone);
+        this.email = activity.findViewById(R.id.edt_email_local);
+        this.telefone = activity.findViewById(R.id.edt_telefone_local);
         this.latitude = activity.findViewById(R.id.edt_latitude);
         this.longitude = activity.findViewById(R.id.edt_longitude);
         this.andar = activity.findViewById(R.id.spn_andar);

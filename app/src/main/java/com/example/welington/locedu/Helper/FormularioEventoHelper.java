@@ -20,6 +20,7 @@ public class FormularioEventoHelper {
     private EditText nomeReponsavel;
     private EditText descricaoEvento;
     private EditText data;
+    private EditText numeroVagas;
     private EditText horario;
     private Spinner tipoEvento;
 
@@ -31,6 +32,7 @@ public class FormularioEventoHelper {
         this.descricaoEvento = activity.findViewById(R.id.edtDescricaoEvento);
         this.data = activity.findViewById(R.id.edtDataEvento);
         this.horario = activity.findViewById(R.id.edtHorarioEvento);
+        this.numeroVagas = activity.findViewById(R.id.edt_numero_vagas_evento);
         this.tipoEvento = activity.findViewById(R.id.spTipoEvento);
     }
 
@@ -39,6 +41,7 @@ public class FormularioEventoHelper {
         this.evento.setResponsavel(nomeReponsavel.getText().toString());
         this.evento.setDescricao(descricaoEvento.getText().toString());
         this.evento.setTipo(String.valueOf(tipoEvento.getSelectedItem()));
+        this.evento.setNumeroVagas(Integer.getInteger(numeroVagas.getText().toString()));
 
         return evento;
     }
@@ -49,6 +52,7 @@ public class FormularioEventoHelper {
         this.descricaoEvento.setText(e.getDescricao());
         this.data.setText(e.getData());
         this.horario.setText(e.getHorario());
+        this.numeroVagas.setText(e.getNumeroVagas());
         this.tipoEvento.setSelection(Util.posicaoTipoEvento(e.getTipo()));
 
         this.evento = e;

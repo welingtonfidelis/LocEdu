@@ -110,7 +110,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         holder.adapterLocalCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(local.getQntEvento()<=0){
+                if(local.getQntEvento()<=0 && ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
                     Toast.makeText(context, "Não há eventos disponíveis neste local.", Toast.LENGTH_SHORT).show();
                 }
                 else{

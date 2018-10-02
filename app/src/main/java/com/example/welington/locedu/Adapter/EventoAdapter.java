@@ -2,6 +2,7 @@ package com.example.welington.locedu.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
@@ -39,6 +40,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         protected TextView adapterEventoTipo;
         protected TextView adapterEventoNome;
         protected TextView adapterEventoResponsavel;
+        protected TextView adapterVagas;
         protected CardView adapterEventoCard;
         protected TextView adapterEventoData;
         protected FloatingActionButton abrirMenu;
@@ -50,6 +52,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             adapterEventoResponsavel = itemView.findViewById(R.id.adapter_evento_responsavel);
             adapterEventoCard = itemView.findViewById(R.id.adapter_evento_card);
             adapterEventoData = itemView.findViewById(R.id.adapter_evento_data);
+            adapterVagas = itemView.findViewById(R.id.adapter_evento_vagas);
             abrirMenu = itemView.findViewById(R.id.fb_info_evento);
         }
     }
@@ -68,6 +71,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
         holder.adapterEventoNome.setText(evento.getNomeEvento());
         holder.adapterEventoResponsavel.setText(evento.getResponsavel());
         holder.adapterEventoData.setText(evento.getData().toString());
+        holder.adapterVagas.setText(evento.getNumeroVagas());
 
         holder.adapterEventoCard.setOnLongClickListener(new View.OnLongClickListener(){
             @Override

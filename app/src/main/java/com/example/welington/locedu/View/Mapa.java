@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +66,9 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
     private TextView distancia, texto, textoAndar, andar;
     private FloatingActionButton focalizaCamera;
     private FloatingActionButton home;
-    private boolean tipoChamada;
+    private boolean tipoChamada, tipoMapa = true;
+    private Switch trocaMapa;
+    private MarkerOptions markerOptions;
     private String rotas = "", rotaPoli = "";
 
     private boolean init = true;
@@ -87,6 +90,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         home = findViewById(R.id.fb_home);
         textoAndar = findViewById(R.id.tv_texto_andar_mapa);
         andar = findViewById(R.id.tv_andar_mapa);
+        trocaMapa = findViewById(R.id.swt_troca_mapa);
 
         if(tipoChamada){
             locationDest = new Location("");
@@ -107,7 +111,6 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         ft.replace(R.id.llMap, mapFrag);
         ft.commit();
 
-
         mLocationServices = LocationServices.getFusedLocationProviderClient(this);
         mLocationCallback = new LocationCallback() {
             @Override
@@ -117,7 +120,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 }
                 location = locationResult.getLastLocation();
 
-                if (tipoChamada) distancia.setText(String.valueOf(location.distanceTo(locationDest)));
+                if (tipoChamada) distancia.setText(String.format("%.2f",location.distanceTo(locationDest)));
 
                 latLngUser = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -125,17 +128,35 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 updateCamera = CameraUpdateFactory.newCameraPosition(positionCamera);
 
                 if (map != null) {
+                    trocaMapa.setVisibility(View.VISIBLE);
                     if (markerLocation != null){
                         markerLocation.setPosition(latLngUser);
                         if(tipoChamada) checaDistancia(location);
 
-                    }else{
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        markerOptions.title("Você");
-                        markerOptions.icon(VetorHelper.bitmapDescriptorFromVector(Mapa.this, R.drawable.ic_marker_radius));
-                        markerOptions.position(latLngUser);
+                        if(trocaMapa.isChecked() && tipoMapa){
+                            map.clear();
+                            map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-                        markerLocation = map.addMarker(markerOptions);
+                            carregaMarcadorUsuario();
+                            carregaMarcadoDestino();
+
+                            tipoMapa = false;
+                        }
+                        else if(!trocaMapa.isChecked() && !tipoMapa){
+                            map.clear();
+                            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                            carregaPlanta();
+                            carregaMarcadoDestino();
+                            carregaMarcadorUsuario();
+
+                            tipoMapa = true;
+                        }
+
+
+                    }else{
+                        markerOptions = new MarkerOptions();
+                        carregaMarcadorUsuario();
                     }
 
                 }
@@ -162,44 +183,25 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(Mapa.this, ListaSetor.class);
+                Intent it = new Intent(Mapa.this, Home.class);
                 startActivity(it);
                 finish();
             }
         });
+
+
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        carregaPlanta();
 
-        //map.moveCamera(updateCamera);
-
-        //sobrepor imagem no mapa
-        LatLngBounds newarkBounds = new LatLngBounds(
-                new LatLng(-20.715010, -46.628925),
-                new LatLng(-20.713806, -46.627306));
-
-        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.planta_campus))
-                .positionFromBounds(newarkBounds);
-
-        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
-
-        //Colocando marcador na localizacao do usuario
-        if(tipoChamada){
-            latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
-            MarkerOptions marcador = new MarkerOptions();
-            marcador.title("Destino");
-            marcador.snippet(local.getNomeLocal());
-            marcador.position(latLngDest);
-            map.addMarker(marcador);
-        }
+        carregaMarcadoDestino();
 
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(3000);
+        mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -252,5 +254,39 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
             Intent it = new Intent(getBaseContext(), Feedback.class);
             startActivity(it);
         }
+    }
+
+    public void carregaPlanta(){
+        //sobrepor imagem no mapa
+
+        LatLngBounds newarkBounds = new LatLngBounds(
+                new LatLng(-20.714930, -46.628944),
+                new LatLng(-20.713806, -46.627306));
+
+        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.planta_campus))
+                .positionFromBounds(newarkBounds);
+
+        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
+    }
+
+    public void carregaMarcadoDestino(){
+        //Colocando marcador na localizacao do usuario
+        if(tipoChamada){
+            latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
+            MarkerOptions marcador = new MarkerOptions();
+            marcador.title("Destino");
+            marcador.snippet(local.getNomeLocal());
+            marcador.position(latLngDest);
+            map.addMarker(marcador);
+        }
+    }
+
+    public void carregaMarcadorUsuario(){
+        markerOptions.title("Você");
+        markerOptions.icon(VetorHelper.bitmapDescriptorFromVector(Mapa.this, R.drawable.ic_marker_radius));
+        markerOptions.position(latLngUser);
+
+        markerLocation = map.addMarker(markerOptions);
     }
 }

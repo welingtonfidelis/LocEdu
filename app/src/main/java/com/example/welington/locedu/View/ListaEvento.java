@@ -95,7 +95,7 @@ public class ListaEvento extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(getBaseContext(), ListaSetor.class);
+                Intent it = new Intent(getBaseContext(), Home.class);
                 startActivity(it);
                 finish();
             }

@@ -2,6 +2,7 @@ package com.example.welington.locedu.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
     private Context context;
     private List<Setor> setores;
     private LayoutInflater mInflater;
+    private String[] paletaCores = {"#18A7FF", "#12107F", "#5B007F","#18A7FF", "#12107F", "#5B007F","#18A7FF", "#12107F", "#5B007F","#18A7FF", "#12107F", "#5B007F","#18A7FF", "#12107F", "#5B007F","#18A7FF", "#12107F", "#5B007F"};
    // private ItemClickListener itemClickListener;
 
     public SetorAdapterGrid(Context context, List<Setor> setores){
@@ -68,6 +70,9 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
                 return true;
             }
         });
+
+        //setando cor do gridview
+        holder.cardView.setBackgroundColor(Color.parseColor(paletaCores[position]));
     }
 
     @Override
@@ -77,15 +82,11 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
 
     public class ViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/{
         TextView nomeSetor;
-        TextView nomeResponsavel;
-        TextView blocoTextView;
         CardView cardView;
 
         ViewHolder(View itemView){
             super(itemView);
             nomeSetor = itemView.findViewById(R.id.info_text);
-            nomeResponsavel = itemView.findViewById(R.id.tv_responsavel);
-            blocoTextView = itemView.findViewById(R.id.bloco_text);
             cardView = itemView.findViewById(R.id.card_view);
         }
 

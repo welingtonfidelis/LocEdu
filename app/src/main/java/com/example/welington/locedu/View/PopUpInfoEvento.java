@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 public class PopUpInfoEvento extends AppCompatActivity {
 
     private Evento evento;
-    private TextView nome, responsavel, horario, data, informacao, tipo;
+    private TextView nome, responsavel, horario, data, informacao, tipo, vagas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +27,6 @@ public class PopUpInfoEvento extends AppCompatActivity {
         (horario = findViewById(R.id.tv_horario)).setText(evento.getHorario());
         (data = findViewById(R.id.tv_data)).setText(evento.getData());
         (informacao = findViewById(R.id.tv_informacao)).setText(evento.getDescricao());
+        (vagas = findViewById(R.id.tv_numero_vagas)).setText(evento.getNumeroVagas());
     }
 }

@@ -51,5 +51,11 @@
     <string name="horarioFuncionamento">Horário de funcionamento</string>
     <string name="email">E-mail</string>
     <string name="andarLocal">Andar/Piso do local</string>
+    <string name="boasVindas">Seja muito bem vindo.</string>
+    <string name="oQueFazer">O que gostaria de fazer?</string>
+    <string name="seLocalizar">Se localizar através do mapa?</string>
+    <string name="listarSetores">Ver lista de setores do campus?</string>
+    <string name="aplicativoAjudou">O aplicativo te ajudou?</string>
+    <string name="numerVagasEvento">Númer de vagas</string>
 
 </resources>
