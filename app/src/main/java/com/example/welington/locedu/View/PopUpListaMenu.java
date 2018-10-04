@@ -98,7 +98,7 @@ public class PopUpListaMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentLigar = new Intent(Intent.ACTION_DIAL);
-                intentLigar.setData(Uri.parse("tel:"+local.getTelefone()));
+                intentLigar.setData(Uri.parse("tel:"+"3526" + local.getTelefone()));
                 startActivity(intentLigar);
             }
         });

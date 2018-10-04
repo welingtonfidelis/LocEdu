@@ -1,8 +1,11 @@
 package com.example.welington.locedu.View;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +38,6 @@ public class ListaSetor extends AppCompatActivity {
     private List<Setor> setores;
     private ValueEventListener setorEventListener;
     private LinearLayoutManager layoutManager;
-    private Toolbar toolbar;
     private SetorAdapterGrid adapter;
 
     @Override
@@ -43,13 +45,18 @@ public class ListaSetor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_setor);
 
-        
         listaSetores = findViewById(R.id.listaSetores);
         botaoNovoSetor = findViewById(R.id.floatingButtonCriarSetor);
         botaoNovoSetor.setVisibility(View.GONE);
 
-       // toolbar = findViewById(R.id.tb_menu);
-      //  setSupportActionBar(toolbar);
+        //Criando e editando toolbar
+        Toolbar toolbar = findViewById(R.id.menu_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("SETORES NO CAMPUS");
+        getSupportActionBar().setSubtitle("Escolhar um setor");
+        toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
+
+        toolbar.inflateMenu(R.menu.menu_login_ajuda);
 
         setores = new ArrayList<>();
 
@@ -152,11 +159,48 @@ public class ListaSetor extends AppCompatActivity {
                     Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+            case R.id.feedBacak:
+                Intent it = new Intent(ListaSetor.this, Feedback.class);
+                startActivity(it);
+                return true;
+            case R.id.menu_home:
+                Intent it3 = new Intent(ListaSetor.this, Home.class);
+                startActivity(it3);
+                finish();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
+            menu.findItem(R.id.sair).setVisible(false);
+            return super.onPrepareOptionsMenu(menu);
+
+        }
+        else{
+            menu.findItem(R.id.sair).setVisible(true);
+            return super.onPrepareOptionsMenu(menu);
+        }
+    }
+
+    /*@Override
+    public void setActionBar(String heading) {
+        // TODO Auto-generated method stub
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBar)));
+        actionBar.setTitle(heading);
+        actionBar.show();
+
+    }*/
 
     @Override
     protected void onDestroy() {

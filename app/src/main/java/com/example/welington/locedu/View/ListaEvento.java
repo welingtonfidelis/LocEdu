@@ -1,12 +1,14 @@
 package com.example.welington.locedu.View;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +37,6 @@ public class ListaEvento extends AppCompatActivity {
     private RecyclerView listaEvento;
     private TextView nomeLocal;
     private Local local;
-    private ImageButton home;
     private LinearLayoutManager layoutManager;
     private ValueEventListener eventoEventListener;
 
@@ -47,10 +48,15 @@ public class ListaEvento extends AppCompatActivity {
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
 
+        //Criando e editando toolbar
+        Toolbar toolbar = findViewById(R.id.menu_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(local.getNomeLocal());
+        getSupportActionBar().setSubtitle("Escolhar um evento");
+        toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
+
         eventos = new ArrayList<>();
-        home = findViewById(R.id.imgb_home);
         listaEvento = findViewById(R.id.listaEventos);
-        (nomeLocal = findViewById(R.id.tvIdentificadorEvento)).setText(local.getNomeLocal().toString());
         novoEvento = findViewById(R.id.fbNovoEvento);
 
         eventoEventListener = new ValueEventListener() {
@@ -89,15 +95,6 @@ public class ListaEvento extends AppCompatActivity {
                 Intent it = new Intent(getBaseContext(), NovoEvento.class);
                 it.putExtra("LOCAL", g.toJson(local));
                 startActivity(it);
-            }
-        });
-
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(getBaseContext(), ListaSetor.class);
-                startActivity(it);
-                finish();
             }
         });
     }
@@ -150,10 +147,31 @@ public class ListaEvento extends AppCompatActivity {
                     Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+            case R.id.feedBacak:
+                Intent it3 = new Intent(ListaEvento.this, Feedback.class);
+                startActivity(it3);
+                return true;
+            case R.id.menu_home:
+                Intent it = new Intent(ListaEvento.this, Home.class);
+                startActivity(it);
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
+            menu.findItem(R.id.sair).setVisible(false);
+            return super.onPrepareOptionsMenu(menu);
+
+        }
+        else{
+            menu.findItem(R.id.sair).setVisible(true);
+            return super.onPrepareOptionsMenu(menu);
+        }
     }
 
     @Override

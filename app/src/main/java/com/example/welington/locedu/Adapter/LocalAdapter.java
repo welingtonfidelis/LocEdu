@@ -3,6 +3,7 @@ package com.example.welington.locedu.Adapter;
 import android.animation.FloatArrayEvaluator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
@@ -110,7 +111,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
         holder.adapterLocalCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(local.getQntEvento()<=0){
+                if(local.getQntEvento()<=0 && ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
                     Toast.makeText(context, "Não há eventos disponíveis neste local.", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -133,6 +134,13 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
                 context.startActivity(it);
             }
         });
+
+        if(position %2 == 0){
+            holder.adapterLocalCard.setBackgroundColor(Color.parseColor("#A6D1E8"));
+        }
+        else{
+            holder.adapterLocalCard.setBackgroundColor(Color.parseColor("#B7FFF1"));
+        }
     }
 
     @Override

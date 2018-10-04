@@ -31,7 +31,7 @@ public class PopUpInfoLocal extends AppCompatActivity {
         //setando informações
         nome.setText(local.getNomeLocal());
         responsavel.setText(local.getNomeResponsavel());
-        telefone.setText(local.getTelefone());
+        telefone.setText("3526-"+local.getTelefone());
         email.setText(local.getEmail());
         horario.setText(local.getHorarioFuncionamento());
         andar.setText(local.getAndar());

@@ -1,12 +1,14 @@
 package com.example.welington.locedu.View;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,10 +36,8 @@ public class ListaLocal extends AppCompatActivity {
     private RecyclerView listaLocais;
     private FloatingActionButton botaoNovoLocal;
     private List<Local> locais;
-    private ImageButton home;
     private ValueEventListener localEventListener;
     private LinearLayoutManager layoutManager;
-    private TextView nomeSetor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,15 @@ public class ListaLocal extends AppCompatActivity {
         Gson gson = new Gson();
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
 
-        home = findViewById(R.id.imgb_home);
+        //Criando e editando toolbar
+        Toolbar toolbar = findViewById(R.id.menu_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(setor.getNomeSetor());
+        getSupportActionBar().setSubtitle("Escolhar um local");
+        toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
+
         listaLocais = findViewById(R.id.listaLocais);
         botaoNovoLocal = findViewById(R.id.floatingActionButtonNovoLocal);
-        (nomeSetor = findViewById(R.id.nomeSetor)).setText(setor.getNomeSetor());
 
         registerForContextMenu(listaLocais);
 
@@ -94,16 +99,6 @@ public class ListaLocal extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(getBaseContext(), ListaSetor.class);
-                startActivity(it);
-                finish();
-            }
-        });
-
     }
 
     @Override
@@ -154,10 +149,31 @@ public class ListaLocal extends AppCompatActivity {
                     Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+            case R.id.feedBacak:
+                Intent it = new Intent(ListaLocal.this, Feedback.class);
+                startActivity(it);
+                return true;
+            case R.id.menu_home:
+                Intent it3 = new Intent(ListaLocal.this, Home.class);
+                startActivity(it3);
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
+            menu.findItem(R.id.sair).setVisible(false);
+            return super.onPrepareOptionsMenu(menu);
+
+        }
+        else{
+            menu.findItem(R.id.sair).setVisible(true);
+            return super.onPrepareOptionsMenu(menu);
+        }
     }
 
     @Override

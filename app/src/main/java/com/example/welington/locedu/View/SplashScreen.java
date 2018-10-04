@@ -44,8 +44,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent it = new Intent(SplashScreen.this, Mapa.class);
-                it.putExtra("TIPOCHAMADA", false);
+                Intent it = new Intent(SplashScreen.this, Home.class);
                 startActivity(it);
                 finish();
             }

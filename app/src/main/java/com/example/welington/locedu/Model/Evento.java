@@ -17,6 +17,7 @@ public class Evento {
     private String data;
     private String horario;
     private String responsavel;
+    private int numeroVagas;
 
     public Evento() {
     }
@@ -85,5 +86,13 @@ public class Evento {
 
     public void setHorario(String horario) {
         this.horario = horario;
+    }
+
+    public int getNumeroVagas() {
+        return numeroVagas;
+    }
+
+    public void setNumeroVagas(int numeroVagas) {
+        this.numeroVagas = numeroVagas;
     }
 }

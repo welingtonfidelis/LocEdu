@@ -1,6 +1,7 @@
 package com.example.welington.locedu.View;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -18,9 +19,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +55,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
-public class Mapa extends FragmentActivity implements OnMapReadyCallback {
+public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
 
     private SupportMapFragment mapFrag; //mapa
     private GoogleMap map;
@@ -64,8 +71,9 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
     private Local local;
     private TextView distancia, texto, textoAndar, andar;
     private FloatingActionButton focalizaCamera;
-    private FloatingActionButton home;
-    private boolean tipoChamada;
+    private boolean tipoChamada, tipoMapa = true;
+    private Switch trocaMapa;
+    private MarkerOptions markerOptions;
     private String rotas = "", rotaPoli = "";
 
     private boolean init = true;
@@ -75,27 +83,35 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
 
-
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
         Intent it = getIntent();
         tipoChamada = it.getBooleanExtra("TIPOCHAMADA", false);//verifica se a chamada veio da tela inicial ou do mapa com destino
 
+        //Criando e editando toolbar
+        Toolbar toolbar = findViewById(R.id.menu_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("SUA LOCALIZAÇÃO");
+        getSupportActionBar().setSubtitle("Você está aqui");
+        toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
+
         distancia = findViewById(R.id.tv_distancia);
         texto = findViewById(R.id.tv_texto);
         focalizaCamera = findViewById(R.id.fb_focaliza_camera);
-        home = findViewById(R.id.fb_home);
         textoAndar = findViewById(R.id.tv_texto_andar_mapa);
         andar = findViewById(R.id.tv_andar_mapa);
+        trocaMapa = findViewById(R.id.swt_troca_mapa);
 
         if(tipoChamada){
             locationDest = new Location("");
             locationDest.setLatitude(local.getLatitude());
             locationDest.setLongitude(local.getLongitude());
-            texto.setText("Distância até o destino");
+            texto.setVisibility(View.VISIBLE);
+            distancia.setVisibility(View.VISIBLE);
             textoAndar.setVisibility(View.VISIBLE);
             andar.setVisibility(View.VISIBLE);
             andar.setText(local.getAndar());
+            getSupportActionBar().setSubtitle("Destino: "+local.getNomeLocal());
         }
 
         GoogleMapOptions options = new GoogleMapOptions();
@@ -107,7 +123,6 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
         ft.replace(R.id.llMap, mapFrag);
         ft.commit();
 
-
         mLocationServices = LocationServices.getFusedLocationProviderClient(this);
         mLocationCallback = new LocationCallback() {
             @Override
@@ -117,7 +132,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 }
                 location = locationResult.getLastLocation();
 
-                if (tipoChamada) distancia.setText(String.valueOf(location.distanceTo(locationDest)));
+                if (tipoChamada) distancia.setText(String.format("%.2f",location.distanceTo(locationDest)));
 
                 latLngUser = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -125,17 +140,35 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                 updateCamera = CameraUpdateFactory.newCameraPosition(positionCamera);
 
                 if (map != null) {
+                    trocaMapa.setVisibility(View.VISIBLE);
                     if (markerLocation != null){
                         markerLocation.setPosition(latLngUser);
                         if(tipoChamada) checaDistancia(location);
 
-                    }else{
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        markerOptions.title("Você");
-                        markerOptions.icon(VetorHelper.bitmapDescriptorFromVector(Mapa.this, R.drawable.ic_marker_radius));
-                        markerOptions.position(latLngUser);
+                        if(trocaMapa.isChecked() && tipoMapa){
+                            map.clear();
+                            map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-                        markerLocation = map.addMarker(markerOptions);
+                            carregaMarcadorUsuario();
+                            carregaMarcadoDestino();
+
+                            tipoMapa = false;
+                        }
+                        else if(!trocaMapa.isChecked() && !tipoMapa){
+                            map.clear();
+                            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                            carregaPlanta();
+                            carregaMarcadoDestino();
+                            carregaMarcadorUsuario();
+
+                            tipoMapa = true;
+                        }
+
+
+                    }else{
+                        markerOptions = new MarkerOptions();
+                        carregaMarcadorUsuario();
                     }
 
                 }
@@ -158,48 +191,17 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
                     }
                 }
             });
-
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent it = new Intent(Mapa.this, ListaSetor.class);
-                startActivity(it);
-                finish();
-            }
-        });
-
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        carregaPlanta();
 
-        //map.moveCamera(updateCamera);
-
-        //sobrepor imagem no mapa
-        LatLngBounds newarkBounds = new LatLngBounds(
-                new LatLng(-20.715010, -46.628925),
-                new LatLng(-20.713806, -46.627306));
-
-        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.planta_campus))
-                .positionFromBounds(newarkBounds);
-
-        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
-
-        //Colocando marcador na localizacao do usuario
-        if(tipoChamada){
-            latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
-            MarkerOptions marcador = new MarkerOptions();
-            marcador.title("Destino");
-            marcador.snippet(local.getNomeLocal());
-            marcador.position(latLngDest);
-            map.addMarker(marcador);
-        }
+        carregaMarcadoDestino();
 
         LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(3000);
+        mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
@@ -240,6 +242,66 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login_ajuda, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logar:
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent it = new Intent(this, Login.class);
+                    startActivity(it);
+                }
+                return true;
+            case R.id.ondeEstou:
+                Intent it2 = new Intent(this, Mapa.class);
+                it2.putExtra("TIPOCHAMADA", false);
+                startActivity(it2);
+                return true;
+            case R.id.sair:
+                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
+                    //ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
+                    ReferencesHelper.getFirebaseAuth().signOut();
+                    Toast.makeText(this, "Deslogado", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            case R.id.feedBacak:
+                Intent it3 = new Intent(Mapa.this, Feedback.class);
+                startActivity(it3);
+                return true;
+            case R.id.menu_home:
+                Intent it = new Intent(Mapa.this, Home.class);
+                startActivity(it);
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
+            menu.findItem(R.id.sair).setVisible(false);
+            return super.onPrepareOptionsMenu(menu);
+
+        }
+        else{
+            menu.findItem(R.id.sair).setVisible(true);
+            return super.onPrepareOptionsMenu(menu);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
@@ -252,5 +314,39 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback {
             Intent it = new Intent(getBaseContext(), Feedback.class);
             startActivity(it);
         }
+    }
+
+    public void carregaPlanta(){
+        //sobrepor imagem no mapa
+
+        LatLngBounds newarkBounds = new LatLngBounds(
+                new LatLng(-20.714930, -46.628944),
+                new LatLng(-20.713806, -46.627306));
+
+        GroundOverlayOptions newarkMap = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.planta_campus))
+                .positionFromBounds(newarkBounds);
+
+        GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
+    }
+
+    public void carregaMarcadoDestino(){
+        //Colocando marcador na localizacao do usuario
+        if(tipoChamada){
+            latLngDest = new LatLng(local.getLatitude(), local.getLongitude());
+            MarkerOptions marcador = new MarkerOptions();
+            marcador.title("Destino");
+            marcador.snippet(local.getNomeLocal());
+            marcador.position(latLngDest);
+            map.addMarker(marcador);
+        }
+    }
+
+    public void carregaMarcadorUsuario(){
+        markerOptions.title("Você");
+        markerOptions.icon(VetorHelper.bitmapDescriptorFromVector(Mapa.this, R.drawable.ic_marker_radius));
+        markerOptions.position(latLngUser);
+
+        markerLocation = map.addMarker(markerOptions);
     }
 }

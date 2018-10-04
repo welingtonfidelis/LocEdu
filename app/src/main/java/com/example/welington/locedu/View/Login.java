@@ -19,7 +19,7 @@ public class Login extends AppCompatActivity {
 
     private EditText usuario;
     private EditText senha;
-    private Button logar;
+    private Button logar, sair;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {
         usuario = findViewById(R.id.editTextUsuario);
         senha = findViewById(R.id.editTextSenha);
         logar = findViewById(R.id.buttonLogar);
+        sair = findViewById(R.id.btn_sair_login);
 
         logar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +49,13 @@ public class Login extends AppCompatActivity {
                                 }
                             }
                 });
+            }
+        });
+
+        sair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

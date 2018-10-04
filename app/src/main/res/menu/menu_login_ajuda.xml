@@ -1,16 +1,21 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/logar"
-        android:title="Logar" />
-
+        android:id="@+id/menu_home" android:icon="@drawable/ic_home" app:showAsAction="always|withText" android:title="vooltar"/>
     <item
         android:id="@+id/ondeEstou"
         android:title="Onde estou" />
-
     <item
-        android:id="@+id/sair"
-        android:title="Sair" >
-    </item>
+        android:id="@+id/feedBacak"
+        android:title="Avaliar App" />
+    <group >
+        <item
+            android:id="@+id/logar"
+            android:title="Logar" />
+        <item
+            android:id="@+id/sair"
+            android:title="Logout"></item>
+    </group>
 
 
 </menu>
