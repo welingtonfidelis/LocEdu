@@ -2,8 +2,6 @@ package com.example.welington.locedu.Model;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.Date;
-
 /**
  * Created by welington on 17/08/18.
  */

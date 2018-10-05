@@ -50,7 +50,7 @@
     <string name="infoLocal">Informações do local</string>
     <string name="horarioFuncionamento">Horário de funcionamento</string>
     <string name="email">E-mail</string>
-    <string name="andarLocal">Andar/Piso do local</string>
+    <string name="andarLocal">Andar/Piso do local:</string>
     <string name="boasVindas">Seja muito bem vindo.</string>
     <string name="oQueFazer">O que gostaria de fazer?</string>
     <string name="seLocalizar">Se localizar através do mapa?</string>
@@ -61,5 +61,7 @@
     <string name="usuario">Usuário</string>
     <string name="senha">Senha</string>
     <string name="bemVindoAdm">Bem vindo administrador</string>
+    <string name="visitanteCampus">Você é visitante no campus?</string>
+    <string name="oSeuAplicativo">O seu aplicativo de informações e localização.</string>
 
 </resources>

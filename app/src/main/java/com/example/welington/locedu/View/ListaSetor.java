@@ -2,13 +2,10 @@ package com.example.welington.locedu.View;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.Telephony;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.welington.locedu.Adapter.SetorAdapterGrid;
@@ -33,12 +30,13 @@ import java.util.List;
 
 public class ListaSetor extends AppCompatActivity {
 
-    private FloatingActionButton botaoNovoSetor;
+    private FloatingActionButton botaoNovoSetor,buscarLocal;
     private RecyclerView listaSetores;
     private List<Setor> setores;
     private ValueEventListener setorEventListener;
     private LinearLayoutManager layoutManager;
     private SetorAdapterGrid adapter;
+    private EditText nomeLocalBusca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +46,8 @@ public class ListaSetor extends AppCompatActivity {
         listaSetores = findViewById(R.id.listaSetores);
         botaoNovoSetor = findViewById(R.id.floatingButtonCriarSetor);
         botaoNovoSetor.setVisibility(View.GONE);
+        buscarLocal = findViewById(R.id.fb_buscar_local);
+        nomeLocalBusca = findViewById(R.id.edt_buscar_local);
 
         //Criando e editando toolbar
         Toolbar toolbar = findViewById(R.id.menu_toolbar);
@@ -108,6 +108,17 @@ public class ListaSetor extends AppCompatActivity {
                 Intent it = new Intent(ListaSetor.this, NovoSetor.class);
                 startActivity(it);
                 //finish();
+            }
+        });
+
+        buscarLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!nomeLocalBusca.getText().toString().equals("")){
+                    Intent it = new Intent(ListaSetor.this, ListaLocal.class);
+                    it.putExtra("NOMEBUSCA", nomeLocalBusca.getText().toString());
+                    startActivity(it);
+                }
             }
         });
 
@@ -187,20 +198,6 @@ public class ListaSetor extends AppCompatActivity {
             return super.onPrepareOptionsMenu(menu);
         }
     }
-
-    /*@Override
-    public void setActionBar(String heading) {
-        // TODO Auto-generated method stub
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionBar)));
-        actionBar.setTitle(heading);
-        actionBar.show();
-
-    }*/
 
     @Override
     protected void onDestroy() {

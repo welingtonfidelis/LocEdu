@@ -1,37 +1,31 @@
 package com.example.welington.locedu.View;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-
-import com.example.welington.locedu.Helper.ReferencesHelper;
-import com.example.welington.locedu.Helper.VetorHelper;
-import com.example.welington.locedu.Model.Local;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.welington.locedu.Helper.ReferencesHelper;
+import com.example.welington.locedu.Helper.VetorHelper;
+import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
@@ -51,8 +45,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
 public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
@@ -82,6 +74,15 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            new AlertDialog.Builder(Mapa.this)
+                    .setTitle("GPS DESATIVADO")
+                    .setMessage("Por favor, verifique se seu GPS está ativado.")
+                    .setPositiveButton("OK", null).show();
+        }
 
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
@@ -132,7 +133,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
                 }
                 location = locationResult.getLastLocation();
 
-                if (tipoChamada) distancia.setText(String.format("%.2f",location.distanceTo(locationDest)));
+                if (tipoChamada) distancia.setText(String.format("%.2f",location.distanceTo(locationDest))+" m");
 
                 latLngUser = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -217,25 +218,11 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
 
         if(polyline == null){
 
-            /*ValueEventListener valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    rotaPoli = dataSnapshot.child("Rotas").child("1").getValue(String.class);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            };*/
-
             PolylineOptions polylineOptions = new PolylineOptions();
             polylineOptions.add();
             polylineOptions.color(Color.BLUE);
 
             polyline = map.addPolyline(polylineOptions);
-
-            //ReferencesHelper.getDatabaseReference().addValueEventListener(valueEventListener);
 
         }
 
@@ -292,13 +279,22 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
             menu.findItem(R.id.sair).setVisible(false);
+            if(!tipoChamada){
+                menu.findItem(R.id.ondeEstou).setVisible(false);
+            }
             return super.onPrepareOptionsMenu(menu);
 
         }
         else{
             menu.findItem(R.id.sair).setVisible(true);
+            if(!tipoChamada){
+                menu.findItem(R.id.ondeEstou).setVisible(false);
+
+            }
             return super.onPrepareOptionsMenu(menu);
         }
+
+
     }
 
     @Override

@@ -2,12 +2,11 @@ package com.example.welington.locedu.View;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.welington.locedu.Model.Evento;
 import com.example.welington.locedu.Model.Local;
@@ -19,6 +18,7 @@ public class PopUpListaMenu extends AppCompatActivity {
     private Local local;
     private Evento evento;
     private TextView ligar, email, informacao, mapa, foto;
+    private ImageView imgInfo, imgLigar, imgEmail, imgFoto, imgMapa;
     private Gson g = new Gson();
     private boolean tipoChamada;
 
@@ -37,6 +37,12 @@ public class PopUpListaMenu extends AppCompatActivity {
         informacao = findViewById(R.id.tv_info);
         mapa = findViewById(R.id.tv_mapa);
         foto = findViewById(R.id.tv_foto);
+
+        imgInfo = findViewById(R.id.imgv_info);
+        imgEmail = findViewById(R.id.imgv_email);
+        imgFoto = findViewById(R.id.imgv_foto_local);
+        imgLigar = findViewById(R.id.imgv_ligar);
+        imgMapa = findViewById(R.id.imgv_mapa_local);
 
         //Se chamada vier dos eventos, desativa ligar, email e foto
         if(tipoChamada){
@@ -71,7 +77,38 @@ public class PopUpListaMenu extends AppCompatActivity {
             }
         });
 
+        imgInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(tipoChamada){
+                    Intent it = new Intent(PopUpListaMenu.this, PopUpInfoEvento.class);
+                    it.putExtra("EVENTO", g.toJson(evento));
+                    startActivity(it);
+                    finish();
+                }
+                else{
+                    Intent it = new Intent(PopUpListaMenu.this, PopUpInfoLocal.class);
+                    it.putExtra("LOCAL", g.toJson(local));
+                    startActivity(it);
+                    finish();
+                }
+
+            }
+        });
+
         mapa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Gson g = new Gson();
+                Intent it = new Intent(PopUpListaMenu.this, Mapa.class);
+                it.putExtra("LOCAL", g.toJson(local));
+                it.putExtra("TIPOCHAMADA", true);
+                startActivity(it);
+                finish();
+            }
+        });
+
+        imgMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Gson g = new Gson();
@@ -94,7 +131,27 @@ public class PopUpListaMenu extends AppCompatActivity {
             }
         });
 
+        imgFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Gson g = new Gson();
+                Intent it = new Intent(PopUpListaMenu.this, PopUpFotoLocal.class);
+                it.putExtra("LOCAL", g.toJson(local));
+                startActivity(it);
+                finish();
+            }
+        });
+
         ligar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentLigar = new Intent(Intent.ACTION_DIAL);
+                intentLigar.setData(Uri.parse("tel:"+"3526" + local.getTelefone()));
+                startActivity(intentLigar);
+            }
+        });
+
+        imgLigar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentLigar = new Intent(Intent.ACTION_DIAL);
@@ -109,7 +166,20 @@ public class PopUpListaMenu extends AppCompatActivity {
                 Intent intentEmail = new Intent(Intent.ACTION_SEND);
                 intentEmail.setType("message/rfc822");
                 intentEmail.putExtra(Intent.EXTRA_EMAIL, new String[] {local.getEmail()});
-                startActivity(Intent.createChooser(intentEmail, "Escolha um App"));
+                //startActivity(Intent.createChooser(intentEmail, "Escolha um App"));
+                startActivity(intentEmail);
+                //return false;
+            }
+        });
+
+        imgEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentEmail = new Intent(Intent.ACTION_SEND);
+                intentEmail.setType("message/rfc822");
+                intentEmail.putExtra(Intent.EXTRA_EMAIL, new String[] {local.getEmail()});
+                //startActivity(Intent.createChooser(intentEmail, "Escolha um App"));
+                startActivity(intentEmail);
                 //return false;
             }
         });

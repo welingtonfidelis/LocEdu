@@ -1,9 +1,12 @@
 package com.example.welington.locedu.View;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -29,7 +32,7 @@ import java.util.Map;
 public class Feedback extends AppCompatActivity {
 
     private RatingBar avaliacao;
-    private RadioButton rb_sim, rb_nao;
+    private RadioButton rb_sim, rb_nao, rdb_sim, rdb_nao;
     private TextView valorAvaliacao;
     private EditText reclamacao;
 
@@ -48,23 +51,43 @@ public class Feedback extends AppCompatActivity {
         reclamacao = findViewById(R.id.edt_relama);
         rb_sim = findViewById(R.id.rb_sim);
         rb_nao = findViewById(R.id.rb_nao);
+        rdb_sim = findViewById(R.id.rdb_sim);
+        rdb_nao = findViewById(R.id.rdb_nao);
         avaliacao.setOnRatingBarChangeListener(rat);
         enviar = findViewById(R.id.imgb_enviar);
 
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String resp = "";
-                if(rb_sim.isChecked()){
+                String resp = "", resp2 = "";
+                if(rdb_sim.isChecked()){
                     resp = "sim";
                 }
-                else if(rb_nao.isChecked()){
+                else if(rdb_nao.isChecked()){
                     resp = "não";
                 }
-                postData(resp,reclamacao.getText().toString(), valorAvaliacao.getText().toString());
 
-                Toast.makeText(Feedback.this, "Obrigado pelo feedback", Toast.LENGTH_LONG).show();
-                finish();
+                if(rb_sim.isChecked()){
+                    resp2 = "sim";
+                }
+                else if(rb_nao.isChecked()){
+                    resp2 = "não";
+                }
+
+                ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Feedback.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+                if (netInfo == null){
+                    new AlertDialog.Builder(Feedback.this)
+                            .setTitle("SEM INTERNET")
+                            .setMessage("Por favor, verifique sua conexão.")
+                            .setPositiveButton("OK", null).show();
+                }else{
+                    postData(resp2, resp,reclamacao.getText().toString(), valorAvaliacao.getText().toString());
+
+                    Toast.makeText(Feedback.this, "Obrigado pela sua ajuda.", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
             }
         });
 
@@ -77,7 +100,7 @@ public class Feedback extends AppCompatActivity {
         }
     };
 
-    public void postData(final String chegouDestino, final String sujestao, final  String pontuacao) {
+    public void postData(final String visitante, final String chegouDestino, final String sujestao, final  String pontuacao) {
 
         //progressDialog.show();
         StringRequest request = new StringRequest(
@@ -107,9 +130,11 @@ public class Feedback extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
+                params.put(Constants.visitante, visitante);
                 params.put(Constants.chegouDestino, chegouDestino);
                 params.put(Constants.sujestao, sujestao);
                 params.put(Constants.pontuacao, pontuacao);
+
                 return params;
             }
         };
@@ -119,4 +144,6 @@ public class Feedback extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
+
+
 }

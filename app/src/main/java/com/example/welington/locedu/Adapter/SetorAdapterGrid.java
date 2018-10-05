@@ -26,8 +26,9 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
     private Context context;
     private List<Setor> setores;
     private LayoutInflater mInflater;
-    private String[] paletaCores = {"#cd298a", "#a9ab08", "#2f7967","#b10e0e", "#8947d8", "#b1500e","#0a9637", "#e6385d", "#4731fc","#4731fc", "#9812db", "#0a9637","#9a4677", "#ff6600", "#0a9637","#c8f737", "#c8f737", "#c8f737"};
-   // private ItemClickListener itemClickListener;
+    /*private String[] paletaCores = {"#cd298a", "#a9ab08", "#2f7967","#b10e0e", "#8947d8", "#b1500e",
+            "#0a9637", "#e6385d", "#4731fc","#4731fc", "#00ff0e", "#9812db", "#0a9637",
+            "#9a4677", "#cfcce8", "#000000","#000000"}; */
 
     public SetorAdapterGrid(Context context, List<Setor> setores){
         this.context = context;
@@ -71,8 +72,10 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
             }
         });
 
-        //setando cor do gridview
-        holder.cardView.setBackgroundColor(Color.parseColor(paletaCores[position]));
+        //setando cores ligadas ao mapa do gridview
+        //holder.cardView.setBackgroundColor(Color.parseColor(paletaCores[position]));
+
+
     }
 
     @Override
@@ -89,27 +92,10 @@ public class SetorAdapterGrid extends RecyclerView.Adapter<SetorAdapterGrid.View
             nomeSetor = itemView.findViewById(R.id.info_text);
             cardView = itemView.findViewById(R.id.card_view);
         }
-
-       /* @Override
-        public void onClick(View v) {
-            if (itemClickListener != null){
-
-                itemClickListener.onItemClick(v, getAdapterPosition());
-            }
-        }*/
     }
 
     public Setor getItem(int id) {
         return setores.get(id);
     }
 
-    // allows clicks events to be caught
- /*   public void setClickListener(ItemClickListener itemClickListener) {
-        //this.itemClickListener = itemClickListener;
-    }*/
-
-    // parent activity will implement this method to respond to click events
-   /* public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }*/
 }

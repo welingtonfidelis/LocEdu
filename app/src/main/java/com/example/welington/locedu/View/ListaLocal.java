@@ -2,18 +2,16 @@ package com.example.welington.locedu.View;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +20,7 @@ import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptionsExtension;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -38,6 +37,8 @@ public class ListaLocal extends AppCompatActivity {
     private List<Local> locais;
     private ValueEventListener localEventListener;
     private LinearLayoutManager layoutManager;
+    private String nomeBusca;
+    private TextView semResultadosBusca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +47,24 @@ public class ListaLocal extends AppCompatActivity {
 
         Gson gson = new Gson();
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
+        Intent it =  getIntent();
+        nomeBusca = it.getStringExtra("NOMEBUSCA");
 
         //Criando e editando toolbar
         Toolbar toolbar = findViewById(R.id.menu_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(setor.getNomeSetor());
-        getSupportActionBar().setSubtitle("Escolhar um local");
+        if(nomeBusca!=null){
+            getSupportActionBar().setTitle("LOCAIS DA BUSCA");
+        }
+        else{
+            getSupportActionBar().setTitle(setor.getNomeSetor());
+        }
+        getSupportActionBar().setSubtitle("Escolhar um local ou servidor");
         toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
 
         listaLocais = findViewById(R.id.listaLocais);
         botaoNovoLocal = findViewById(R.id.floatingActionButtonNovoLocal);
+        semResultadosBusca = findViewById(R.id.tv_sem_resultado);
 
         registerForContextMenu(listaLocais);
 
@@ -79,6 +88,10 @@ public class ListaLocal extends AppCompatActivity {
 
                     LocalAdapter localAdapter = new LocalAdapter(ListaLocal.this, locais);
                     listaLocais.setAdapter(localAdapter);
+
+                    if(locais.size() > 0){
+                       semResultadosBusca.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -88,7 +101,12 @@ public class ListaLocal extends AppCompatActivity {
             }
         };
 
-        ReferencesHelper.getDatabaseReference().child("Local").orderByChild("keySetor").equalTo(setor.getKey()).addValueEventListener(localEventListener);
+        if(nomeBusca == null){
+            ReferencesHelper.getDatabaseReference().child("Local").orderByChild("keySetor").equalTo(setor.getKey()).addValueEventListener(localEventListener);
+        }
+        else{
+            ReferencesHelper.getDatabaseReference().child("Local").orderByChild("nomeLocal").startAt(nomeBusca).addValueEventListener(localEventListener);
+        }
 
         botaoNovoLocal.setOnClickListener(new View.OnClickListener() {
             @Override

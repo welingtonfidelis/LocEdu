@@ -65,7 +65,7 @@ public class Util {
         builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
                 ReferencesHelper.getDatabaseReference().child(tabela).child(chave).removeValue();
-                Toast.makeText(context, "Informação deletada.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Excluído.", Toast.LENGTH_SHORT).show();
                 context.finish();
             }
         });

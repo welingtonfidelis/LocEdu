@@ -4,7 +4,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.welington.locedu.Model.Local;
-import com.example.welington.locedu.Model.Setor;
 import com.example.welington.locedu.R;
 import com.example.welington.locedu.View.NovoLocal;
 

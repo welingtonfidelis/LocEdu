@@ -9,5 +9,6 @@ package com.example.welington.locedu.Model;
         public static final String chegouDestino = "entry.211867510";
         public static final String sujestao = "entry.1359225089";
         public static final String pontuacao = "entry.2146737636";
+        public static final String visitante = "entry.1904146209";
     }
 

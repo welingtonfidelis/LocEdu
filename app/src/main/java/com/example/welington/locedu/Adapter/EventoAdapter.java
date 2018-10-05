@@ -10,16 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.welington.locedu.Helper.ReferencesHelper;
 import com.example.welington.locedu.Model.Evento;
 import com.example.welington.locedu.Model.Local;
 import com.example.welington.locedu.R;
-import com.example.welington.locedu.View.Mapa;
 import com.example.welington.locedu.View.NovoEvento;
-import com.example.welington.locedu.View.PopUpInfoEvento;
 import com.example.welington.locedu.View.PopUpListaMenu;
 import com.google.gson.Gson;
 
