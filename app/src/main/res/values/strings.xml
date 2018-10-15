@@ -63,5 +63,7 @@
     <string name="bemVindoAdm">Bem vindo administrador</string>
     <string name="visitanteCampus">Você é visitante no campus?</string>
     <string name="oSeuAplicativo">O seu aplicativo de informações e localização.</string>
-
+    <string name="cadastroSite">Link para inscrição</string>
+    <string name="cliqueAqui">Clique aqui.</string>
+    <string name="inscricao">Inscrição</string>
 </resources>

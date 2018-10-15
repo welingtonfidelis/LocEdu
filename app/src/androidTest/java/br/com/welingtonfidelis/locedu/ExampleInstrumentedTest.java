@@ -1,4 +1,4 @@
-package com.example.welington.locedu;
+package br.com.welingtonfidelis.locedu;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

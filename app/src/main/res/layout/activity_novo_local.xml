@@ -4,35 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.welington.locedu.View.NovoLocal"
+    tools:context=".View.NovoLocal"
     tools:layout_editor_absoluteY="81dp">
 
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="@string/infoLocal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="477dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27">
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,7 +29,7 @@
 
 
             <TextView
-                android:id="@+id/tv_nome_local"
+                android:id="@+id/textView27"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -51,10 +37,31 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="@string/nomeLocal"
+                android:text="@string/infoLocal"
+                android:textAllCaps="true"
+                android:textColor="@color/botaListaMenu"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_nome_local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginRight="9dp"
+                android:text="@string/nomeLocal"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
             <EditText
                 android:id="@+id/edt_nome_local"
@@ -65,7 +72,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:ems="10"
                 android:hint="@string/nomeLocal"
                 android:inputType="textPersonName"
@@ -83,6 +90,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/responsavel"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_nome_local" />
@@ -96,7 +106,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:ems="10"
                 android:hint="@string/nomeResponsavel"
                 android:inputType="textPersonName"
@@ -114,6 +124,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/telefone"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_nome_responsavel" />
@@ -127,7 +140,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:ems="10"
                 android:hint="@string/telefone"
                 android:inputType="phone"
@@ -145,6 +158,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/email"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_telefone_local" />
@@ -158,7 +174,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:ems="10"
                 android:hint="@string/email"
                 android:inputType="textPersonName"
@@ -176,6 +192,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/horarioFuncionamento"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_email_local" />
@@ -189,7 +208,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:ems="10"
                 android:hint="@string/horarioFuncionamento"
                 android:inputType="textPersonName"
@@ -207,6 +226,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/andarLocal"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_horario_funcionamento" />
@@ -220,7 +242,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:entries="@array/andar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -236,6 +258,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/latitude"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spn_andar" />
@@ -249,7 +274,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:ems="10"
                 android:hint="@string/latitude"
                 android:inputType="text|number"
@@ -267,6 +292,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/longitude"
+                android:textAllCaps="true"
+                android:textColor="@color/botaoNovo"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edt_latitude" />
@@ -280,7 +308,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/campo_cadastro_layout"
                 android:ems="10"
                 android:hint="@string/longitude"
                 android:inputType="text|number"

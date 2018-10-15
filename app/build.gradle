@@ -4,7 +4,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId 'com.example.welington.locedu'
+        applicationId 'br.com.welingtonfidelis.locedu'
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1

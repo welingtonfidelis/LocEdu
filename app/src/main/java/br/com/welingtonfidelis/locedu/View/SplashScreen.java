@@ -1,4 +1,4 @@
-package com.example.welington.locedu.View;
+package br.com.welingtonfidelis.locedu.View;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,8 +12,9 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.welington.locedu.Helper.PermissionHelper;
-import com.example.welington.locedu.R;
+import br.com.welingtonfidelis.locedu.Helper.PermissionHelper;
+
+import br.com.welingtonfidelis.locedu.R;
 
 public class SplashScreen extends AppCompatActivity {
 

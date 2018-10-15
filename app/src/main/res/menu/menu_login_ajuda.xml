@@ -1,9 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_home" android:icon="@drawable/ic_home" app:showAsAction="always|withText" android:title="vooltar"/>
+        android:id="@+id/menu_home"
+        android:icon="@drawable/ic_home"
+        android:title="INÍCIO"
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/ondeEstou"
+        android:icon="@drawable/ic_mapa"
         android:title="Onde estou" />
     <item
         android:id="@+id/feedBacak"

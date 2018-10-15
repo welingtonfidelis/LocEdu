@@ -1,4 +1,4 @@
-package com.example.welington.locedu;
+package br.com.welingtonfidelis.locedu;
 
 import org.junit.Test;
 

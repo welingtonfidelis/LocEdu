@@ -23,19 +23,15 @@
 
     <RelativeLayout
         android:id="@+id/llMap"
-        android:layout_width="371dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menu_toolbar"
-        app:layout_constraintVertical_bias="1.0">
-    </RelativeLayout>
+        app:layout_constraintVertical_bias="1.0"></RelativeLayout>
 
     <TextView
         android:id="@+id/tv_distancia"
@@ -44,24 +40,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="  "
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tv_texto"
-        app:layout_constraintTop_toBottomOf="@+id/menu_toolbar" />
-
-    <TextView
-        android:id="@+id/tv_texto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:background="@drawable/busca_layout"
         android:text="@string/distanciaDestino"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,42 +62,33 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/tv_texto_andar_mapa"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/andarLocal"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_texto" />
-
-    <TextView
         android:id="@+id/tv_andar_mapa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/busca_layout"
         android:text="    "
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/tv_texto_andar_mapa"
-        app:layout_constraintTop_toTopOf="@+id/tv_texto_andar_mapa" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menu_toolbar" />
 
     <Switch
         android:id="@+id/swt_troca_mapa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Mapa/Satélite"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/busca_layout"
+        android:text="Satélite"
         android:textAllCaps="false"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_texto_andar_mapa" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_andar_mapa" />
 
 
 </android.support.constraint.ConstraintLayout>

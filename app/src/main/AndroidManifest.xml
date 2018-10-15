@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.welington.locedu">
+    package="br.com.welingtonfidelis.locedu">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -27,28 +27,27 @@
         android:theme="@style/AppTheme"
         android:screenOrientation="portrait">
         <activity
-            android:name=".View.Login"
-            android:screenOrientation="portrait" />
-        <activity android:name=".View.ListaSetor" />
+            android:name="br.com.welingtonfidelis.locedu.View.Login"/>
+        <activity android:name="br.com.welingtonfidelis.locedu.View.ListaSetor" />
         <activity
-            android:name=".View.NovoSetor"
+            android:name="br.com.welingtonfidelis.locedu.View.NovoSetor"
             android:theme="@style/AppTheme" />
-        <activity android:name=".View.ListaLocal" />
+        <activity android:name="br.com.welingtonfidelis.locedu.View.ListaLocal" />
         <activity
-            android:name=".View.NovoLocal"
+            android:name="br.com.welingtonfidelis.locedu.View.NovoLocal"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".View.NovoEvento"
+            android:name="br.com.welingtonfidelis.locedu.View.NovoEvento"
             android:theme="@style/AppTheme" />
-        <activity android:name=".View.ListaEvento" />
+        <activity android:name="br.com.welingtonfidelis.locedu.View.ListaEvento" />
         <activity
-            android:name=".View.PopUpInfoLocal"
+            android:name="br.com.welingtonfidelis.locedu.View.PopUpInfoLocal"
             android:theme="@style/Theme.AppCompat.Dialog.MinWidth" />
         <activity
-            android:name=".View.PopUpInfoEvento"
+            android:name="br.com.welingtonfidelis.locedu.View.PopUpInfoEvento"
             android:theme="@style/Theme.AppCompat.Dialog.MinWidth" />
         <activity
-            android:name=".View.PopUpFotoLocal"
+            android:name="br.com.welingtonfidelis.locedu.View.PopUpFotoLocal"
             android:theme="@style/Theme.AppCompat.Dialog.MinWidth" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
@@ -57,17 +56,19 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyDVCOD0idfqISrjTb8piTeG71D903ARRAM" />
 
         <activity
-            android:name=".View.Mapa"
-            android:label="@string/title_activity_mapa" />
+            android:name="br.com.welingtonfidelis.locedu.View.Mapa"
+            android:label="@string/title_activity_mapa"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".View.Feedback"
+            android:name="br.com.welingtonfidelis.locedu.View.Feedback"
             android:theme="@style/Theme.AppCompat.Dialog.MinWidth" />
         <activity
-            android:name=".View.SplashScreen"
-            android:theme="@style/AppTheme">
+            android:name="br.com.welingtonfidelis.locedu.View.SplashScreen"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,9 +76,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.PopUpListaMenu"
+            android:name="br.com.welingtonfidelis.locedu.View.PopUpListaMenu"
             android:theme="@style/Theme.AppCompat.Dialog.MinWidth" />
-        <activity android:name=".View.Home"></activity>
+        <activity
+            android:name="br.com.welingtonfidelis.locedu.View.Home"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

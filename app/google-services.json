@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:372652881219:android:8672eeb0d1a984b4",
+        "mobilesdk_app_id": "1:372652881219:android:be750dfcf1fc743d",
         "android_client_info": {
-          "package_name": "com.example.welington.locedu"
+          "package_name": "br.com.welingtonfidelis.locedu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "372652881219-dqn09gnva7lqlc4eoc632lojda3vp584.apps.googleusercontent.com",
+          "client_id": "372652881219-it17ranbj64oe9kqh8aq1lufk9ai9v37.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.welington.locedu",
-            "certificate_hash": "c6f2259b91de275058b4d8896b55cc2b22cd461f"
+            "package_name": "br.com.welingtonfidelis.locedu",
+            "certificate_hash": "8edd2f6291ede46d683a4e77bcf12ee2952e56bc"
           }
         },
         {
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBjqErLEVfgJ4mcdug-TjUPqQweZTw5-WQ"
+          "current_key": "AIzaSyDVCOD0idfqISrjTb8piTeG71D903ARRAM"
         }
       ],
       "services": {
@@ -52,18 +52,26 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:372652881219:android:b5a73d1e37c427e6",
+        "mobilesdk_app_id": "1:372652881219:android:8672eeb0d1a984b4",
         "android_client_info": {
-          "package_name": "com.example.welington.locedu.View"
+          "package_name": "com.example.welington.locedu"
         }
       },
       "oauth_client": [
         {
-          "client_id": "372652881219-64e88moqa55des8rj7aej83urub76n3d.apps.googleusercontent.com",
+          "client_id": "372652881219-dqn09gnva7lqlc4eoc632lojda3vp584.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.welington.locedu.View",
+            "package_name": "com.example.welington.locedu",
             "certificate_hash": "c6f2259b91de275058b4d8896b55cc2b22cd461f"
+          }
+        },
+        {
+          "client_id": "372652881219-s2m0mmo8qklm3kdrpll14p82844r19gg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.welington.locedu",
+            "certificate_hash": "8edd2f6291ede46d683a4e77bcf12ee2952e56bc"
           }
         },
         {
@@ -73,7 +81,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBjqErLEVfgJ4mcdug-TjUPqQweZTw5-WQ"
+          "current_key": "AIzaSyDVCOD0idfqISrjTb8piTeG71D903ARRAM"
         }
       ],
       "services": {
