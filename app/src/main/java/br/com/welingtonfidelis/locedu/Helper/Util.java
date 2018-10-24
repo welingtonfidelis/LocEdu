@@ -6,14 +6,26 @@ import android.content.DialogInterface;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import br.com.welingtonfidelis.locedu.Model.Local;
+import br.com.welingtonfidelis.locedu.R;
 
 /**
  * Created by welington on 15/08/18.
  */
 
 public class Util {
+    private static Local l;
 
     public static int  posicaoTipoEvento(String nome){
         switch (nome){
@@ -24,7 +36,10 @@ public class Util {
                 return 1;
 
             case "Oficina":
-                return  2;
+                return 2;
+
+            case "Apresentação":
+                return 3;
 
         }
         return 0;
@@ -79,6 +94,26 @@ public class Util {
         alerta = builder.create();
         //Exibe
         alerta.show();
+    }
+
+    public static void contaEventos( final Local local){
+        final int[] size = new int[1];
+        final Local finalLocal = local;
+        ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).
+                addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // get total available quest
+                        size[0] = (int) dataSnapshot.getChildrenCount();
+                        Log.e(local.getKey(), "Contador "+ size[0] +" ");
+                        local.setQntEvento(size[0]);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
     }
 
 }

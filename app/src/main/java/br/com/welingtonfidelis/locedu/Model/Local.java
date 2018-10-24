@@ -17,7 +17,7 @@ public class Local {
     private Double longitude;
     private String horarioFuncionamento;
     private String imagem;
-    private Long qntEvento;
+    private int qntEvento;
     private String andar;
 
     public Local() {
@@ -34,12 +34,12 @@ public class Local {
     }
 
     @Exclude
-    public Long getQntEvento() {
+    public int getQntEvento() {
         return qntEvento;
     }
 
     @Exclude
-    public void setQntEvento(Long qntEvento) {
+    public void setQntEvento(int qntEvento) {
         this.qntEvento = qntEvento;
     }
 

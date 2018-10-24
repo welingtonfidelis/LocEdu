@@ -7,4 +7,5 @@
 /build
 /captures
 .externalNativeBuild
-/app/src/debug/res/values
+/app/src/debug/res/values/google_maps_api.xml
+/home/welington/Documents/ProjetosAndroid/LocEdu/app/src/main/AndroidManifest.xml

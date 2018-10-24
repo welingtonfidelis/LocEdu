@@ -56,8 +56,8 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_menu_mylocation"
-        app:backgroundTint="@color/botaoNovo"
+        android:src="@drawable/ic_marker_radius"
+        app:backgroundTint="@color/toolbar_cor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

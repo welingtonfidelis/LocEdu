@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +52,7 @@ public class ListaLocal extends AppCompatActivity {
         nomeBusca = it.getStringExtra("NOMEBUSCA");
 
         //Criando e editando toolbar
-        Toolbar toolbar = findViewById(R.id.menu_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(nomeBusca!=null){
             getSupportActionBar().setTitle("LOCAIS DA BUSCA");
@@ -59,8 +60,11 @@ public class ListaLocal extends AppCompatActivity {
         else{
             getSupportActionBar().setTitle(setor.getNomeSetor());
         }
-        getSupportActionBar().setSubtitle("Escolhar um local ou servidor");
-        toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
+        getSupportActionBar().setSubtitle("Escolha um local ou servidor");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_cor));
+
 
         listaLocais = findViewById(R.id.listaLocais);
         botaoNovoLocal = findViewById(R.id.floatingActionButtonNovoLocal);
@@ -143,56 +147,14 @@ public class ListaLocal extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.logar:
-                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-                    Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent it = new Intent(ListaLocal.this, Login.class);
-                    startActivity(it);
-                }
-                return true;
-            case R.id.ondeEstou:
-                Intent it2 = new Intent(ListaLocal.this, Mapa.class);
-                it2.putExtra("TIPOCHAMADA", false);
-                startActivity(it2);
-                return true;
-            case R.id.sair:
-                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-                    //ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
-                    ReferencesHelper.getFirebaseAuth().signOut();
-                    botaoNovoLocal.setVisibility(View.GONE);
-                    Toast.makeText(this, "Deslogado", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            case R.id.feedBacak:
-                Intent it = new Intent(ListaLocal.this, Feedback.class);
-                startActivity(it);
-                return true;
             case R.id.menu_home:
-                Intent it3 = new Intent(ListaLocal.this, Home.class);
-                startActivity(it3);
+                Intent it = new Intent(ListaLocal.this, Home.class);
+                startActivity(it);
                 finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
-            menu.findItem(R.id.sair).setVisible(false);
-            return super.onPrepareOptionsMenu(menu);
-
-        }
-        else{
-            menu.findItem(R.id.sair).setVisible(true);
-            return super.onPrepareOptionsMenu(menu);
-        }
     }
 
     @Override

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.welington.locedu.br.example.welington.locedu.View.ListaSetor">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listaSetores"
@@ -29,7 +27,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        app:backgroundTint="@color/botaoNovo"
+        app:backgroundTint="@color/toolbar_cor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_add" />
@@ -44,6 +42,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fb_buscar_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:clickable="true"
+        app:backgroundTint="@color/botaListaMenu"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_buscar_local"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt_buscar_local"
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
     <EditText
         android:id="@+id/edt_buscar_local"
@@ -61,24 +72,4 @@
         app:layout_constraintEnd_toStartOf="@+id/fb_buscar_local"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menu_toolbar" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fb_buscar_local"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:clickable="true"
-        app:backgroundTint="@color/botaListaMenu"
-        app:layout_constraintBottom_toBottomOf="@+id/edt_buscar_local"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edt_buscar_local"
-        app:srcCompat="@android:drawable/ic_menu_search" /><![CDATA[
-
-
-
-     -->
-
-
-]]>
 </android.support.constraint.ConstraintLayout>

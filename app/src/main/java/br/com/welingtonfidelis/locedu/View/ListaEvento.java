@@ -49,9 +49,17 @@ public class ListaEvento extends AppCompatActivity {
         //Criando e editando toolbar
         Toolbar toolbar = findViewById(R.id.menu_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(local.getNomeLocal());
-        getSupportActionBar().setSubtitle("Escolhar um evento");
-        toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
+        if(local == null){
+            getSupportActionBar().setTitle("EVENTOS DISPONÍVEIS");
+        }
+        else{
+
+            getSupportActionBar().setTitle(local.getNomeLocal());
+        }
+        getSupportActionBar().setSubtitle("Escolha um evento");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_cor));
 
         eventos = new ArrayList<>();
         listaEvento = findViewById(R.id.listaEventos);
@@ -84,7 +92,13 @@ public class ListaEvento extends AppCompatActivity {
             }
         };
 
-        ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).addValueEventListener(eventoEventListener);
+        if(local == null){
+            ReferencesHelper.getDatabaseReference().child("Evento").addValueEventListener(eventoEventListener);
+        }
+        else{
+            ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).addValueEventListener(eventoEventListener);
+        }
+
 
         novoEvento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,56 +134,16 @@ public class ListaEvento extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.logar:
-                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-                    Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent it = new Intent(this, Login.class);
-                    startActivity(it);
-                }
-                return true;
-            case R.id.ondeEstou:
-                Intent it2 = new Intent(this, Mapa.class);
-                it2.putExtra("TIPOCHAMADA", false);
-                startActivity(it2);
-                return true;
-            case R.id.sair:
-                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-                    //ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
-                    ReferencesHelper.getFirebaseAuth().signOut();
-                    novoEvento.setVisibility(View.GONE);
-                    Toast.makeText(this, "Deslogado", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            case R.id.feedBacak:
-                Intent it3 = new Intent(ListaEvento.this, Feedback.class);
-                startActivity(it3);
-                return true;
             case R.id.menu_home:
                 Intent it = new Intent(ListaEvento.this, Home.class);
                 startActivity(it);
                 finish();
+
             default:
+                finish();
                 return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
-            menu.findItem(R.id.sair).setVisible(false);
-            return super.onPrepareOptionsMenu(menu);
-
-        }
-        else{
-            menu.findItem(R.id.sair).setVisible(true);
-            return super.onPrepareOptionsMenu(menu);
-        }
     }
 
     @Override

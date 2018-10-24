@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -101,8 +102,16 @@ public class PopUpListaMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Gson g = new Gson();
                 Intent it = new Intent(PopUpListaMenu.this, Mapa.class);
-                it.putExtra("LOCAL", g.toJson(local));
-                it.putExtra("TIPOCHAMADA", true);
+
+                if(tipoChamada){
+                    it.putExtra("EVENTO", g.toJson(evento));
+                }
+                else{
+                    it.putExtra("TIPOCHAMADA", true);
+                    it.putExtra("LOCAL", g.toJson(local));
+                    it.putExtra("TIPOCHAMADA", true);
+                }
+
                 startActivity(it);
                 finish();
             }
@@ -113,8 +122,16 @@ public class PopUpListaMenu extends AppCompatActivity {
             public void onClick(View view) {
                 Gson g = new Gson();
                 Intent it = new Intent(PopUpListaMenu.this, Mapa.class);
-                it.putExtra("LOCAL", g.toJson(local));
-                it.putExtra("TIPOCHAMADA", true);
+
+                if(tipoChamada){
+                    it.putExtra("EVENTO", g.toJson(evento));
+                }
+                else{
+                    it.putExtra("TIPOCHAMADA", true);
+                    it.putExtra("LOCAL", g.toJson(local));
+                    it.putExtra("TIPOCHAMADA", true);
+                }
+
                 startActivity(it);
                 finish();
             }

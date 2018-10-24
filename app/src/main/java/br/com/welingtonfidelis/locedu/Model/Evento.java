@@ -17,6 +17,9 @@ public class Evento {
     private String responsavel;
     private int numeroVagas;
     private String siteCadastro;
+    private String andar;
+    double latitude;
+    double longitude;
 
     public Evento() {
     }
@@ -101,5 +104,29 @@ public class Evento {
 
     public void setNumeroVagas(int numeroVagas) {
         this.numeroVagas = numeroVagas;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public String getAndar() {
+        return andar;
+    }
+
+    public void setAndar(String andar) {
+        this.andar = andar;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

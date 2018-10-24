@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -29,9 +30,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class NovoEvento extends AppCompatActivity {
-    private EditText data;
-    private EditText horario;
-    private Spinner tipoEvento;
+    private TextView data, horario;
+    //private Spinner tipoEvento;
     private FloatingActionButton btnSalvar, btnCancelar, btnDeletar;
     private Evento evento;
     private FormularioEventoHelper formularioEventoHelper;
@@ -114,6 +114,9 @@ public class NovoEvento extends AppCompatActivity {
                     evento.setHorario(horario.getText().toString());
                     evento.setData(data.getText().toString());
                     evento.setLocalKey(local.getKey());
+                    evento.setLatitude(local.getLatitude());
+                    evento.setLongitude(local.getLongitude());
+                    evento.setAndar(local.getAndar());
 
                     String key = ReferencesHelper.getDatabaseReference().push().getKey();
 

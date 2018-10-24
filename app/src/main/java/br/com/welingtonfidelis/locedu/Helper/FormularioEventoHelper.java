@@ -2,6 +2,7 @@ package br.com.welingtonfidelis.locedu.Helper;
 
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import br.com.welingtonfidelis.locedu.Model.Evento;
 import br.com.welingtonfidelis.locedu.R;
@@ -12,9 +13,9 @@ public class FormularioEventoHelper {
     private EditText nomeEvento;
     private EditText nomeReponsavel;
     private EditText descricaoEvento;
-    private EditText data;
+    private TextView data;
     private EditText numeroVagas;
-    private EditText horario;
+    private TextView horario;
     private EditText linkInscricao;
     private Spinner tipoEvento;
 

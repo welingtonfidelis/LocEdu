@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,10 @@ import br.com.welingtonfidelis.locedu.Model.Local;
 import br.com.welingtonfidelis.locedu.R;
 import br.com.welingtonfidelis.locedu.View.NovoEvento;
 import br.com.welingtonfidelis.locedu.View.PopUpListaMenu;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -87,16 +92,17 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
                 it.putExtra("LOCAL", gson.toJson(local));
                 it.putExtra("EVENTO", gson.toJson(evento));
                 it.putExtra("TIPOCHAMADA", true);
+               // it.putExtra("KEYLOCAL", evento.getLocalKey());
 
                 context.startActivity(it);
             }
         });
 
-        if(position %2 == 0){
-            holder.adapterEventoCard.setBackgroundColor(Color.parseColor("#A6D1E8"));
+        if(position %2 != 0){
+            holder.adapterEventoCard.setBackgroundColor(context.getResources().getColor(R.color.card_impar_evento));
         }
         else{
-            holder.adapterEventoCard.setBackgroundColor(Color.parseColor("#C4CBFF"));
+            holder.adapterEventoCard.setBackgroundColor(context.getResources().getColor(R.color.card_par));
         }
     }
 
@@ -104,4 +110,5 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
     public int getItemCount() {
         return eventos.size();
     }
+    
 }

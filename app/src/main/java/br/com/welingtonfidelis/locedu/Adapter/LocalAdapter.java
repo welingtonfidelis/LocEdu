@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.welingtonfidelis.locedu.Helper.ReferencesHelper;
+import br.com.welingtonfidelis.locedu.Helper.Util;
 import br.com.welingtonfidelis.locedu.Model.Local;
 import br.com.welingtonfidelis.locedu.R;
 import br.com.welingtonfidelis.locedu.View.ListaEvento;
@@ -67,11 +68,15 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Local local = locais.get(position);
 
+        /*Util.contaEventos(local);
+        holder.adapterQntEvento.setText(String.valueOf(local.getQntEvento()));*/
+
         ValueEventListener m = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                local.setQntEvento(dataSnapshot.getChildrenCount());
+                local.setQntEvento((int) dataSnapshot.getChildrenCount());
                 holder.adapterQntEvento.setText(String.valueOf(local.getQntEvento()));
+                Log.e("CONTADOR", local.getQntEvento()+"");
             }
 
             @Override
@@ -126,11 +131,11 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             }
         });
 
-        if(position %2 == 0){
-            holder.adapterLocalCard.setBackgroundColor(Color.parseColor("#A6D1E8"));
+        if(position %2 != 0){
+            holder.adapterLocalCard.setBackgroundColor( context.getResources().getColor(R.color.card_impar));
         }
         else{
-            holder.adapterLocalCard.setBackgroundColor(Color.parseColor("#B7FFF1"));
+            holder.adapterLocalCard.setBackgroundColor( context.getResources().getColor(R.color.card_par));
         }
     }
 

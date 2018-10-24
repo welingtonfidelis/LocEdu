@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import br.com.welingtonfidelis.locedu.Helper.ReferencesHelper;
 import br.com.welingtonfidelis.locedu.Helper.VetorHelper;
+import br.com.welingtonfidelis.locedu.Model.Evento;
 import br.com.welingtonfidelis.locedu.Model.Local;
 import br.com.welingtonfidelis.locedu.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -45,6 +47,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
@@ -61,12 +66,12 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mLocationServices;
     private LocationCallback mLocationCallback;
     private Local local;
+    private Evento evento;
     private TextView distancia, textoAndar, andar;
     private FloatingActionButton focalizaCamera;
     private boolean tipoChamada, tipoMapa = true;
     private Switch trocaMapa;
     private MarkerOptions markerOptions;
-    private String rotas = "", rotaPoli = "";
 
     private boolean init = true;
 
@@ -86,6 +91,8 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
 
         Gson gson = new Gson();
         local = gson.fromJson(getIntent().getStringExtra("LOCAL"), Local.class);
+        evento = gson.fromJson(getIntent().getStringExtra("EVENTO"), Evento.class);
+
         Intent it = getIntent();
         tipoChamada = it.getBooleanExtra("TIPOCHAMADA", false);//verifica se a chamada veio da tela inicial ou do mapa com destino
 
@@ -94,14 +101,26 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("SUA LOCALIZAÇÃO");
         getSupportActionBar().setSubtitle("Você está aqui");
-        toolbar.setBackgroundColor(Color.parseColor("#05ADE8"));
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_cor));
 
         distancia = findViewById(R.id.tv_distancia);
         focalizaCamera = findViewById(R.id.fb_focaliza_camera);
         andar = findViewById(R.id.tv_andar_mapa);
         trocaMapa = findViewById(R.id.swt_troca_mapa);
 
-        if(tipoChamada){
+        if(evento != null){//verifica se a chamada veio da lista de eventos
+            locationDest = new Location("");
+            locationDest.setLatitude(evento.getLatitude());
+            locationDest.setLongitude(evento.getLongitude());
+            distancia.setVisibility(View.VISIBLE);
+            andar.setVisibility(View.VISIBLE);
+            andar.setText("Andar: "+  evento.getAndar());
+            getSupportActionBar().setSubtitle("Destino: "+evento.getNomeEvento());
+        }
+
+        else if(tipoChamada){
             locationDest = new Location("");
             locationDest.setLatitude(local.getLatitude());
             locationDest.setLongitude(local.getLongitude());
@@ -110,6 +129,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
             andar.setText("Andar: "+  local.getAndar());
             getSupportActionBar().setSubtitle("Destino: "+local.getNomeLocal());
         }
+
 
         GoogleMapOptions options = new GoogleMapOptions();
         options.zOrderOnTop(true);
@@ -130,6 +150,7 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
                 location = locationResult.getLastLocation();
 
                 if (tipoChamada) distancia.setText(String.format("%.2f",location.distanceTo(locationDest))+" m até seu destino");
+                else if(evento != null) distancia.setText(String.format("%.2f",location.distanceTo(locationDest))+" m até seu destino");
 
                 latLngUser = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -213,7 +234,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
         mLocationServices.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
 
         //colocando a polilinha
-
         if(polyline == null){
 
             PolylineOptions polylineOptions = new PolylineOptions();
@@ -235,34 +255,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.logar:
-                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-                    Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent it = new Intent(this, Login.class);
-                    startActivity(it);
-                }
-                return true;
-            case R.id.ondeEstou:
-                Intent it2 = new Intent(this, Mapa.class);
-                it2.putExtra("TIPOCHAMADA", false);
-                startActivity(it2);
-                return true;
-            case R.id.sair:
-                if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
-                    //ReferencesHelper.getDatabaseReference().child("Setor").removeEventListener(setorEventListener);
-                    ReferencesHelper.getFirebaseAuth().signOut();
-                    Toast.makeText(this, "Deslogado", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(this, "Não está logado.", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            case R.id.feedBacak:
-                Intent it3 = new Intent(Mapa.this, Feedback.class);
-                startActivity(it3);
-                return true;
             case R.id.menu_home:
                 Intent it = new Intent(Mapa.this, Home.class);
                 startActivity(it);
@@ -273,27 +265,6 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if(ReferencesHelper.getFirebaseAuth().getCurrentUser() == null){
-            menu.findItem(R.id.sair).setVisible(false);
-            if(!tipoChamada){
-                menu.findItem(R.id.ondeEstou).setVisible(false);
-            }
-            return super.onPrepareOptionsMenu(menu);
-
-        }
-        else{
-            menu.findItem(R.id.sair).setVisible(true);
-            if(!tipoChamada){
-                menu.findItem(R.id.ondeEstou).setVisible(false);
-
-            }
-            return super.onPrepareOptionsMenu(menu);
-        }
-
-
-    }
 
     @Override
     protected void onDestroy() {
@@ -331,6 +302,14 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
             MarkerOptions marcador = new MarkerOptions();
             marcador.title("Destino");
             marcador.snippet(local.getNomeLocal());
+            marcador.position(latLngDest);
+            map.addMarker(marcador);
+        }
+        else if(evento != null){
+            latLngDest = new LatLng(evento.getLatitude(), evento.getLongitude());
+            MarkerOptions marcador = new MarkerOptions();
+            marcador.title("Destino");
+            marcador.snippet(evento.getNomeEvento());
             marcador.position(latLngDest);
             map.addMarker(marcador);
         }
