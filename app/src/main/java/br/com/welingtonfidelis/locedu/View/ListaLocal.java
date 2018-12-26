@@ -40,6 +40,7 @@ public class ListaLocal extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private String nomeBusca;
     private TextView semResultadosBusca;
+    private boolean listarTodosLocais = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class ListaLocal extends AppCompatActivity {
         setor = gson.fromJson(getIntent().getStringExtra("SETOR"), Setor.class);
         Intent it =  getIntent();
         nomeBusca = it.getStringExtra("NOMEBUSCA");
+        listarTodosLocais = getIntent().getExtras().getBoolean("LISTARTODOSLOCAIS");
 
         //Criando e editando toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -57,7 +59,7 @@ public class ListaLocal extends AppCompatActivity {
         if(nomeBusca!=null){
             getSupportActionBar().setTitle("LOCAIS DA BUSCA");
         }
-        else{
+        else if (!listarTodosLocais){
             getSupportActionBar().setTitle(setor.getNomeSetor());
         }
         getSupportActionBar().setSubtitle("Escolha um local ou servidor");
@@ -83,7 +85,12 @@ public class ListaLocal extends AppCompatActivity {
                     for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                         Local local = postSnapshot.getValue(Local.class);
                         local.setKey(postSnapshot.getKey());
-                        locais.add(local);
+                        if(nomeBusca != null){
+                            if ((local.getNomeLocal().toLowerCase()).contains((nomeBusca).toLowerCase())) locais.add(local);
+                        }
+                        else{
+                            locais.add(local);
+                        }
                     }
 
                     layoutManager = new LinearLayoutManager(ListaLocal.this);
@@ -106,11 +113,17 @@ public class ListaLocal extends AppCompatActivity {
         };
 
         if(nomeBusca == null){
-            ReferencesHelper.getDatabaseReference().child("Local").orderByChild("keySetor").equalTo(setor.getKey()).addValueEventListener(localEventListener);
+            if(!listarTodosLocais){
+                ReferencesHelper.getDatabaseReference().child("Local").orderByChild("keySetor").equalTo(setor.getKey()).addValueEventListener(localEventListener);
+            }
+            else{
+                ReferencesHelper.getDatabaseReference().child("Local").orderByChild("nomeLocal").addValueEventListener(localEventListener);
+            }
         }
         else{
-            String upperString = nomeBusca.substring(0,1).toUpperCase() + nomeBusca.substring(1);//garantindo que a primeira letra da busca seja maiúscula
-            ReferencesHelper.getDatabaseReference().child("Local").orderByChild("nomeLocal").startAt(upperString).endAt(upperString+"\uf8ff").addValueEventListener(localEventListener);
+            //String upperString = nomeBusca.substring(0,1).toUpperCase() + nomeBusca.substring(1);//garantindo que a primeira letra da busca seja maiúscula
+            //ReferencesHelper.getDatabaseReference().child("Local").orderByChild("nomeLocal").startAt(upperString).endAt(upperString+"\uf8ff").addValueEventListener(localEventListener);
+            ReferencesHelper.getDatabaseReference().child("Local").orderByChild("nomeLocal").addValueEventListener(localEventListener);
         }
 
         botaoNovoLocal.setOnClickListener(new View.OnClickListener() {

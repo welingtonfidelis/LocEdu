@@ -12,7 +12,7 @@ public class Evento {
     private String nomeEvento;
     private String tipo;
     private String descricao;
-    private String data;
+    private long data;
     private String horario;
     private String responsavel;
     private int numeroVagas;
@@ -74,11 +74,11 @@ public class Evento {
         this.descricao = descricao;
     }
 
-    public String getData() {
+    public long getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(long data) {
         this.data = data;
     }
 

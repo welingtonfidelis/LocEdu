@@ -97,6 +97,7 @@ public class NovoEvento extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         horario.setText( selectedHour + ":" + selectedMinute);
+
                     }
                 }, hora, minuto, true);//Yes 24 hour time
                 timePickerDialog.setTitle("Escolha o horário");
@@ -112,7 +113,8 @@ public class NovoEvento extends AppCompatActivity {
                     evento = new Evento();
                     evento = formularioEventoHelper.retornaEventoDoFormulario();
                     evento.setHorario(horario.getText().toString());
-                    evento.setData(data.getText().toString());
+                    //evento.setData(data.getText().toString());
+                    evento.setData(myCalendar.getTimeInMillis());
                     evento.setLocalKey(local.getKey());
                     evento.setLatitude(local.getLatitude());
                     evento.setLongitude(local.getLongitude());
@@ -142,7 +144,8 @@ public class NovoEvento extends AppCompatActivity {
                 public void onClick(View v) {
                     evento = formularioEventoHelper.retornaEventoDoFormulario();
                     evento.setHorario(horario.getText().toString());
-                    evento.setData(data.getText().toString());
+                    //evento.setData(data.getText().toString());
+                    evento.setData(myCalendar.getTimeInMillis());
 
                     ReferencesHelper.getDatabaseReference().child("Evento").child(evento.getKey()).setValue(evento);
                     Toast.makeText(getBaseContext(), "Salvo com sucesso.", Toast.LENGTH_SHORT).show();

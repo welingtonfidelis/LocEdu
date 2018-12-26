@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.TextView;
 
 import br.com.welingtonfidelis.locedu.Model.Evento;
 import br.com.welingtonfidelis.locedu.R;
 import com.google.gson.Gson;
+
+import java.util.Date;
 
 public class PopUpInfoEvento extends AppCompatActivity {
 
@@ -28,7 +31,8 @@ public class PopUpInfoEvento extends AppCompatActivity {
         (tipo = findViewById(R.id.tv_tipo_evento)).setText(evento.getTipo());
         (responsavel = findViewById(R.id.tv_responsavel_evento)).setText(evento.getResponsavel());
         (horario = findViewById(R.id.tv_horario)).setText(evento.getHorario());
-        (data = findViewById(R.id.tv_data)).setText(evento.getData());
+        //(data = findViewById(R.id.tv_data)).setText(evento.getData());
+        (data = findViewById(R.id.tv_data)).setText(DateFormat.format("dd/MM/yyyy", new Date(evento.getData())).toString());
         (informacao = findViewById(R.id.tv_informacao)).setText(evento.getDescricao());
         (vagas = findViewById(R.id.tv_numero_vagas)).setText(String.valueOf(evento.getNumeroVagas()));
         (link = findViewById(R.id.tv_link_inscricao)).setText("Clique aqui!");

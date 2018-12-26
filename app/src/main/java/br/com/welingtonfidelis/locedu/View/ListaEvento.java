@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ListaEvento extends AppCompatActivity {
@@ -53,7 +54,6 @@ public class ListaEvento extends AppCompatActivity {
             getSupportActionBar().setTitle("EVENTOS DISPONÍVEIS");
         }
         else{
-
             getSupportActionBar().setTitle(local.getNomeLocal());
         }
         getSupportActionBar().setSubtitle("Escolha um evento");
@@ -74,7 +74,9 @@ public class ListaEvento extends AppCompatActivity {
                     for(DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                         Evento evento = postSnapshot.getValue(Evento.class);
                         evento.setKey(postSnapshot.getKey());
-                        eventos.add(evento);
+
+                        Date data = new Date();
+                        if(evento.getData() >= data.getTime()) eventos.add(evento);
                     }
 
                     layoutManager = new LinearLayoutManager(ListaEvento.this);

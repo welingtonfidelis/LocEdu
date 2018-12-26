@@ -1,8 +1,11 @@
 package br.com.welingtonfidelis.locedu.Helper;
 
+import android.text.format.DateFormat;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.Date;
 
 import br.com.welingtonfidelis.locedu.Model.Evento;
 import br.com.welingtonfidelis.locedu.R;
@@ -47,11 +50,14 @@ public class FormularioEventoHelper {
         this.nomeEvento.setText(e.getNomeEvento());
         this.nomeReponsavel.setText(e.getResponsavel());
         this.descricaoEvento.setText(e.getDescricao());
-        this.data.setText(e.getData());
+        //this.data.setText(e.getData());
+        this.data.setText(DateFormat.format("dd/MM/yyyy", new Date(e.getData())).toString());
         this.horario.setText(e.getHorario());
         this.numeroVagas.setText(String.valueOf(e.getNumeroVagas()));
         this.tipoEvento.setSelection(Util.posicaoTipoEvento(e.getTipo()));
         this.linkInscricao.setText(e.getSiteCadastro());
+
+
 
         this.evento = e;
     }

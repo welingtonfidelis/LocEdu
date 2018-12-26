@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import br.com.welingtonfidelis.locedu.Helper.ReferencesHelper;
 import br.com.welingtonfidelis.locedu.Helper.Util;
+import br.com.welingtonfidelis.locedu.Model.Evento;
 import br.com.welingtonfidelis.locedu.Model.Local;
 import br.com.welingtonfidelis.locedu.R;
 import br.com.welingtonfidelis.locedu.View.ListaEvento;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +47,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
     protected class ViewHolder extends RecyclerView.ViewHolder {
         protected TextView adapterLocalNome;
         protected CardView adapterLocalCard;
-        protected TextView adapterQntEvento;
+        //protected TextView adapterQntEvento;
         protected FloatingActionButton abrirMenu;
 
         public ViewHolder(final View itemView){
@@ -53,7 +55,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
 
             adapterLocalNome = itemView.findViewById(R.id.adapter_local_nome);
             adapterLocalCard = itemView.findViewById(R.id.adapter_local_card);
-            adapterQntEvento = itemView.findViewById(R.id.tvQntdEvento);
+            //adapterQntEvento = itemView.findViewById(R.id.tvQntdEvento);
             abrirMenu = itemView.findViewById(R.id.fb_menu);
         }
     }
@@ -75,7 +77,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 local.setQntEvento((int) dataSnapshot.getChildrenCount());
-                holder.adapterQntEvento.setText(String.valueOf(local.getQntEvento()));
+                //holder.adapterQntEvento.setText(String.valueOf(local.getQntEvento()));
                 Log.e("CONTADOR", local.getQntEvento()+"");
             }
 
@@ -84,6 +86,8 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
 
             }
         };
+        //ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).addValueEventListener(m);
+        Date data = new Date();
         ReferencesHelper.getDatabaseReference().child("Evento").orderByChild("localKey").equalTo(local.getKey()).addValueEventListener(m);
 
 
@@ -141,7 +145,7 @@ public class LocalAdapter  extends RecyclerView.Adapter<LocalAdapter.ViewHolder>
 
     @Override
     public int getItemCount() {
-        Log.e("Quantidade na LOCAIS", String.valueOf(locais.size()) );
+        //Log.e("Quantidade na LOCAIS", String.valueOf(locais.size()) );
         return locais.size();
     }
 }

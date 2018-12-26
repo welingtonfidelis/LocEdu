@@ -1,13 +1,19 @@
 package br.com.welingtonfidelis.locedu.View;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,16 +27,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 public class PopUpFotoLocal extends AppCompatActivity {
 
     private ImageView imgv_foto, imgv_upload, imageView;
-    private Uri resultUri;
     private Bitmap imagemSalva;
     private Local local;
     private String photoUrl;
@@ -61,49 +64,53 @@ public class PopUpFotoLocal extends AppCompatActivity {
 
         imgv_foto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                chooseImage();
+            public void onClick(View view) {
+                File file = new File(Environment.getExternalStorageDirectory() + "/" + System.currentTimeMillis() + ".jpg");
+                Uri outputFileUri = Uri.fromFile(file);
+                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                StrictMode.setVmPolicy(builder.build());
+                startActivityForResult(intent, 123);
             }
         });
 
         imgv_upload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 saveImage();
             }
         });
-
-
     }
 
-    private void chooseImage() {
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(1, 1)
-                .start(PopUpFotoLocal.this);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+        System.gc(); // garbage colector
+        if (requestCode == 123) {
             if (resultCode == RESULT_OK) {
-                resultUri = result.getUri();
-
                 try {
-                    imagemSalva = MediaStore.Images.Media.getBitmap(getContentResolver(), resultUri);
-                    imageView.setImageBitmap(imagemSalva);
-                    imageView.setVisibility(View.VISIBLE);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 3;
+                    imagemSalva = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/arquivo.jpg", options);
+
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    boolean validaCompressao = imagemSalva.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+                    byte[] fotoBinario = outputStream.toByteArray();
+
+                    String encodedImage = Base64.encodeToString(fotoBinario, Base64.DEFAULT);
+
+                    imageView.setImageBitmap(imagemSalva); // ImageButton, seto a foto como imagem do botão
+
+                    boolean isImageTaken = true;
+                } catch (Exception e) {
+                    Toast.makeText(this, "Picture Not taken",Toast.LENGTH_LONG).show();e.printStackTrace();
                 }
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "Picture was not taken 1 ", Toast.LENGTH_SHORT);
+            } else {
+                Toast.makeText(this, "Picture was not taken 2 ", Toast.LENGTH_SHORT);
             }
         }
     }
-
-    // CODIGO NOVO
 
     private void loadImage(String id) {
         final StorageHelper storageHelper = new StorageHelper(PopUpFotoLocal.this, id);
@@ -111,7 +118,7 @@ public class PopUpFotoLocal extends AppCompatActivity {
 
         if (imagemLocal != null) {
             imageView.setImageBitmap(imagemLocal);
-            imageView.setVisibility(View.VISIBLE);                                                
+            imageView.setVisibility(View.VISIBLE);
             Log.e("BuscaLocal", "Imagem Local");
         } else {
             ReferencesHelper.getStorageReference().child("Imagens").child( id+".jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -144,7 +151,7 @@ public class PopUpFotoLocal extends AppCompatActivity {
         }
     }
 
-   private void saveImage() {
+    private void saveImage() {
         if (imagemSalva != null) {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             imagemSalva.compress(Bitmap.CompressFormat.JPEG, 65, stream);
@@ -153,7 +160,7 @@ public class PopUpFotoLocal extends AppCompatActivity {
             if (data != null) {
                 //PopUp de carregamento
                 final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setTitle("Uploading...");
+                progressDialog.setTitle("Enviando...");
                 final StorageHelper iStorageHelper = new StorageHelper(getApplicationContext(), photoUrl);
                 progressDialog.show();iStorageHelper.save(data);
 
@@ -161,7 +168,7 @@ public class PopUpFotoLocal extends AppCompatActivity {
                 ReferencesHelper.getStorageReference().child("Imagens").child(local.getImagem()+".jpg").delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                              Log.d("EXCLUIDO", "onSuccess: deleted file");
+                        Log.d("EXCLUIDO", "onSuccess: deleted file");
                     }
                 });
 
@@ -193,4 +200,5 @@ public class PopUpFotoLocal extends AppCompatActivity {
             Toast.makeText(this, "Você deve selecionar uma imagem", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

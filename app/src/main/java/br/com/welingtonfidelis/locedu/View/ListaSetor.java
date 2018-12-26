@@ -205,6 +205,11 @@ public class ListaSetor extends AppCompatActivity implements NavigationView.OnNa
             Intent it = new Intent(ListaSetor.this, ListaEvento.class);
             startActivity(it);
         }
+        else if(id == R.id.nav_lista_locais){
+            Intent it = new Intent(ListaSetor.this, ListaLocal.class);
+            it.putExtra("LISTARTODOSLOCAIS", true);
+            startActivity(it);
+        }
         else if (id == R.id.nav_logar) {
             if(ReferencesHelper.getFirebaseAuth().getCurrentUser() != null){
                 Toast.makeText(this, "Já está logado.", Toast.LENGTH_SHORT).show();
