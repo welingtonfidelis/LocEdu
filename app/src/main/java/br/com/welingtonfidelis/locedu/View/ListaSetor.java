@@ -55,7 +55,7 @@ public class ListaSetor extends AppCompatActivity implements NavigationView.OnNa
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("SETORES NO CAMPUS");
         getSupportActionBar().setSubtitle("Escolha um setor");
-        toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_cor));
+        //toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_cor));
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -185,6 +185,12 @@ public class ListaSetor extends AppCompatActivity implements NavigationView.OnNa
 
         if (id == R.id.action_settings) {
             Toast.makeText(this, "Futura tela sobre nós.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else if(id ==  R.id.menu_home){
+            Intent it = new Intent(ListaSetor.this, Home.class);
+            startActivity(it);
+            finish();
             return true;
         }
 

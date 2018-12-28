@@ -8,10 +8,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="59dp"
-        android:layout_marginTop="8dp"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        android:background="@color/azulMedio"
+        android:theme="@style/ToolBarStyle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listaLocais"
@@ -31,14 +30,14 @@
         android:id="@+id/floatingActionButtonNovoLocal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
         android:clickable="true"
-        app:backgroundTint="@color/toolbar_cor"
+        app:backgroundTint="@color/azulForte"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        android:layout_marginRight="8dp" />
+        app:srcCompat="@android:drawable/ic_menu_add" />
 
     <TextView
         android:id="@+id/tv_sem_resultado"

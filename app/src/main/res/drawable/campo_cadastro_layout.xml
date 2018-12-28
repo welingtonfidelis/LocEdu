@@ -3,11 +3,11 @@
     android:shape="rectangle">
     <stroke
         android:width="4dp"
-        android:color="@color/botaoNovo" />
+        android:color="@color/azulForte" />
 
     //cor interna do campo
     <solid
-        android:color="#B7FFF1"/>
+        android:color="#fff"/>
 
     // Reduce the corner radius value
     <corners android:radius="15dp" />

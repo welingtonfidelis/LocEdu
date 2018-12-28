@@ -65,7 +65,7 @@ public class ListaLocal extends AppCompatActivity {
         getSupportActionBar().setSubtitle("Escolha um local ou servidor");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_cor));
+        //toolbar.setBackgroundColor(getResources().getColor(R.color.toolbar_cor));
 
 
         listaLocais = findViewById(R.id.listaLocais);

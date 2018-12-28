@@ -3,30 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_onde_estou"
-            android:icon="@drawable/ic_mapa"
-            android:title="Onde Estou?" />
-        <item
-            android:id="@+id/nav_lista_eventos"
-            android:icon="@drawable/ic_calendario"
-            android:title="Eventos Disponíveis" />
-        <item
-            android:id="@+id/nav_lista_locais"
-            android:icon="@drawable/ic_menu_lista"
-            android:title="Locais Disponíveis" />
-        <item
-            android:id="@+id/nav_logar"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Logar" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Logout" />
-    </group>
 
-    <item android:title="Communicate">
+    <item android:title="Principal">
+        <menu>
+            <item
+                android:id="@+id/nav_onde_estou"
+                android:icon="@drawable/ic_mapa"
+                android:title="Onde Estou?" />
+            <item
+                android:id="@+id/nav_lista_eventos"
+                android:icon="@drawable/ic_calendario"
+                android:title="Eventos Disponíveis" />
+            <item
+                android:id="@+id/nav_lista_locais"
+                android:icon="@drawable/ic_menu_lista"
+                android:title="Locais Disponíveis" />
+            <item
+                android:id="@+id/nav_logar"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Logar" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+    <item android:title="Comunicação">
         <menu>
             <item
                 android:id="@+id/nav_share"

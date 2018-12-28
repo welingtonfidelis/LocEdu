@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:theme="@style/ToolBarStyle"
         ads:layout_constraintEnd_toEndOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
         ads:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +57,8 @@
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:src="@drawable/ic_marker_radius"
-        app:backgroundTint="@color/toolbar_cor"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/azulForte"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
